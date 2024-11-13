@@ -106,3 +106,4 @@ func (h *HttpMethod) HandlePatch(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, response)
 }
+
