@@ -178,3 +178,8 @@ func (h *HttpFormat) handleUTF8(c *gin.Context) {
 }
 
 
+func (h *HttpFormat) HandleRobotTxt(c *gin.Context) {
+	c.Header("Content-Type", "text/plain")
+	c.Data(http.StatusOK, "text/plain", []byte(utils.RobotTXT))
+}
+

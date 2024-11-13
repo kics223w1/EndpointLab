@@ -12,3 +12,6 @@ const AngryASCII = `
           '-......-'
      YOU SHOULDN'T BE HERE
 `
+
+const RobotTXT = `User-agent: *
+Disallow: /deny`

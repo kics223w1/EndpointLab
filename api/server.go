@@ -43,7 +43,7 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/html", httpFormat.HandleHtml)
 	s.router.GET("/json", httpFormat.HandleJson)
 	s.router.GET("/encoding/utf8", httpFormat.handleUTF8)
-
+	s.router.GET("/robots.txt", httpFormat.HandleRobotTxt)
 
 	// Register middleware
 	s.router.Use(ContentLengthMiddleware())
