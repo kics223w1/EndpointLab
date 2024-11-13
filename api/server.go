@@ -33,9 +33,21 @@ func (s *Server) registerRoutes() {
 	// Status endpoint
 	httpStatus := NewHttpStatus()
 	s.router.Any("/status/:code", httpStatus.HandleStatus)
+
+	// Format endpoint
+	httpFormat := NewHttpFormat()
+	s.router.GET("/brotli", httpFormat.HandleBrotli)
+	s.router.GET("/deflate", httpFormat.HandleDeflate)
+	s.router.GET("/deny", httpFormat.HandleDeny)
+
+	// Register middleware
+	s.router.Use(ContentLengthMiddleware())
+
 }
 
 func (s *Server) Run(addr string) error {
 	return s.router.Run(addr)
 }
+
+
 
