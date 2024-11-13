@@ -155,6 +155,17 @@ func (h *HttpFormat) HandleHtml(c *gin.Context) {
 	c.Data(http.StatusOK, "text/html", html)
 }	
 
+func (h *HttpFormat) HandleXML(c *gin.Context) {
+	xml, err := os.ReadFile("templates/demo.xml")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read HTML file"})
+		return
+	}
+
+	c.Header("Content-Type", "application/xml")
+	c.Data(http.StatusOK, "application/xml", xml)
+}	
+
 func (h *HttpFormat) HandleJson(c *gin.Context) {
 	json, err := os.ReadFile("templates/demo.json")
 	if err != nil {
@@ -182,4 +193,6 @@ func (h *HttpFormat) HandleRobotTxt(c *gin.Context) {
 	c.Header("Content-Type", "text/plain")
 	c.Data(http.StatusOK, "text/plain", []byte(utils.RobotTXT))
 }
+
+
 
