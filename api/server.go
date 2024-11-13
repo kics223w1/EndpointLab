@@ -28,6 +28,11 @@ func (s *Server) registerRoutes() {
 	s.router.PUT("/put", httpMethod.HandlePut)
 	s.router.DELETE("/delete", httpMethod.HandleDelete)
 	s.router.PATCH("/patch", httpMethod.HandlePatch)
+
+
+	// Status endpoint
+	httpStatus := NewHttpStatus()
+	s.router.GET("/status/:code", httpStatus.HandleStatus)
 }
 
 func (s *Server) Run(addr string) error {
