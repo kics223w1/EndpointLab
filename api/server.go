@@ -41,8 +41,10 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/deny", httpFormat.HandleDeny)
 	s.router.GET("/gzip", httpFormat.HandleGzip)
 	s.router.GET("/html", httpFormat.HandleHtml)
+	s.router.GET("/json", httpFormat.HandleJson)
 	s.router.GET("/encoding/utf8", httpFormat.handleUTF8)
-	
+
+
 	// Register middleware
 	s.router.Use(ContentLengthMiddleware())
 

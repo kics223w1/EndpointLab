@@ -145,7 +145,7 @@ func (h *HttpFormat) HandleDeny(c *gin.Context) {
 
 
 func (h *HttpFormat) HandleHtml(c *gin.Context) {
-	html, err := os.ReadFile("templates/sample.html")
+	html, err := os.ReadFile("templates/demo.html")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read HTML file"})
 		return
@@ -154,6 +154,17 @@ func (h *HttpFormat) HandleHtml(c *gin.Context) {
 	c.Header("Content-Type", "text/html")
 	c.Data(http.StatusOK, "text/html", html)
 }	
+
+func (h *HttpFormat) HandleJson(c *gin.Context) {
+	json, err := os.ReadFile("templates/demo.json")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read JSON file"})
+		return
+	}
+
+	c.Header("Content-Type", "application/json")
+	c.Data(http.StatusOK, "application/json", json)
+}
 
 func (h *HttpFormat) handleUTF8(c *gin.Context) {
 	html, err := os.ReadFile("templates/UTF-8-demo.txt")
