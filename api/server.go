@@ -55,6 +55,7 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/image/png", httpImage.HandleImagePNG)
 	s.router.GET("/image/jpeg", httpImage.HandleImageJPEG)
 	s.router.GET("/image/svg", httpImage.HandleImageSVG)
+	s.router.GET("/image/webp", httpImage.HandleImageWebp)
 }
 
 func (s *Server) Run(addr string) error {

@@ -73,3 +73,17 @@ func (h *HttpImage) HandleImageSVG(c *gin.Context) {
 }
 
 
+func (h *HttpImage) HandleImageWebp(c *gin.Context) {
+	imagePath := "templates/images/wolf_1.webp"
+	image, err := os.ReadFile(imagePath)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read image file"})
+		return
+	}
+
+	c.Header("Content-Type", "image/webp")
+	c.Header("Content-Length", fmt.Sprint(len(image)))
+	c.Header("Cache-Control", "public, max-age=31536000")
+	c.Data(http.StatusOK, "image/webp", image)
+}
+
