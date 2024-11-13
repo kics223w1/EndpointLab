@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"endpointlab/utils"
 	"net/http"
+	"os"
 
 	"compress/gzip"
 
@@ -142,6 +143,17 @@ func (h *HttpFormat) HandleDeny(c *gin.Context) {
 	c.Data(http.StatusOK, "text/plain", []byte(utils.AngryASCII))
 }
 
+
+func (h *HttpFormat) HandleHtml(c *gin.Context) {
+	html, err := os.ReadFile("htmls/sample.html")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read HTML file"})
+		return
+	}
+
+	c.Header("Content-Type", "text/html")
+	c.Data(http.StatusOK, "text/html", html)
+}	
 
 
 

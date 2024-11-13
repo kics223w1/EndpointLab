@@ -39,6 +39,8 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/brotli", httpFormat.HandleBrotli)
 	s.router.GET("/deflate", httpFormat.HandleDeflate)
 	s.router.GET("/deny", httpFormat.HandleDeny)
+	s.router.GET("/gzip", httpFormat.HandleGzip)
+	s.router.GET("/html", httpFormat.HandleHtml)
 
 	// Register middleware
 	s.router.Use(ContentLengthMiddleware())
