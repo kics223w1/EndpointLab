@@ -44,5 +44,19 @@ func (h *HttpImage) HandleImagePNG(c *gin.Context) {
 	c.Data(http.StatusOK, "image/png", image)
 }
 
+func (h *HttpImage) HandleImageJPEG(c *gin.Context) {
+	imagePath := "templates/images/jackal.jpg"
+	image, err := os.ReadFile(imagePath)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read image file"})
+		return
+	}
+
+	c.Header("Content-Type", "image/jpeg")
+	c.Header("Content-Length", fmt.Sprint(len(image)))
+	c.Header("Cache-Control", "public, max-age=31536000")
+	c.Data(http.StatusOK, "image/jpeg", image)
+}
+
 
 
