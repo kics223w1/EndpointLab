@@ -32,7 +32,7 @@ func (s *Server) registerRoutes() {
 
 	// Status endpoint
 	httpStatus := NewHttpStatus()
-	s.router.GET("/status/:code", httpStatus.HandleStatus)
+	s.router.Any("/status/:code", httpStatus.HandleStatus)
 }
 
 func (s *Server) Run(addr string) error {
