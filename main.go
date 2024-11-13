@@ -11,9 +11,10 @@ func main() {
 
 	// Basic HTTP method endpoints
 	router.GET("/get", handlers.HandleGet)
-	router.POST("/post", handlers.HandleGet)
+	router.POST("/post", handlers.HandlePost)
 	router.PUT("/put", handlers.HandlePut)
 	router.DELETE("/delete", handlers.HandleDelete)
+	router.PATCH("/patch", handlers.HandlePatch)
 	
 	// Response format endpoints
 	// router.GET("/ip", handlers.HandleIP)
