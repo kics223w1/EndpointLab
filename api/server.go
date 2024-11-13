@@ -21,6 +21,9 @@ func NewServer() (*Server, error) {
 }
 
 func (s *Server) registerRoutes() {
+	// Register middleware
+	// s.router.Use(ContentLengthMiddleware())
+
 	// Basic HTTP method endpoints
 	httpMethod := NewHttpMethod()
 	s.router.GET("/get", httpMethod.HandleGet)
@@ -45,9 +48,11 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/encoding/utf8", httpFormat.handleUTF8)
 	s.router.GET("/robots.txt", httpFormat.HandleRobotTxt)
 	s.router.GET("/xml", httpFormat.HandleXML)
-	// Register middleware
-	s.router.Use(ContentLengthMiddleware())
 
+	// Images
+	httpImage := NewHttpImage()
+	s.router.GET("/image", httpImage.HandleImage)
+	s.router.GET("/image/png", httpImage.HandleImagePNG)
 }
 
 func (s *Server) Run(addr string) error {
