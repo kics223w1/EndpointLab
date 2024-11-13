@@ -58,5 +58,18 @@ func (h *HttpImage) HandleImageJPEG(c *gin.Context) {
 	c.Data(http.StatusOK, "image/jpeg", image)
 }
 
+func (h *HttpImage) HandleImageSVG(c *gin.Context) {
+	imagePath := "templates/images/svg_logo.svg"
+	image, err := os.ReadFile(imagePath)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read image file"})
+		return
+	}
+
+	c.Header("Content-Type", "image/svg+xml")
+	c.Header("Content-Length", fmt.Sprint(len(image)))
+	c.Header("Cache-Control", "public, max-age=31536000")
+	c.Data(http.StatusOK, "image/svg+xml", image)
+}
 
 
