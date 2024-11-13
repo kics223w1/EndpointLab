@@ -1,13 +1,17 @@
-package handlers
+package api
 
 import (
+	"endpointlab/utils"
 	"net/http"
-	"net/url"
 
 	"github.com/gin-gonic/gin"
 )
 
-type HTTPResponse struct {
+type HttpMethod struct {
+
+}
+
+type HTTPMethodResponse struct {
 	Args    map[string]string `json:"args"`
 	Data    string             `json:"data,omitempty"`
 	Files   map[string]string  `json:"files,omitempty"`
@@ -19,36 +23,21 @@ type HTTPResponse struct {
 	Method  string             `json:"method"`
 }
 
-func convertHeaders(header http.Header) map[string]string {
-	headers := make(map[string]string)
-	for key, values := range header {
-		if len(values) > 0 && len(values) == 1 {
-			headers[key] = values[0]
-		}
-	}
-	return headers
+func NewHttpMethod() *HttpMethod {
+	return &HttpMethod{}
 }
 
-func convertQuery(query url.Values) map[string]string {
-	queries := make(map[string]string)
-	for key, values := range query {    
-		if len(values) > 0 && len(values) == 1 {
-			queries[key] = values[0]
-            }
-      }
-      return queries
-}
 
-func HandleGet(c *gin.Context) {
+func (h *HttpMethod) HandleGet(c *gin.Context) {
 	scheme := "http"
 	if c.Request.TLS != nil {
 		scheme = "https"
 	}
 	fullURL := scheme + "://" + c.Request.Host + c.Request.URL.String()
 	
-	response := HTTPResponse{
-		Args:    convertQuery(c.Request.URL.Query()),
-		Headers: convertHeaders(c.Request.Header),
+	response := HTTPMethodResponse{
+		Args:    utils.ConvertQuery(c.Request.URL.Query()),
+		Headers: utils.ConvertHeaders(c.Request.Header),
 		JSON:    nil,
 		Origin:  c.ClientIP(),
 		URL:     fullURL,
@@ -57,13 +46,14 @@ func HandleGet(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func HandlePost(c *gin.Context) {
-	response := HTTPResponse{
-		Args:   convertQuery(c.Request.URL.Query()),
+
+func (h *HttpMethod) HandlePost(c *gin.Context) {
+	response := HTTPMethodResponse{
+		Args:   utils.ConvertQuery(c.Request.URL.Query()),
 		Data:    "",
 		Files:   make(map[string]string),
 		Form:    make(map[string]string),
-		Headers: convertHeaders(c.Request.Header),
+		Headers: utils.ConvertHeaders(c.Request.Header),
 		JSON:    nil,
 		Origin:  c.ClientIP(),
 		URL:     c.Request.URL.String(),
@@ -72,13 +62,13 @@ func HandlePost(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func HandlePut(c *gin.Context) {
-	response := HTTPResponse{
-		Args:    convertQuery(c.Request.URL.Query()),
+func (h *HttpMethod) HandlePut(c *gin.Context) {
+	response := HTTPMethodResponse{
+		Args:    utils.ConvertQuery(c.Request.URL.Query()),
 		Data:    "",
 		Files:   make(map[string]string),
 		Form:    make(map[string]string),
-		Headers: convertHeaders(c.Request.Header),
+		Headers: utils.ConvertHeaders(c.Request.Header),
 		JSON:    nil,
 		Origin:  c.ClientIP(),
 		URL:     c.Request.URL.String(),
@@ -87,13 +77,13 @@ func HandlePut(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func HandleDelete(c *gin.Context) {
-	response := HTTPResponse{
-		Args:   convertQuery(c.Request.URL.Query()),
+func (h *HttpMethod) HandleDelete(c *gin.Context) {
+	response := HTTPMethodResponse{
+		Args:   utils.ConvertQuery(c.Request.URL.Query()),
 		Data:    "",
 		Files:   make(map[string]string),
 		Form:    make(map[string]string),
-		Headers: convertHeaders(c.Request.Header),
+		Headers: utils.ConvertHeaders(c.Request.Header),
 		JSON:    nil,
 		Origin:  c.ClientIP(),
 		URL:     c.Request.URL.String(),
@@ -102,13 +92,13 @@ func HandleDelete(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func HandlePatch(c *gin.Context) {
-	response := HTTPResponse{
-		Args:   convertQuery(c.Request.URL.Query()),
+func (h *HttpMethod) HandlePatch(c *gin.Context) {
+	response := HTTPMethodResponse{
+		Args:   utils.ConvertQuery(c.Request.URL.Query()),
 		Data:    "",
 		Files:   make(map[string]string),
 		Form:    make(map[string]string),
-		Headers: convertHeaders(c.Request.Header),
+		Headers: utils.ConvertHeaders(c.Request.Header),
 		JSON:    nil,
 		Origin:  c.ClientIP(),
 		URL:     c.Request.URL.String(),
