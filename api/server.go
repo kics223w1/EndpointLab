@@ -72,6 +72,10 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/stream-bytes/:n", httpDynamic.HandleStreamBytes)
 	s.router.GET("/stream/:n", httpDynamic.HandleStream)
 	s.router.GET("/uuid", httpDynamic.HandleUuid)
+
+	// Cookies
+	httpCookies := NewCookies()
+	s.router.GET("/cookies", httpCookies.HandleCookies)
 }
 
 func (s *Server) Run(addr string) error {
