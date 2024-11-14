@@ -60,6 +60,10 @@ func (s *Server) registerRoutes() {
 	// Anything
 	httpAnything := NewHttpAnything()
 	s.router.Any("/anything", httpAnything.HandleAnything)
+
+	// Dynamic
+	httpDynamic := NewDynamic()
+	s.router.GET("/base64/:value", httpDynamic.HandleBase64)
 }
 
 func (s *Server) Run(addr string) error {
