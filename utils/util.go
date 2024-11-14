@@ -3,6 +3,9 @@ package utils
 import (
 	"net/http"
 	"net/url"
+	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
 
 func ConvertHeaders(header http.Header) map[string]string {
@@ -23,4 +26,13 @@ func ConvertQuery(query url.Values) map[string]string {
             }
       }
       return queries
+}
+
+
+func GetQueryInt(c *gin.Context, key string, defaultValue int) int {
+	value, err := strconv.Atoi(c.Query(key))
+	if err != nil {
+		return defaultValue
+	}
+	return value
 }

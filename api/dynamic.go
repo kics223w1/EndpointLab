@@ -88,7 +88,47 @@ func (d *Dynamic) HandleDeplay(c *gin.Context) {
 }
 
 func (d *Dynamic) HandleDrip(c *gin.Context) {
+	// Parse query parameters with defaults
+	duration := utils.GetQueryInt(c, "duration", 2)
+	numbytes := utils.GetQueryInt(c, "numbytes", 10)
+	code := utils.GetQueryInt(c, "code", 200)
+	delay := utils.GetQueryInt(c, "delay", 2)
 
+	// Validate parameters
+	if duration <= 0 || numbytes <= 0 || delay < 0 {
+		c.String(http.StatusBadRequest, "Invalid parameters")
+		return
+	}
+
+	// Apply initial delay
+	time.Sleep(time.Duration(delay) * time.Second)
+
+	// Calculate delay between drips
+	chunks := 2
+	bytesPerChunk := numbytes / chunks
+	delayPerChunk := duration / chunks
+
+	// Set headers for chunked transfer
+	c.Header("Content-Type", "application/octet-stream")
+	c.Header("Content-Length", strconv.Itoa(numbytes))
+
+	// Start chunked response
+	c.Status(code)
+
+	for i := 0; i < chunks; i++ {
+		// Generate random bytes for this chunk
+		chunk := make([]byte, bytesPerChunk)
+		rand.Read(chunk)
+
+		// Write chunk
+		c.Writer.Write(chunk)
+		c.Writer.Flush()
+
+		// Wait before next chunk (except for last iteration)
+		if i < chunks-1 {
+			time.Sleep(time.Duration(delayPerChunk) * time.Second)
+		}
+	}
 }
 
 func (d *Dynamic) HandleLinks(c *gin.Context) {

@@ -66,6 +66,7 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/base64/:value", httpDynamic.HandleBase64)
 	s.router.GET("/bytes/:n", httpDynamic.HandleBytes)
 	s.router.Any("/delay/:delay", httpDynamic.HandleDeplay)
+	s.router.Any("/drip", httpDynamic.HandleDrip)
 }
 
 func (s *Server) Run(addr string) error {
