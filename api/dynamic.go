@@ -167,7 +167,58 @@ func (d *Dynamic) HandleLinks(c *gin.Context) {
 }
 
 func (d *Dynamic) HandleRange(c *gin.Context) {
+	// Get number of bytes from URL parameter
+	numbytes := c.Param("numbytes")
+	n, err := strconv.Atoi(numbytes)
+	if err != nil || n <= 0 {
+		c.String(http.StatusBadRequest, "Invalid number of bytes")
+		return
+	}
 
+	// Get optional query parameters
+	chunkSize := utils.GetQueryInt(c, "chunk_size", 10240) // Default 10KB chunks
+	duration := utils.GetQueryInt(c, "duration", 1)        // Default 1 second total duration
+
+	// Validate parameters
+	if chunkSize <= 0 || duration <= 0 {
+		c.String(http.StatusBadRequest, "Invalid chunk_size or duration")
+		return
+	}
+
+	// Calculate delay between chunks
+	totalChunks := (n + chunkSize - 1) / chunkSize // Round up division
+	delayBetweenChunks := time.Duration(duration) * time.Second / time.Duration(totalChunks)
+
+	// Set up streaming response
+	c.Header("Content-Type", "application/octet-stream")
+	c.Header("Content-Length", strconv.Itoa(n))
+	c.Status(http.StatusOK)
+
+	bytesRemaining := n
+	for bytesRemaining > 0 {
+		// Calculate size of next chunk
+		currentChunkSize := chunkSize
+		if bytesRemaining < chunkSize {
+			currentChunkSize = bytesRemaining
+		}
+
+		// Generate and write random bytes
+		chunk := make([]byte, currentChunkSize)
+		_, err := rand.Read(chunk)
+		if err != nil {
+			c.Status(http.StatusInternalServerError)
+			return
+		}
+		c.Writer.Write(chunk)
+		c.Writer.Flush()
+
+		bytesRemaining -= currentChunkSize
+
+		// Delay before next chunk (skip delay for last chunk)
+		if bytesRemaining > 0 {
+			time.Sleep(delayBetweenChunks)
+		}
+	}
 }
 
 func (d *Dynamic) HandleStreamBytes(c *gin.Context) {
