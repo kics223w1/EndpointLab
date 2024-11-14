@@ -50,7 +50,6 @@ func (h *HttpAnything) HandleAnything(c *gin.Context) {
 	c.JSON(200, response)
 }
 
-
 func getData(body io.ReadCloser , c *gin.Context) string {
 	if body == nil {
 		return ""

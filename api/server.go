@@ -37,6 +37,13 @@ func (s *Server) registerRoutes() {
 	httpStatus := NewHttpStatus()
 	s.router.Any("/status/:code", httpStatus.HandleStatus)
 
+
+	// Request inspection
+	httpReqInspection := NewReqInspection()
+	s.router.GET("/headers", httpReqInspection.HandleHeaders)
+	s.router.GET("/ip", httpReqInspection.HandleIP)
+	s.router.GET("/user-agent", httpReqInspection.HandleUserAgent)
+
 	// Format endpoint
 	httpFormat := NewHttpFormat()
 	s.router.GET("/brotli", httpFormat.HandleBrotli)
