@@ -3,8 +3,10 @@ package api
 import (
 	"crypto/rand"
 	"encoding/base64"
+	"endpointlab/utils"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -55,7 +57,34 @@ func (d *Dynamic) HandleBytes(c *gin.Context) {
 }
 
 func (d *Dynamic) HandleDeplay(c *gin.Context) {
+	delay := c.Param("delay")
+	delayInt, err := strconv.Atoi(delay)
+	if err != nil || delayInt < 0 {
+		c.String(http.StatusBadRequest, "Invalid delay value")
+		return
+	}
 
+	maxDelay := 10000
+	timeDelay := delayInt
+	if timeDelay > maxDelay {
+		timeDelay = maxDelay
+	}
+	
+	response := utils.HTTPResponse{
+		Args:    utils.ConvertQuery(c.Request.URL.Query()),
+		Data:    "",
+		Files:   map[string]string{},
+		Form:    map[string]string{},
+		Headers: utils.ConvertHeaders(c.Request.Header),
+		JSON:    nil,
+		Origin:  c.ClientIP(),
+		URL:     c.Request.URL.String(),
+		Method:  c.Request.Method,
+	}
+
+
+	time.Sleep(time.Duration(timeDelay) * time.Millisecond)
+	c.JSON(http.StatusOK, response)
 }
 
 func (d *Dynamic) HandleDrip(c *gin.Context) {
