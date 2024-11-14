@@ -1,8 +1,10 @@
 package api
 
 import (
+	"crypto/rand"
 	"encoding/base64"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,7 +33,25 @@ func (d *Dynamic) HandleBase64(c *gin.Context) {
 }
 
 func (d *Dynamic) HandleBytes(c *gin.Context) {
+	// Get the number of bytes from URL parameter
+	n := c.Param("n")
+	numBytes, err := strconv.Atoi(n)
+	if err != nil || numBytes < 0 {
+		c.String(http.StatusBadRequest, "Invalid number of bytes requested")
+		return
+	}
 
+	// Generate random bytes
+	randomBytes := make([]byte, numBytes)
+	_, err = rand.Read(randomBytes)
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Failed to generate random bytes")
+		return
+	}
+
+	// Set content type and send response
+	c.Header("Content-Type", "application/octet-stream")
+	c.Data(http.StatusOK, "application/octet-stream", randomBytes)
 }
 
 func (d *Dynamic) HandleDeplay(c *gin.Context) {
