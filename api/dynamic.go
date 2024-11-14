@@ -3,7 +3,8 @@ package api
 import (
 	cryptorand "crypto/rand"
 	"encoding/base64"
-	"endpointlab/utils"  // Add this import
+	"endpointlab/utils" // Add this import
+	"fmt"
 	mathrand "math/rand" // Update alias to match usage
 	"net/http"
 	"strconv"
@@ -325,5 +326,21 @@ func (d *Dynamic) HandleStream(c *gin.Context) {
 
 
 func (d *Dynamic) HandleUuid(c *gin.Context) {
+	// Generate 16 random bytes
+	uuid := make([]byte, 16)
+	_, err := cryptorand.Read(uuid)
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Failed to generate UUID")
+		return
+	}
 
+	// Set version (4) and variant (RFC 4122) bits
+	uuid[6] = (uuid[6] & 0x0f) | 0x40 // Version 4
+	uuid[8] = (uuid[8] & 0x3f) | 0x80 // Variant RFC 4122
+
+	// Format as UUID string
+	uuidStr := fmt.Sprintf("%x-%x-%x-%x-%x",
+		uuid[0:4], uuid[4:6], uuid[6:8], uuid[8:10], uuid[10:])
+
+	c.JSON(http.StatusOK, gin.H{"uuid": uuidStr})
 }
