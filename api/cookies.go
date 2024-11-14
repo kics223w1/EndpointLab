@@ -42,7 +42,15 @@ func (c *Cookies) HandleSetCookieWithParams(ctx *gin.Context) {
 }
 
 func (c *Cookies) HandleDeleteCookie(ctx *gin.Context) {
-
+	// Get the freeform value from query parameters
+	freeform := ctx.Query("freeform")
+	if freeform != "" {
+		// Set cookie with MaxAge = -1 to delete it
+		ctx.SetCookie("freeform", "", -1, "/", "", false, false)
+	}
+	
+	// Redirect to cookie list
+	ctx.Redirect(302, "/cookies")
 }
 
 
