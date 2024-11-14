@@ -1,9 +1,10 @@
 package api
 
 import (
-	"crypto/rand"
+	cryptorand "crypto/rand"
 	"encoding/base64"
-	"endpointlab/utils"
+	"endpointlab/utils"  // Add this import
+	mathrand "math/rand" // Update alias to match usage
 	"net/http"
 	"strconv"
 	"time"
@@ -45,7 +46,7 @@ func (d *Dynamic) HandleBytes(c *gin.Context) {
 
 	// Generate random bytes
 	randomBytes := make([]byte, numBytes)
-	_, err = rand.Read(randomBytes)
+	_, err = cryptorand.Read(randomBytes)
 	if err != nil {
 		c.String(http.StatusInternalServerError, "Failed to generate random bytes")
 		return
@@ -118,7 +119,7 @@ func (d *Dynamic) HandleDrip(c *gin.Context) {
 	for i := 0; i < chunks; i++ {
 		// Generate random bytes for this chunk
 		chunk := make([]byte, bytesPerChunk)
-		rand.Read(chunk)
+		cryptorand.Read(chunk)
 
 		// Write chunk
 		c.Writer.Write(chunk)
@@ -204,7 +205,7 @@ func (d *Dynamic) HandleRange(c *gin.Context) {
 
 		// Generate and write random bytes
 		chunk := make([]byte, currentChunkSize)
-		_, err := rand.Read(chunk)
+		_, err := cryptorand.Read(chunk)
 		if err != nil {
 			c.Status(http.StatusInternalServerError)
 			return
@@ -222,7 +223,53 @@ func (d *Dynamic) HandleRange(c *gin.Context) {
 }
 
 func (d *Dynamic) HandleStreamBytes(c *gin.Context) {
+	// Get number of bytes from URL parameter
+	n := c.Param("n")
+	numBytes, err := strconv.Atoi(n)
+	if err != nil || numBytes <= 0 {
+		c.String(http.StatusBadRequest, "Invalid number of bytes")
+		return
+	}
 
+	// Limit to 100KB like the Python version
+	if numBytes > 100*1024 {
+		numBytes = 100 * 1024
+	}
+
+	// Get optional query parameters
+	chunkSize := utils.GetQueryInt(c, "chunk_size", 10*1024) // Default 10KB chunks like Python
+	if chunkSize < 1 {
+		chunkSize = 1
+	}
+
+	// Set up random source
+	var randSource mathrand.Rand
+	if seed := utils.GetQueryInt(c, "seed", -1); seed != -1 {
+		randSource = *mathrand.New(mathrand.NewSource(int64(seed)))
+	} else {
+		randSource = *mathrand.New(mathrand.NewSource(time.Now().UnixNano()))
+	}
+
+	// Set up streaming response
+	c.Header("Content-Type", "application/octet-stream")
+	c.Status(http.StatusOK)
+
+	// Generate and stream bytes in chunks
+	chunks := make([]byte, 0, chunkSize)
+	for i := 0; i < numBytes; i++ {
+		chunks = append(chunks, byte(randSource.Intn(256)))
+		if len(chunks) == chunkSize {
+			c.Writer.Write(chunks)
+			c.Writer.Flush()
+			chunks = make([]byte, 0, chunkSize)
+		}
+	}
+
+	// Send any remaining bytes
+	if len(chunks) > 0 {
+		c.Writer.Write(chunks)
+		c.Writer.Flush()
+	}
 }
 
 func (d *Dynamic) HandleStream(c *gin.Context) {
