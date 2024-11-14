@@ -44,6 +44,14 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/ip", httpReqInspection.HandleIP)
 	s.router.GET("/user-agent", httpReqInspection.HandleUserAgent)
 
+	// Response inspection
+	httpResInspection := NewResInspection()
+	s.router.GET("/cache", httpResInspection.HandleCache)
+	s.router.GET("/cache/:value", httpResInspection.HandleCache)
+	s.router.GET("/etag/:etag", httpResInspection.HandleETag)
+	s.router.GET("/response-headers", httpResInspection.HandleResponseHeaders)
+	s.router.POST("/response-headers", httpResInspection.HandleResponseHeaders)
+
 	// Format endpoint
 	httpFormat := NewHttpFormat()
 	s.router.GET("/brotli", httpFormat.HandleBrotli)
