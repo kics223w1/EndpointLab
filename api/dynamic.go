@@ -15,6 +15,12 @@ import (
 type Dynamic struct {
 }
 
+type streamJSONResponse struct {
+	utils.HTTPResponse
+	ID int `json:"id"`
+}
+
+
 func NewDynamic() *Dynamic {
 	return &Dynamic{}
 }
@@ -273,8 +279,50 @@ func (d *Dynamic) HandleStreamBytes(c *gin.Context) {
 }
 
 func (d *Dynamic) HandleStream(c *gin.Context) {
+	// Parse number of responses from URL parameter
+	n := c.Param("n")
+	count, err := strconv.Atoi(n)
+	if err != nil || count <= 0 {
+		c.String(http.StatusBadRequest, "Invalid number of responses")
+		return
+	}
 
+	// Set headers for streaming JSON
+	c.Header("Content-Type", "application/json")
+	c.Header("Transfer-Encoding", "chunked")
+
+	
+
+	scheme := "http"
+	if c.Request.TLS != nil {
+		scheme = "https"
+	}
+	fullURL := scheme + "://" + c.Request.Host + c.Request.URL.String()
+
+	// Stream n responses
+	for i := 0; i < count; i++ {
+		response := streamJSONResponse{
+			HTTPResponse: utils.HTTPResponse{
+                Args:    utils.ConvertQuery(c.Request.URL.Query()),
+                Data:    "",
+                Files:   map[string]string{},
+                Form:    map[string]string{},
+                Headers: utils.ConvertHeaders(c.Request.Header),
+                JSON:    nil,
+                Origin:  c.ClientIP(),
+                URL:     fullURL,
+				Method:  c.Request.Method,
+			},
+			ID: i,
+		}
+
+		// Write each response as a separate JSON object
+		c.JSON(http.StatusOK, response)
+		c.Writer.Write([]byte("\n"))
+		c.Writer.Flush()
+	}
 }
+
 
 func (d *Dynamic) HandleUuid(c *gin.Context) {
 

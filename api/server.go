@@ -70,6 +70,8 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/links/:n/:offset", httpDynamic.HandleLinks)
 	s.router.GET("/range/:numbytes", httpDynamic.HandleRange)
 	s.router.GET("/stream-bytes/:n", httpDynamic.HandleStreamBytes)
+	s.router.GET("/stream/:n", httpDynamic.HandleStream)
+	s.router.GET("/uuid", httpDynamic.HandleUuid)
 }
 
 func (s *Server) Run(addr string) error {
