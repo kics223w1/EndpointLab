@@ -47,7 +47,7 @@ func (s *Server) registerRoutes() {
 	// Response inspection
 	httpResInspection := NewResInspection()
 	s.router.GET("/cache", httpResInspection.HandleCache)
-	s.router.GET("/cache/:value", httpResInspection.HandleCache)
+	s.router.GET("/cache/:value", httpResInspection.HandleCacheValue)
 	s.router.GET("/etag/:etag", httpResInspection.HandleETag)
 	s.router.GET("/response-headers", httpResInspection.HandleResponseHeaders)
 	s.router.POST("/response-headers", httpResInspection.HandleResponseHeaders)

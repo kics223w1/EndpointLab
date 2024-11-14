@@ -42,7 +42,28 @@ func (r *ResInspection) HandleCache(ctx *gin.Context) {
 }
 
 func (r *ResInspection) HandleCacheValue(ctx *gin.Context) {
+	// Get the value parameter from the URL
+	value := ctx.Param("value")
+	
+	// Set Cache-Control header
+	ctx.Header("Cache-Control", "public, max-age="+value)
+	
+	// Build the response as in HandleCache
+	scheme := "http"
+	if ctx.Request.TLS != nil {
+		scheme = "https"
+	}
+	fullURL := scheme + "://" + ctx.Request.Host + ctx.Request.URL.String()
 
+	response := HTTPMethodResponse{
+		Args:    utils.ConvertQuery(ctx.Request.URL.Query()),
+		Headers: utils.ConvertHeaders(ctx.Request.Header),
+		JSON:    nil,
+		Origin:  ctx.ClientIP(),
+		URL:     fullURL,
+		Method:  ctx.Request.Method,
+	}
+	ctx.JSON(http.StatusOK, response)
 }
 
 func (r *ResInspection) HandleETag(ctx *gin.Context) {
