@@ -76,6 +76,7 @@ func (s *Server) registerRoutes() {
 	// Cookies
 	httpCookies := NewCookies()
 	s.router.GET("/cookies", httpCookies.HandleCookies)
+	s.router.GET("/cookies/set", httpCookies.HandleSetCookie)
 }
 
 func (s *Server) Run(addr string) error {
