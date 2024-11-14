@@ -132,7 +132,38 @@ func (d *Dynamic) HandleDrip(c *gin.Context) {
 }
 
 func (d *Dynamic) HandleLinks(c *gin.Context) {
+	// Parse path parameters
+	n := c.Param("n")
+	offset := c.Param("offset")
+	
+	numLinks, err := strconv.Atoi(n)
+	if err != nil || numLinks < 0 {
+		c.String(http.StatusBadRequest, "Invalid number of links")
+		return
+	}
+	
+	offsetNum, err := strconv.Atoi(offset)
+	if err != nil || offsetNum < 0 {
+		c.String(http.StatusBadRequest, "Invalid offset")
+		return
+	}
 
+	// Build HTML response
+	html := "<html><head><title>Links</title></head><body>"
+	html += "<h1>Page " + offset + "</h1>"
+	
+	// Generate n links to next pages
+	for i := 1; i <= numLinks; i++ {
+		nextOffset := offsetNum + i
+		html += "<p><a href='/links/" + n + "/" + strconv.Itoa(nextOffset) + 
+			   "'>Link to page " + strconv.Itoa(nextOffset) + "</a></p>"
+	}
+	
+	html += "</body></html>"
+
+	// Send response with HTML content type
+	c.Header("Content-Type", "text/html")
+	c.String(http.StatusOK, html)
 }
 
 func (d *Dynamic) HandleRange(c *gin.Context) {
