@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -35,4 +36,24 @@ func GetQueryInt(c *gin.Context, key string, defaultValue int) int {
 		return defaultValue
 	}
 	return value
+}
+
+func ParseMultiValueHeader(header string) []string {
+    if header == "" {
+        return nil
+    }
+    
+    // Split by comma and trim whitespace and quotes
+    values := strings.Split(header, ",")
+    cleaned := make([]string, 0, len(values))
+    
+    for _, value := range values {
+        value = strings.TrimSpace(value)
+        value = strings.Trim(value, "\"")
+        if value != "" {
+            cleaned = append(cleaned, value)
+        }
+    }
+    
+    return cleaned
 }
