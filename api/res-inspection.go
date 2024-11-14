@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"endpointlab/utils"
 	"net/http"
 
@@ -117,5 +118,32 @@ func (r *ResInspection) HandleETag(ctx *gin.Context) {
 }
 
 func (r *ResInspection) HandleResponseHeaders(ctx *gin.Context) {
+	// Get only the "freeform" query parameters
+	freeformValues := ctx.Request.URL.Query()["freeform"]
+	
+	// Set response headers from freeform values
+	for _, value := range freeformValues {
+		ctx.Header("freeform", value)
+	}
 
+	// Set Content-Type header
+	ctx.Header("Content-Type", "application/json")
+
+	// Build response containing all response headers
+	headers := make(map[string]interface{})
+	for key := range ctx.Writer.Header() {
+		values := ctx.Writer.Header()[key]
+		if len(values) == 1 {
+			headers[key] = values[0]
+		} else {
+			headers[key] = values
+		}
+	}
+
+
+	// Convert response to JSON bytes to get content length
+	jsonData, _ := json.Marshal(headers)
+	headers["Content-Length"] = len(jsonData)
+
+	ctx.JSON(http.StatusOK, headers)
 }

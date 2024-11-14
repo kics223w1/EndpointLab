@@ -21,9 +21,6 @@ func NewServer() (*Server, error) {
 }
 
 func (s *Server) registerRoutes() {
-	// Register middleware
-	// s.router.Use(ContentLengthMiddleware())
-
 	// Basic HTTP method endpoints
 	httpMethod := NewHttpMethod()
 	s.router.GET("/get", httpMethod.HandleGet)
@@ -32,11 +29,9 @@ func (s *Server) registerRoutes() {
 	s.router.DELETE("/delete", httpMethod.HandleDelete)
 	s.router.PATCH("/patch", httpMethod.HandlePatch)
 
-
 	// Status endpoint
 	httpStatus := NewHttpStatus()
 	s.router.Any("/status/:code", httpStatus.HandleStatus)
-
 
 	// Request inspection
 	httpReqInspection := NewReqInspection()
