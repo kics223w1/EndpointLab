@@ -58,3 +58,23 @@ func (h *HttpRedirect) HandleRedirectTo(ctx *gin.Context) {
 
 	ctx.Redirect(statusCode, url)
 }
+
+func (h *HttpRedirect) HandleRedirect(ctx *gin.Context) {
+	// Get the number of redirects from path parameter
+	n := ctx.Param("n")
+	redirectCount, err := strconv.Atoi(n)
+	if err != nil || redirectCount <= 0 {
+		ctx.JSON(400, gin.H{"error": "Invalid redirect count"})
+		return
+	}
+
+	// If this is the final redirect, redirect to /get endpoint
+	if redirectCount == 1 {
+		ctx.Redirect(302, "/get")
+		return
+	}
+
+	// Construct next redirect URL with relative path
+	nextURL := fmt.Sprintf("/redirect/%d", redirectCount-1)
+	ctx.Redirect(302, nextURL)
+}
