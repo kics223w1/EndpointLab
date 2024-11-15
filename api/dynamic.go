@@ -13,7 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Dynamic struct {
+type HttpDynamic struct {
 }
 
 type streamJSONResponse struct {
@@ -22,12 +22,12 @@ type streamJSONResponse struct {
 }
 
 
-func NewDynamic() *Dynamic {
-	return &Dynamic{}
+func NewHttpDynamic() *HttpDynamic {
+	return &HttpDynamic{}
 }
 
 
-func (d *Dynamic) HandleBase64(c *gin.Context) {
+func (d *HttpDynamic) HandleBase64(c *gin.Context) {
 	// Get the base64 value from URL parameter
 	value := c.Param("value")
 	
@@ -42,7 +42,7 @@ func (d *Dynamic) HandleBase64(c *gin.Context) {
 	c.String(http.StatusOK, string(decoded))
 }
 
-func (d *Dynamic) HandleBytes(c *gin.Context) {
+func (d *HttpDynamic) HandleBytes(c *gin.Context) {
 	// Get the number of bytes from URL parameter
 	n := c.Param("n")
 	numBytes, err := strconv.Atoi(n)
@@ -64,7 +64,7 @@ func (d *Dynamic) HandleBytes(c *gin.Context) {
 	c.Data(http.StatusOK, "application/octet-stream", randomBytes)
 }
 
-func (d *Dynamic) HandleDeplay(c *gin.Context) {
+func (d *HttpDynamic) HandleDeplay(c *gin.Context) {
 	delay := c.Param("delay")
 	delayInt, err := strconv.Atoi(delay)
 	if err != nil || delayInt < 0 {
@@ -95,7 +95,7 @@ func (d *Dynamic) HandleDeplay(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (d *Dynamic) HandleDrip(c *gin.Context) {
+func (d *HttpDynamic) HandleDrip(c *gin.Context) {
 	// Parse query parameters with defaults
 	duration := utils.GetQueryInt(c, "duration", 2)
 	numbytes := utils.GetQueryInt(c, "numbytes", 10)
@@ -139,7 +139,7 @@ func (d *Dynamic) HandleDrip(c *gin.Context) {
 	}
 }
 
-func (d *Dynamic) HandleLinks(c *gin.Context) {
+func (d *HttpDynamic) HandleLinks(c *gin.Context) {
 	// Parse path parameters
 	n := c.Param("n")
 	offset := c.Param("offset")
@@ -174,7 +174,7 @@ func (d *Dynamic) HandleLinks(c *gin.Context) {
 	c.String(http.StatusOK, html)
 }
 
-func (d *Dynamic) HandleRange(c *gin.Context) {
+func (d *HttpDynamic) HandleRange(c *gin.Context) {
 	// Get number of bytes from URL parameter
 	numbytes := c.Param("numbytes")
 	n, err := strconv.Atoi(numbytes)
@@ -229,7 +229,7 @@ func (d *Dynamic) HandleRange(c *gin.Context) {
 	}
 }
 
-func (d *Dynamic) HandleStreamBytes(c *gin.Context) {
+func (d *HttpDynamic) HandleStreamBytes(c *gin.Context) {
 	// Get number of bytes from URL parameter
 	n := c.Param("n")
 	numBytes, err := strconv.Atoi(n)
@@ -279,7 +279,7 @@ func (d *Dynamic) HandleStreamBytes(c *gin.Context) {
 	}
 }
 
-func (d *Dynamic) HandleStream(c *gin.Context) {
+func (d *HttpDynamic) HandleStream(c *gin.Context) {
 	// Parse number of responses from URL parameter
 	n := c.Param("n")
 	count, err := strconv.Atoi(n)
@@ -325,7 +325,7 @@ func (d *Dynamic) HandleStream(c *gin.Context) {
 }
 
 
-func (d *Dynamic) HandleUuid(c *gin.Context) {
+func (d *HttpDynamic) HandleUuid(c *gin.Context) {
 	// Generate 16 random bytes
 	uuid := make([]byte, 16)
 	_, err := cryptorand.Read(uuid)

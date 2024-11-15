@@ -29,6 +29,11 @@ func (s *Server) registerRoutes() {
 	s.router.DELETE("/delete", httpMethod.HandleDelete)
 	s.router.PATCH("/patch", httpMethod.HandlePatch)
 
+	
+	// Auth endpoint
+	httpAuth := NewHttpAuth()
+	s.router.GET("/bearer", httpAuth.HandleBearer)
+
 	// Status endpoint
 	httpStatus := NewHttpStatus()
 	s.router.Any("/status/:code", httpStatus.HandleStatus)
@@ -72,7 +77,7 @@ func (s *Server) registerRoutes() {
 	s.router.Any("/anything", httpAnything.HandleAnything)
 
 	// Dynamic
-	httpDynamic := NewDynamic()
+	httpDynamic := NewHttpDynamic()
 	s.router.GET("/base64/:value", httpDynamic.HandleBase64)
 	s.router.GET("/bytes/:n", httpDynamic.HandleBytes)
 	s.router.Any("/delay/:delay", httpDynamic.HandleDeplay)
@@ -84,7 +89,7 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/uuid", httpDynamic.HandleUuid)
 
 	// Cookies
-	httpCookies := NewCookies()
+	httpCookies := 	NewHttpCookies()
 	s.router.GET("/cookies", httpCookies.HandleCookies)
 	s.router.GET("/cookies/set", httpCookies.HandleSetCookie)
 	s.router.GET("/cookies/set/:name/:value", httpCookies.HandleSetCookieWithParams)

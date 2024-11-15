@@ -2,20 +2,20 @@ package api
 
 import "github.com/gin-gonic/gin"
 
-type Cookies struct {}
+type HttpCookies struct {}
 
-func NewCookies() *Cookies {
-	return &Cookies{}
+func NewHttpCookies() *HttpCookies {
+	return &HttpCookies{}
 }
 
-func (c *Cookies) HandleCookies(ctx *gin.Context) {
+func (c *HttpCookies) HandleCookies(ctx *gin.Context) {
 	cookies := ctx.Request.Cookies()
 	ctx.JSON(200, gin.H{
 		"cookies": cookies,
 	})
 }
 
-func (c *Cookies) HandleSetCookie(ctx *gin.Context) {
+func (c *HttpCookies) HandleSetCookie(ctx *gin.Context) {
 	// Get the freeform value from query parameters
 	freeform := ctx.Query("freeform")
 	if freeform != "" {
@@ -26,7 +26,7 @@ func (c *Cookies) HandleSetCookie(ctx *gin.Context) {
 	ctx.Redirect(302, "/cookies")
 }
 
-func (c *Cookies) HandleSetCookieWithParams(ctx *gin.Context) {
+func (c *HttpCookies) HandleSetCookieWithParams(ctx *gin.Context) {
 	name := ctx.Param("name")
 	value := ctx.Param("value")
 
@@ -41,7 +41,7 @@ func (c *Cookies) HandleSetCookieWithParams(ctx *gin.Context) {
 	ctx.Redirect(302, "/cookies")
 }
 
-func (c *Cookies) HandleDeleteCookie(ctx *gin.Context) {
+func (c *HttpCookies) HandleDeleteCookie(ctx *gin.Context) {
 	// Get the freeform value from query parameters
 	freeform := ctx.Query("freeform")
 	if freeform != "" {
