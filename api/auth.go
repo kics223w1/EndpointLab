@@ -2,6 +2,8 @@ package api
 
 import (
 	"crypto/md5"
+	"crypto/sha256"
+	"crypto/sha512"
 	"encoding/hex"
 	"fmt"
 	"strings"
@@ -139,6 +141,130 @@ func (h *HttpAuth) HandleDigestAuth(ctx *gin.Context) {
 	})
 }
 
+func (h *HttpAuth) HandleDigestAuthAlgorithm(ctx *gin.Context) {
+	// Get parameters from URL
+	qop := ctx.Param("qop")
+	user := ctx.Param("user")
+	passwd := ctx.Param("passwd")
+	algorithm := ctx.Param("algorithm")
+
+	// Set defaults if not provided
+	if user == "" {
+		user = "user"
+	}
+	if passwd == "" {
+		passwd = "passwd"
+	}
+
+	// Validate qop parameter
+	if qop != "auth" && qop != "auth-int" {
+		ctx.AbortWithStatus(400)
+		return
+	}
+
+	// Validate and normalize algorithm
+	algorithm = strings.ToUpper(algorithm)
+	switch algorithm {
+	case "MD5", "SHA-256", "SHA-512":
+		// Valid algorithms
+	case "":
+		algorithm = "MD5" // Set default
+	default:
+		ctx.AbortWithStatus(400)
+		return
+	}
+
+	// Generate a static nonce to match Python implementation
+	nonce := "dcd98b7102dd2f0e8b11d0f600bfb0c093"
+	realm := "Authentication Required"
+	opaque := "5ccc069c403ebaf9f0171e9517f40e41"
+
+	// Get the Authorization header
+	authHeader := ctx.GetHeader("Authorization")
+	if authHeader == "" {
+		// If no Authorization header, send WWW-Authenticate header
+		ctx.Header("WWW-Authenticate", fmt.Sprintf(
+			`Digest realm="%s", qop="%s", nonce="%s", opaque="%s", algorithm="%s", stale=FALSE`,
+			realm, qop, nonce, opaque, algorithm))
+		ctx.AbortWithStatus(401)
+		return
+	}
+
+	// Parse the Digest Authorization header
+	params := parseDigestHeader(authHeader)
+	if params == nil {
+		ctx.AbortWithStatus(401)
+		return
+	}
+
+	// Verify the provided username matches
+	if params["username"] != user {
+		ctx.AbortWithStatus(401)
+		return
+	}
+
+	// Calculate HA1 based on algorithm
+	var ha1 string
+	baseString := fmt.Sprintf("%s:%s:%s", user, realm, passwd)
+	switch algorithm {
+	case "SHA-256":
+		ha1 = sha256hex(baseString)
+	case "SHA-512":
+		ha1 = sha512hex(baseString)
+	default: // MD5
+		ha1 = md5hex(baseString)
+	}
+
+	// Calculate HA2
+	ha2String := fmt.Sprintf("%s:%s", ctx.Request.Method, params["uri"])
+	var ha2 string
+	switch algorithm {
+	case "SHA-256":
+		ha2 = sha256hex(ha2String)
+	case "SHA-512":
+		ha2 = sha512hex(ha2String)
+	default: // MD5
+		ha2 = md5hex(ha2String)
+	}
+
+	// Calculate expected response
+	var expectedResponse string
+	if qop == "auth" {
+		responseString := fmt.Sprintf("%s:%s:%s:%s:%s:%s",
+			ha1, nonce, params["nc"], params["cnonce"], qop, ha2)
+		switch algorithm {
+		case "SHA-256":
+			expectedResponse = sha256hex(responseString)
+		case "SHA-512":
+			expectedResponse = sha512hex(responseString)
+		default: // MD5
+			expectedResponse = md5hex(responseString)
+		}
+	} else {
+		responseString := fmt.Sprintf("%s:%s:%s", ha1, nonce, ha2)
+		switch algorithm {
+		case "SHA-256":
+			expectedResponse = sha256hex(responseString)
+		case "SHA-512":
+			expectedResponse = sha512hex(responseString)
+		default: // MD5
+			expectedResponse = md5hex(responseString)
+		}
+	}
+
+	// Compare the response
+	if expectedResponse != params["response"] {
+		ctx.AbortWithStatus(401)
+		return
+	}
+
+	// If authentication is successful, return success response
+	ctx.JSON(200, gin.H{
+		"authenticated": true,
+		"user": user,
+	})
+}
+
 // Helper function to parse digest authorization header
 func parseDigestHeader(header string) map[string]string {
 	if !strings.HasPrefix(header, "Digest ") {
@@ -163,6 +289,18 @@ func parseDigestHeader(header string) map[string]string {
 // Helper function to calculate MD5 hex
 func md5hex(data string) string {
 	hash := md5.New()
+	hash.Write([]byte(data))
+	return hex.EncodeToString(hash.Sum(nil))
+}
+
+func sha256hex(data string) string {
+	hash := sha256.New()
+	hash.Write([]byte(data))
+	return hex.EncodeToString(hash.Sum(nil))
+}
+
+func sha512hex(data string) string {
+	hash := sha512.New()
 	hash.Write([]byte(data))
 	return hex.EncodeToString(hash.Sum(nil))
 }

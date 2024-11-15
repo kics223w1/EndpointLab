@@ -35,6 +35,8 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/bearer", httpAuth.HandleBearer)
 	s.router.GET("/basic-auth/:user/:passwd", httpAuth.HandleBasicAuth)
 	s.router.GET("/digest-auth/:qop/:user/:passwd", httpAuth.HandleDigestAuth)
+	s.router.GET("/digest-auth/:qop/:user/:passwd/:algorithm", httpAuth.HandleDigestAuthAlgorithm)
+	
 	// Status endpoint
 	httpStatus := NewHttpStatus()
 	s.router.Any("/status/:code", httpStatus.HandleStatus)
