@@ -37,6 +37,7 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/digest-auth/:qop/:user/:passwd", httpAuth.HandleDigestAuth)
 	s.router.GET("/digest-auth/:qop/:user/:passwd/:algorithm", httpAuth.HandleDigestAuthAlgorithm)
 	s.router.GET("/digest-auth/:qop/:user/:passwd/:algorithm/:stale_after", httpAuth.HandleDigestAuthStaleAfter)
+	s.router.GET("/hidden-basic-auth/:user/:passwd", httpAuth.HandleHiddenBasicAuth)
 
 	// Status endpoint
 	httpStatus := NewHttpStatus()

@@ -367,6 +367,28 @@ func (h *HttpAuth) HandleDigestAuthStaleAfter(ctx *gin.Context) {
 	})
 }
 
+func (h *HttpAuth) HandleHiddenBasicAuth(ctx *gin.Context) {
+	// Get user and password from URL parameters
+	user := ctx.Param("user")
+	passwd := ctx.Param("passwd")
+
+	// Get the credentials from the request's Basic Auth
+	providedUser, providedPass, ok := ctx.Request.BasicAuth()
+	
+	// If no auth provided or credentials don't match, return 404
+	// Note: We don't send WWW-Authenticate header to hide that auth is required
+	if !ok || providedUser != user || providedPass != passwd {
+		ctx.AbortWithStatus(404)
+		return
+	}
+
+	// If authentication is successful, return success response
+	ctx.JSON(200, gin.H{
+		"authenticated": true,
+		"user": user,
+	})
+}
+
 // Helper function to send challenge response
 func sendChallengeResponse(ctx *gin.Context, qop, algorithm string, stale bool, staleAfter string) {
 	nonce := "dcd98b7102dd2f0e8b11d0f600bfb0c093"
