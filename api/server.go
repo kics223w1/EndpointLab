@@ -103,6 +103,7 @@ func (s *Server) registerRoutes() {
 	// Redirects
 	httpRedirects := NewHttpRedirect()
 	s.router.GET("/absolute-redirect/:n", httpRedirects.HandleAbsoluteRedirect)
+	s.router.Any("/redirect-to", httpRedirects.HandleRedirectTo)
 }
 
 func (s *Server) Run(addr string) error {

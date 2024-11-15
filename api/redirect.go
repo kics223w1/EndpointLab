@@ -39,3 +39,22 @@ func (h *HttpRedirect) HandleAbsoluteRedirect(ctx *gin.Context) {
 	nextURL := fmt.Sprintf("%s://%s/absolute-redirect/%d", scheme, host, redirectCount-1)
 	ctx.Redirect(302, nextURL)
 }
+
+func (h *HttpRedirect) HandleRedirectTo(ctx *gin.Context) {
+	// Get URL from form body
+	url := ctx.Request.FormValue("url")
+	if url == "" {
+		ctx.JSON(400, gin.H{"error": "URL is required"})
+		return
+	}
+
+	// Parse status code, default to 302 if not provided or invalid
+	statusCode := 302
+	if code := ctx.Request.FormValue("status_code"); code != "" {
+		if parsed, err := strconv.Atoi(code); err == nil && parsed >= 300 && parsed < 400 {
+				statusCode = parsed
+		}
+	}
+
+	ctx.Redirect(statusCode, url)
+}
