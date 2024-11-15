@@ -99,6 +99,10 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/cookies/set", httpCookies.HandleSetCookie)
 	s.router.GET("/cookies/set/:name/:value", httpCookies.HandleSetCookieWithParams)
 	s.router.GET("/cookies/delete", httpCookies.HandleDeleteCookie)
+
+	// Redirects
+	httpRedirects := NewHttpRedirect()
+	s.router.GET("/absolute-redirect/:n", httpRedirects.HandleAbsoluteRedirect)
 }
 
 func (s *Server) Run(addr string) error {
