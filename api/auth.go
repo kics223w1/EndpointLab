@@ -6,6 +6,7 @@ import (
 	"crypto/sha512"
 	"encoding/hex"
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -263,6 +264,203 @@ func (h *HttpAuth) HandleDigestAuthAlgorithm(ctx *gin.Context) {
 		"authenticated": true,
 		"user": user,
 	})
+}
+
+func (h *HttpAuth) HandleDigestAuthStaleAfter(ctx *gin.Context) {
+	// Get parameters from URL
+	qop := ctx.Param("qop")
+	user := ctx.Param("user")
+	passwd := ctx.Param("passwd")
+	algorithm := ctx.Param("algorithm")
+	staleAfter := ctx.Param("stale_after")
+
+	// Get cookie requirement from query params
+	requireCookie := strings.ToLower(ctx.Query("require-cookie"))
+	cookieRequired := requireCookie == "1" || requireCookie == "t" || requireCookie == "true"
+
+	// Set defaults and validate parameters
+	if user == "" {
+		user = "user"
+	}
+	if passwd == "" {
+		passwd = "passwd"
+	}
+	if algorithm == "" {
+		algorithm = "MD5"
+	}
+	if staleAfter == "" {
+		staleAfter = "never"
+	}
+
+	// Validate qop parameter
+	if qop != "auth" && qop != "auth-int" {
+		qop = ""
+	}
+
+	// Validate algorithm
+	algorithm = strings.ToUpper(algorithm)
+	switch algorithm {
+	case "MD5", "SHA-256", "SHA-512":
+		// Valid algorithms
+	default:
+		algorithm = "MD5"
+	}
+
+	// Get the Authorization header
+	authHeader := ctx.GetHeader("Authorization")
+
+	// Check cookie requirement
+	if cookieRequired && ctx.GetHeader("Cookie") == "" {
+		sendChallengeResponse(ctx, qop, algorithm, false, staleAfter)
+		return
+	}
+
+	// If no valid authorization, send challenge
+	if authHeader == "" {
+		sendChallengeResponse(ctx, qop, algorithm, false, staleAfter)
+		return
+	}
+
+	// Parse the Digest Authorization header
+	params := parseDigestHeader(authHeader)
+	if params == nil {
+		sendChallengeResponse(ctx, qop, algorithm, false, staleAfter)
+		return
+	}
+
+	// Check for required cookie
+	fakeValue, _ := ctx.Cookie("fake")
+	if cookieRequired && fakeValue != "fake_value" {
+		ctx.SetCookie("fake", "fake_value", 3600, "/", "", false, true)
+		ctx.JSON(403, gin.H{"errors": []string{"missing cookie set on challenge"}})
+		return
+	}
+
+	currentNonce := params["nonce"]
+	lastNonce, _ := ctx.Cookie("last_nonce")
+	storedStaleAfter, _ := ctx.Cookie("stale_after")
+
+	// Check if nonce is stale
+	if (lastNonce != "" && currentNonce == lastNonce) || storedStaleAfter == "0" {
+		sendChallengeResponse(ctx, qop, algorithm, true, staleAfter)
+		ctx.SetCookie("last_nonce", currentNonce, 3600, "/", "", false, true)
+		return
+	}
+
+	// Verify the credentials
+	if !verifyDigestAuth(ctx, params, user, passwd, algorithm, qop) {
+		sendChallengeResponse(ctx, qop, algorithm, false, staleAfter)
+		ctx.SetCookie("last_nonce", currentNonce, 3600, "/", "", false, true)
+		return
+	}
+
+	// Successful authentication
+	ctx.SetCookie("fake", "fake_value", 3600, "/", "", false, true)
+	if storedStaleAfter != "" {
+		nextStaleAfter := calculateNextStaleAfter(storedStaleAfter)
+		ctx.SetCookie("stale_after", nextStaleAfter, 3600, "/", "", false, true)
+	}
+
+	ctx.JSON(200, gin.H{
+		"authenticated": true,
+		"user":         user,
+	})
+}
+
+// Helper function to send challenge response
+func sendChallengeResponse(ctx *gin.Context, qop, algorithm string, stale bool, staleAfter string) {
+	nonce := "dcd98b7102dd2f0e8b11d0f600bfb0c093"
+	realm := "Authentication Required"
+	opaque := "5ccc069c403ebaf9f0171e9517f40e41"
+
+	ctx.Header("WWW-Authenticate", fmt.Sprintf(
+		`Digest realm="%s", qop="%s", nonce="%s", opaque="%s", algorithm="%s", stale=%t`,
+		realm, qop, nonce, opaque, algorithm, stale))
+	
+	ctx.SetCookie("stale_after", staleAfter, 3600, "/", "", false, true)
+	ctx.SetCookie("fake", "fake_value", 3600, "/", "", false, true)
+	
+	ctx.AbortWithStatus(401)
+}
+
+// Helper function to calculate next stale_after value
+func calculateNextStaleAfter(current string) string {
+	if current == "never" {
+		return "never"
+	}
+	
+	val, err := strconv.Atoi(current)
+	if err != nil {
+		return current
+	}
+	
+	if val <= 0 {
+		return "0"
+	}
+	
+	return strconv.Itoa(val - 1)
+}
+
+// Helper function to verify digest auth credentials
+func verifyDigestAuth(ctx *gin.Context, params map[string]string, user, passwd, algorithm, qop string) bool {
+	realm := "Authentication Required"
+	nonce := "dcd98b7102dd2f0e8b11d0f600bfb0c093"
+
+	// Verify username
+	if params["username"] != user {
+		return false
+	}
+
+	// Calculate HA1
+	var ha1 string
+	baseString := fmt.Sprintf("%s:%s:%s", user, realm, passwd)
+	switch algorithm {
+	case "SHA-256":
+		ha1 = sha256hex(baseString)
+	case "SHA-512":
+		ha1 = sha512hex(baseString)
+	default:
+		ha1 = md5hex(baseString)
+	}
+
+	// Calculate HA2
+	ha2String := fmt.Sprintf("%s:%s", ctx.Request.Method, params["uri"])
+	var ha2 string
+	switch algorithm {
+	case "SHA-256":
+		ha2 = sha256hex(ha2String)
+	case "SHA-512":
+		ha2 = sha512hex(ha2String)
+	default:
+		ha2 = md5hex(ha2String)
+	}
+
+	// Calculate expected response
+	var expectedResponse string
+	if qop == "auth" {
+		responseString := fmt.Sprintf("%s:%s:%s:%s:%s:%s",
+			ha1, nonce, params["nc"], params["cnonce"], qop, ha2)
+		switch algorithm {
+		case "SHA-256":
+			expectedResponse = sha256hex(responseString)
+		case "SHA-512":
+			expectedResponse = sha512hex(responseString)
+		default:
+			expectedResponse = md5hex(responseString)
+		}
+	} else {
+		responseString := fmt.Sprintf("%s:%s:%s", ha1, nonce, ha2)
+		switch algorithm {
+		case "SHA-256":
+			expectedResponse = sha256hex(responseString)
+		case "SHA-512":
+			expectedResponse = sha512hex(responseString)
+		default:
+			expectedResponse = md5hex(responseString)
+		}
+	}
+
+	return expectedResponse == params["response"]
 }
 
 // Helper function to parse digest authorization header
