@@ -37,3 +37,40 @@ func (h *HttpAuth) HandleBearer(ctx *gin.Context) {
 	ctx.JSON(200, gin.H{"token": token, "authenticated": true})
 }
 
+func (h *HttpAuth) HandleBasicAuth(ctx *gin.Context) {
+	// Get user and password from URL parameters
+	user := ctx.Param("user")
+	passwd := ctx.Param("passwd")
+
+	// Get the Authorization header
+	authHeader := ctx.GetHeader("Authorization")
+
+	// If no Authorization header is present, return 401 Unauthorized
+	if authHeader == "" {
+		ctx.Header("WWW-Authenticate", `Basic realm="Authorization Required"`)
+		ctx.AbortWithStatus(401)
+		return
+	}
+
+	// Get the credentials from the request's Basic Auth
+	providedUser, providedPass, ok := ctx.Request.BasicAuth()
+	if !ok {
+		ctx.Header("WWW-Authenticate", `Basic realm="Authorization Required"`)
+		ctx.AbortWithStatus(401)
+		return
+	}
+
+	// Compare the provided credentials with expected values
+	if providedUser != user || providedPass != passwd {
+		ctx.Header("WWW-Authenticate", `Basic realm="Authorization Required"`)
+		ctx.AbortWithStatus(401)
+		return
+	}
+
+	// If authentication is successful, return success response
+	ctx.JSON(200, gin.H{
+		"authenticated": true,
+		"user": user,
+	})
+}
+

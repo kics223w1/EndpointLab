@@ -33,6 +33,7 @@ func (s *Server) registerRoutes() {
 	// Auth endpoint
 	httpAuth := NewHttpAuth()
 	s.router.GET("/bearer", httpAuth.HandleBearer)
+	s.router.GET("/basic-auth/:user/:passwd", httpAuth.HandleBasicAuth)
 
 	// Status endpoint
 	httpStatus := NewHttpStatus()
