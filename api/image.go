@@ -9,17 +9,28 @@ import (
 )
 
 type HttpImage struct {
+	imagePath string
 }
 
 func NewHttpImage() *HttpImage {
-	return &HttpImage{}
+	basePath := os.Getenv("IMAGE_PATH")
+	if basePath == "" {
+		basePath = "templates/images"
+	}
+	return &HttpImage{imagePath: basePath}
 }
 
 func (h *HttpImage) HandleImage(c *gin.Context) {
-	imagePath := "templates/images/wolf_1.webp"
+	imagePath := fmt.Sprintf("%s/wolf_1.webp", h.imagePath)
+	
+	if _, err := os.Stat(imagePath); os.IsNotExist(err) {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Image not found at path: %s", imagePath)})
+		return
+	}
+	
 	image, err := os.ReadFile(imagePath)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read image file"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to read image file: %v", err)})
 		return
 	}
 
@@ -29,12 +40,17 @@ func (h *HttpImage) HandleImage(c *gin.Context) {
 	c.Data(http.StatusOK, "image/webp", image)
 }
 
-
 func (h *HttpImage) HandleImagePNG(c *gin.Context) {
-	imagePath := "templates/images/pig_icon.png"
+	imagePath := fmt.Sprintf("%s/pig_icon.png", h.imagePath)
+	
+	if _, err := os.Stat(imagePath); os.IsNotExist(err) {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Image not found at path: %s", imagePath)})
+		return
+	}
+	
 	image, err := os.ReadFile(imagePath)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read image file"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to read image file: %v", err)})
 		return
 	}
 
@@ -45,10 +61,16 @@ func (h *HttpImage) HandleImagePNG(c *gin.Context) {
 }
 
 func (h *HttpImage) HandleImageJPEG(c *gin.Context) {
-	imagePath := "templates/images/jackal.jpg"
+	imagePath := fmt.Sprintf("%s/jackal.jpg", h.imagePath)
+	
+	if _, err := os.Stat(imagePath); os.IsNotExist(err) {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Image not found at path: %s", imagePath)})
+		return
+	}
+	
 	image, err := os.ReadFile(imagePath)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read image file"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to read image file: %v", err)})
 		return
 	}
 
@@ -59,10 +81,16 @@ func (h *HttpImage) HandleImageJPEG(c *gin.Context) {
 }
 
 func (h *HttpImage) HandleImageSVG(c *gin.Context) {
-	imagePath := "templates/images/svg_logo.svg"
+	imagePath := fmt.Sprintf("%s/svg_logo.svg", h.imagePath)
+	
+	if _, err := os.Stat(imagePath); os.IsNotExist(err) {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Image not found at path: %s", imagePath)})
+		return
+	}
+	
 	image, err := os.ReadFile(imagePath)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read image file"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to read image file: %v", err)})
 		return
 	}
 
@@ -72,12 +100,17 @@ func (h *HttpImage) HandleImageSVG(c *gin.Context) {
 	c.Data(http.StatusOK, "image/svg+xml", image)
 }
 
-
 func (h *HttpImage) HandleImageWebp(c *gin.Context) {
-	imagePath := "templates/images/wolf_1.webp"
+	imagePath := fmt.Sprintf("%s/wolf_1.webp", h.imagePath)
+	
+	if _, err := os.Stat(imagePath); os.IsNotExist(err) {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Image not found at path: %s", imagePath)})
+		return
+	}
+	
 	image, err := os.ReadFile(imagePath)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read image file"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to read image file: %v", err)})
 		return
 	}
 
