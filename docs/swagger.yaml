@@ -11,6 +11,105 @@ info:
   title: EndpointLab
   version: "1.0"
 paths:
+  /anything:
+    delete:
+      consumes:
+      - application/json
+      description: Return anything that is passed to the request
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Returns anything that is passed to request
+      tags:
+      - Anything
+    get:
+      consumes:
+      - application/json
+      description: Return anything that is passed to the request
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Returns anything that is passed to request
+      tags:
+      - Anything
+    head:
+      consumes:
+      - application/json
+      description: Return anything that is passed to the request
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Returns anything that is passed to request
+      tags:
+      - Anything
+    options:
+      consumes:
+      - application/json
+      description: Return anything that is passed to the request
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Returns anything that is passed to request
+      tags:
+      - Anything
+    patch:
+      consumes:
+      - application/json
+      description: Return anything that is passed to the request
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Returns anything that is passed to request
+      tags:
+      - Anything
+    post:
+      consumes:
+      - application/json
+      description: Return anything that is passed to the request
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Returns anything that is passed to request
+      tags:
+      - Anything
+    put:
+      consumes:
+      - application/json
+      description: Return anything that is passed to the request
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Returns anything that is passed to request
+      tags:
+      - Anything
   /cookies:
     get:
       consumes:

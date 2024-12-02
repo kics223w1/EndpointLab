@@ -28,6 +28,19 @@ func NewHttpAnything() *HttpAnything {
 }
 
 
+//	@Summary		Returns anything that is passed to request
+//	@Description	Return anything that is passed to the request
+//	@Tags			Anything
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	object
+//	@Router			/anything [get]
+//	@Router			/anything [post]
+//	@Router			/anything [put]
+//	@Router			/anything [delete]
+//	@Router			/anything [patch]
+//	@Router			/anything [options]
+//	@Router			/anything [head]
 func (h *HttpAnything) HandleAnything(c *gin.Context) {
 	scheme := "http"
 	if c.Request.TLS != nil {
