@@ -11,7 +11,7 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "John Cao",
+            "name": "The repository",
             "url": "https://github.com/kics223w1/EndpointLab"
         },
         "license": {

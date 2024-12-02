@@ -1,7 +1,7 @@
 host: localhost:8080
 info:
   contact:
-    name: John Cao
+    name: The repository
     url: https://github.com/kics223w1/EndpointLab
   description: 'An alternative to httpbin.org in Gin. <br/> <br/> <b>Run locally:
     </b> <code>$ docker run -p 8080:8080 viethuy/endpointlab</code>'

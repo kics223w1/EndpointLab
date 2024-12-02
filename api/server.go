@@ -29,7 +29,7 @@ func NewServer() (*Server, error) {
 //	@description	An alternative to httpbin.org in Gin. <br/> <br/> <b>Run locally: </b> <code>$ docker run -p 8080:8080 viethuy/endpointlab</code>
 //	@termsOfService	http://swagger.io/terms/
 
-//	@contact.name	John Cao
+//	@contact.name	The repository
 //	@contact.url	https://github.com/kics223w1/EndpointLab
 
 //	@license.name	Apache 2.0
