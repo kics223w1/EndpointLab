@@ -110,14 +110,6 @@ func (s *Server) registerRoutes() {
 
 	// Status endpoint
 	httpStatus := NewHttpStatus()
-	//	@Summary		Status code
-	//	@Description	Returns response with specified status code
-	//	@Tags			status
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			code	path		int	true	"HTTP Status Code"
-	//	@Success		200		{object}	object
-	//	@Router			/status/{code} [get]
 	s.router.Any("/status/:code", httpStatus.HandleStatus)
 
 	// Request inspection

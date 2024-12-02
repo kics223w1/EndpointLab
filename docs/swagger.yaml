@@ -1,3 +1,32 @@
+definitions:
+  api.httpAnythingResponse:
+    properties:
+      args:
+        additionalProperties:
+          type: string
+        type: object
+      data:
+        type: string
+      files:
+        additionalProperties:
+          type: string
+        type: object
+      form:
+        additionalProperties:
+          type: string
+        type: object
+      headers:
+        additionalProperties:
+          type: string
+        type: object
+      json: {}
+      method:
+        type: string
+      origin:
+        type: string
+      url:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -22,7 +51,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: object
+            $ref: '#/definitions/api.httpAnythingResponse'
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -36,7 +65,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: object
+            $ref: '#/definitions/api.httpAnythingResponse'
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -50,7 +79,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: object
+            $ref: '#/definitions/api.httpAnythingResponse'
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -64,7 +93,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: object
+            $ref: '#/definitions/api.httpAnythingResponse'
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -78,7 +107,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: object
+            $ref: '#/definitions/api.httpAnythingResponse'
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -92,7 +121,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: object
+            $ref: '#/definitions/api.httpAnythingResponse'
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -106,7 +135,7 @@ paths:
         "200":
           description: OK
           schema:
-            type: object
+            $ref: '#/definitions/api.httpAnythingResponse'
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -341,4 +370,131 @@ paths:
       summary: The request's PUT parameters.
       tags:
       - HTTP Methods
+  /status/{code}:
+    delete:
+      description: Returns a status code based on the path
+      parameters:
+      - description: HTTP Status Code
+        in: path
+        name: code
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Return status code or random status code if more than one are given
+      tags:
+      - Status
+    get:
+      description: Returns a status code based on the path
+      parameters:
+      - description: HTTP Status Code
+        in: path
+        name: code
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Return status code or random status code if more than one are given
+      tags:
+      - Status
+    head:
+      description: Returns a status code based on the path
+      parameters:
+      - description: HTTP Status Code
+        in: path
+        name: code
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Return status code or random status code if more than one are given
+      tags:
+      - Status
+    options:
+      description: Returns a status code based on the path
+      parameters:
+      - description: HTTP Status Code
+        in: path
+        name: code
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Return status code or random status code if more than one are given
+      tags:
+      - Status
+    patch:
+      description: Returns a status code based on the path
+      parameters:
+      - description: HTTP Status Code
+        in: path
+        name: code
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Return status code or random status code if more than one are given
+      tags:
+      - Status
+    post:
+      description: Returns a status code based on the path
+      parameters:
+      - description: HTTP Status Code
+        in: path
+        name: code
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Return status code or random status code if more than one are given
+      tags:
+      - Status
+    put:
+      description: Returns a status code based on the path
+      parameters:
+      - description: HTTP Status Code
+        in: path
+        name: code
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Return status code or random status code if more than one are given
+      tags:
+      - Status
 swagger: "2.0"
