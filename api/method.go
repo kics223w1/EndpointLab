@@ -27,9 +27,9 @@ func NewHttpMethod() *HttpMethod {
 	return &HttpMethod{}
 }	
 
-//	@Summary		Get request returns a simple GET response
-//	@Description	Returns a simple GET response
-//	@Tags			http-methods
+//	@Summary		The request's query parameters.
+//	@Description	Returns the query parameters of the request
+//	@Tags			HTTP Methods
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	{object}	object
@@ -53,9 +53,9 @@ func (h *HttpMethod) HandleGet(c *gin.Context) {
 }
 
 
-//	@Summary		Post request returns a POST response
-//	@Description	Returns a POST response
-//	@Tags			http-methods
+//	@Summary		The request's POST parameters.
+//	@Description	Returns the POST parameters of the request
+//	@Tags			HTTP Methods
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	{object}	object
@@ -75,9 +75,9 @@ func (h *HttpMethod) HandlePost(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-//	@Summary		Put request returns a PUT response
-//	@Description	Returns a PUT response
-//	@Tags			http-methods
+//	@Summary		The request's PUT parameters.
+//	@Description	Returns the PUT parameters of the request
+//	@Tags			HTTP Methods
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	{object}	object
@@ -97,9 +97,9 @@ func (h *HttpMethod) HandlePut(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-//	@Summary		Delete request returns a DELETE response
-//	@Description	Returns a DELETE response
-//	@Tags			http-methods
+//	@Summary		The request's DELETE parameters.
+//	@Description	Returns the DELETE parameters of the request
+//	@Tags			HTTP Methods
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	{object}	object
@@ -119,9 +119,9 @@ func (h *HttpMethod) HandleDelete(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-//	@Summary		Patch request returns a PATCH response
-//	@Description	Returns a PATCH response
-//	@Tags			http-methods
+//	@Summary		The request's PATCH parameters.
+//	@Description	Returns the PATCH parameters of the request
+//	@Tags			HTTP Methods
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	{object}	object

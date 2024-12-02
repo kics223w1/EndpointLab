@@ -48,7 +48,7 @@ const docTemplate = `{
         },
         "/delete": {
             "delete": {
-                "description": "Returns a DELETE response",
+                "description": "Returns the DELETE parameters of the request",
                 "consumes": [
                     "application/json"
                 ],
@@ -56,9 +56,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "http-methods"
+                    "HTTP Methods"
                 ],
-                "summary": "Delete request returns a DELETE response",
+                "summary": "The request's DELETE parameters.",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -71,7 +71,7 @@ const docTemplate = `{
         },
         "/get": {
             "get": {
-                "description": "Returns a simple GET response",
+                "description": "Returns the query parameters of the request",
                 "consumes": [
                     "application/json"
                 ],
@@ -79,9 +79,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "http-methods"
+                    "HTTP Methods"
                 ],
-                "summary": "Get request returns a simple GET response",
+                "summary": "The request's query parameters.",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -94,7 +94,7 @@ const docTemplate = `{
         },
         "/patch": {
             "patch": {
-                "description": "Returns a PATCH response",
+                "description": "Returns the PATCH parameters of the request",
                 "consumes": [
                     "application/json"
                 ],
@@ -102,9 +102,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "http-methods"
+                    "HTTP Methods"
                 ],
-                "summary": "Patch request returns a PATCH response",
+                "summary": "The request's PATCH parameters.",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -117,7 +117,7 @@ const docTemplate = `{
         },
         "/post": {
             "post": {
-                "description": "Returns a POST response",
+                "description": "Returns the POST parameters of the request",
                 "consumes": [
                     "application/json"
                 ],
@@ -125,9 +125,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "http-methods"
+                    "HTTP Methods"
                 ],
-                "summary": "Post request returns a POST response",
+                "summary": "The request's POST parameters.",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -140,7 +140,7 @@ const docTemplate = `{
         },
         "/put": {
             "put": {
-                "description": "Returns a PUT response",
+                "description": "Returns the PUT parameters of the request",
                 "consumes": [
                     "application/json"
                 ],
@@ -148,9 +148,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "http-methods"
+                    "HTTP Methods"
                 ],
-                "summary": "Put request returns a PUT response",
+                "summary": "The request's PUT parameters.",
                 "responses": {
                     "200": {
                         "description": "OK",

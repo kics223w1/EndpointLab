@@ -30,7 +30,7 @@ paths:
     delete:
       consumes:
       - application/json
-      description: Returns a DELETE response
+      description: Returns the DELETE parameters of the request
       produces:
       - application/json
       responses:
@@ -38,14 +38,14 @@ paths:
           description: OK
           schema:
             type: object
-      summary: Delete request returns a DELETE response
+      summary: The request's DELETE parameters.
       tags:
-      - http-methods
+      - HTTP Methods
   /get:
     get:
       consumes:
       - application/json
-      description: Returns a simple GET response
+      description: Returns the query parameters of the request
       produces:
       - application/json
       responses:
@@ -53,14 +53,14 @@ paths:
           description: OK
           schema:
             type: object
-      summary: Get request returns a simple GET response
+      summary: The request's query parameters.
       tags:
-      - http-methods
+      - HTTP Methods
   /patch:
     patch:
       consumes:
       - application/json
-      description: Returns a PATCH response
+      description: Returns the PATCH parameters of the request
       produces:
       - application/json
       responses:
@@ -68,14 +68,14 @@ paths:
           description: OK
           schema:
             type: object
-      summary: Patch request returns a PATCH response
+      summary: The request's PATCH parameters.
       tags:
-      - http-methods
+      - HTTP Methods
   /post:
     post:
       consumes:
       - application/json
-      description: Returns a POST response
+      description: Returns the POST parameters of the request
       produces:
       - application/json
       responses:
@@ -83,14 +83,14 @@ paths:
           description: OK
           schema:
             type: object
-      summary: Post request returns a POST response
+      summary: The request's POST parameters.
       tags:
-      - http-methods
+      - HTTP Methods
   /put:
     put:
       consumes:
       - application/json
-      description: Returns a PUT response
+      description: Returns the PUT parameters of the request
       produces:
       - application/json
       responses:
@@ -98,7 +98,7 @@ paths:
           description: OK
           schema:
             type: object
-      summary: Put request returns a PUT response
+      summary: The request's PUT parameters.
       tags:
-      - http-methods
+      - HTTP Methods
 swagger: "2.0"
