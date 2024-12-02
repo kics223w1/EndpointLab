@@ -27,6 +27,15 @@ func NewHttpDynamic() *HttpDynamic {
 }
 
 
+//	@Summary		Decode Base64 value.
+//	@Description	Decodes a Base64 encoded string provided in the URL parameter.
+//	@Tags			Dynamic
+//	@Accept			plain
+//	@Produce		plain
+//	@Param			value path string true "Base64 encoded string" default(RW5kcG9pbnRMYWIgaXMgYXdlc29tZQ==)
+//	@Success		200 {string} string "Decoded string"
+//	@Failure		400 {string} string "Incorrect Base64 data"
+//	@Router			/base64/{value} [get]
 func (d *HttpDynamic) HandleBase64(c *gin.Context) {
 	// Get the base64 value from URL parameter
 	value := c.Param("value")
@@ -42,6 +51,16 @@ func (d *HttpDynamic) HandleBase64(c *gin.Context) {
 	c.String(http.StatusOK, string(decoded))
 }
 
+//	@Summary		Generate random bytes.
+//	@Description	Generates a specified number of random bytes.
+//	@Tags			Dynamic
+//	@Accept			plain
+//	@Produce		octet-stream
+//	@Param			n path int true "Number of bytes"
+//	@Success		200 {file} file "Random bytes"
+//	@Failure		400 {string} string "Invalid number of bytes requested"
+//	@Failure		500 {string} string "Failed to generate random bytes"
+//	@Router			/bytes/{n} [get]
 func (d *HttpDynamic) HandleBytes(c *gin.Context) {
 	// Get the number of bytes from URL parameter
 	n := c.Param("n")
@@ -64,6 +83,19 @@ func (d *HttpDynamic) HandleBytes(c *gin.Context) {
 	c.Data(http.StatusOK, "application/octet-stream", randomBytes)
 }
 
+//	@Summary		Delay response.
+//	@Description	Delays the response by a specified number of milliseconds.
+//	@Tags			Dynamic
+//	@Accept			plain
+//	@Produce		json
+//	@Param			delay path int true "Delay in milliseconds"
+//	@Success		200 {object} utils.HTTPResponse "Delayed response"
+//	@Failure		400 {string} string "Invalid delay value"
+//	@Router			/delay/{delay} [delete]
+//	@Router			/delay/{delay} [get]
+//	@Router			/delay/{delay} [patch]
+//	@Router			/delay/{delay} [post]
+//	@Router			/delay/{delay} [put]
 func (d *HttpDynamic) HandleDeplay(c *gin.Context) {
 	delay := c.Param("delay")
 	delayInt, err := strconv.Atoi(delay)
@@ -95,6 +127,18 @@ func (d *HttpDynamic) HandleDeplay(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
+//	@Summary		Drip response.
+//	@Description	Streams data in chunks with a specified delay between each chunk.
+//	@Tags			Dynamic
+//	@Accept			plain
+//	@Produce		octet-stream
+//	@Param			duration query int false "Total duration in seconds"
+//	@Param			numbytes query int false "Total number of bytes"
+//	@Param			code query int false "HTTP status code"
+//	@Param			delay query int false "Initial delay in seconds"
+//	@Success		200 {file} file "Streamed data"
+//	@Failure		400 {string} string "Invalid parameters"
+//	@Router			/drip [get]
 func (d *HttpDynamic) HandleDrip(c *gin.Context) {
 	// Parse query parameters with defaults
 	duration := utils.GetQueryInt(c, "duration", 2)
@@ -139,6 +183,16 @@ func (d *HttpDynamic) HandleDrip(c *gin.Context) {
 	}
 }
 
+//	@Summary		Generate HTML links.
+//	@Description	Generates a page with a specified number of links.
+//	@Tags			Dynamic
+//	@Accept			plain
+//	@Produce		html
+//	@Param			n path int true "Number of links"
+//	@Param			offset path int true "Offset for links"
+//	@Success		200 {string} string "HTML page with links"
+//	@Failure		400 {string} string "Invalid number of links or offset"
+//	@Router			/links/{n}/{offset} [get]
 func (d *HttpDynamic) HandleLinks(c *gin.Context) {
 	// Parse path parameters
 	n := c.Param("n")
@@ -174,6 +228,17 @@ func (d *HttpDynamic) HandleLinks(c *gin.Context) {
 	c.String(http.StatusOK, html)
 }
 
+//	@Summary		Stream bytes in range.
+//	@Description	Streams a specified number of bytes in chunks.
+//	@Tags			Dynamic
+//	@Accept			plain
+//	@Produce		octet-stream
+//	@Param			numbytes path int true "Total number of bytes"
+//	@Param			chunk_size query int false "Size of each chunk"
+//	@Param			duration query int false "Total duration in seconds"
+//	@Success		200 {file} file "Streamed bytes"
+//	@Failure		400 {string} string "Invalid number of bytes, chunk_size, or duration"
+//	@Router			/range/{numbytes} [get]
 func (d *HttpDynamic) HandleRange(c *gin.Context) {
 	// Get number of bytes from URL parameter
 	numbytes := c.Param("numbytes")
@@ -229,6 +294,17 @@ func (d *HttpDynamic) HandleRange(c *gin.Context) {
 	}
 }
 
+//	@Summary		Stream random bytes.
+//	@Description	Streams a specified number of random bytes in chunks.
+//	@Tags			Dynamic
+//	@Accept			plain
+//	@Produce		octet-stream
+//	@Param			n path int true "Total number of bytes"
+//	@Param			chunk_size query int false "Size of each chunk"
+//	@Param			seed query int false "Random seed"
+//	@Success		200 {file} file "Streamed random bytes"
+//	@Failure		400 {string} string "Invalid number of bytes"
+//	@Router			/stream-bytes/{n} [get]
 func (d *HttpDynamic) HandleStreamBytes(c *gin.Context) {
 	// Get number of bytes from URL parameter
 	n := c.Param("n")
@@ -279,6 +355,15 @@ func (d *HttpDynamic) HandleStreamBytes(c *gin.Context) {
 	}
 }
 
+//	@Summary		Stream JSON responses.
+//	@Description	Streams a specified number of JSON responses.
+//	@Tags			Dynamic
+//	@Accept			plain
+//	@Produce		json
+//	@Param			n path int true "Number of responses"
+//	@Success		200 {object} streamJSONResponse "Streamed JSON responses"
+//	@Failure		400 {string} string "Invalid number of responses"
+//	@Router			/stream/{n} [get]
 func (d *HttpDynamic) HandleStream(c *gin.Context) {
 	// Parse number of responses from URL parameter
 	n := c.Param("n")
@@ -325,6 +410,14 @@ func (d *HttpDynamic) HandleStream(c *gin.Context) {
 }
 
 
+//	@Summary		Generate UUID.
+//	@Description	Generates a UUID (version 4).
+//	@Tags			Dynamic
+//	@Accept			plain
+//	@Produce		json
+//	@Success		200 {object} map[string]string "Generated UUID"
+//	@Failure		500 {string} string "Failed to generate UUID"
+//	@Router			/uuid [get]
 func (d *HttpDynamic) HandleUuid(c *gin.Context) {
 	// Generate 16 random bytes
 	uuid := make([]byte, 16)

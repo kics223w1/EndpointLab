@@ -151,108 +151,14 @@ func (s *Server) registerRoutes() {
 
 	// Dynamic
 	httpDynamic := NewHttpDynamic()
-	//	@Summary		Base64 encoded data
-	//	@Description	Returns base64 encoded data
-	//	@Tags			dynamic-data
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			value	path		string	true	"Value to encode"
-	//	@Success		200		{object}	object
-	//	@Router			/base64/{value} [get]
 	s.router.GET("/base64/:value", httpDynamic.HandleBase64)
-
-	//	@Summary		Random bytes
-	//	@Description	Returns n random bytes generated with specified seed
-	//	@Tags			dynamic-data
-	//	@Accept			json
-	//	@Produce		application/octet-stream
-	//	@Param			n	path		int		true	"Number of bytes to generate (max 100KB)"
-	//	@Success		200	{file}		binary	"Random binary data"
-	//	@Failure		400	{object}	object	"Invalid number of bytes requested"
-	//	@Router			/bytes/{n} [get]
 	s.router.GET("/bytes/:n", httpDynamic.HandleBytes)
-
-	//	@Summary		Delayed response
-	//	@Description	Returns a delayed response (max: 10 seconds)
-	//	@Tags			dynamic-data
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			delay	path		number	true	"Delay in seconds (float value, max 10)"
-	//	@Success		200		{object}	object
-	//	@Failure		400		{object}	object	"Invalid delay value"
-	//	@Router			/delay/{delay} [get]
 	s.router.Any("/delay/:delay", httpDynamic.HandleDeplay)
-
-	//	@Summary		Dripped response
-	//	@Description	Drips data over a duration after an optional initial delay
-	//	@Tags			dynamic-data
-	//	@Accept			json
-	//	@Produce		application/octet-stream
-	//	@Param			duration	query		number	false	"Duration in seconds to drip data"
-	//	@Param			numbytes	query		int		false	"Number of bytes to drip (default: 10)"
-	//	@Param			code		query		int		false	"Status code (default: 200)"
-	//	@Param			delay		query		number	false	"Initial delay in seconds"
-	//	@Success		200			{file}		binary	"Dripped data"
-	//	@Failure		400			{object}	object	"Invalid parameters"
-	//	@Router			/drip [get]
 	s.router.Any("/drip", httpDynamic.HandleDrip)
-
-	//	@Summary		Generate links
-	//	@Description	Returns a page containing n links to other pages offset by the specified amount
-	//	@Tags			dynamic-data
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			n		path		int	true	"Number of links to generate"
-	//	@Param			offset	path		int	true	"Offset for link numbering"
-	//	@Success		200		{object}	object
-	//	@Failure		400		{object}	object	"Invalid parameters"
-	//	@Router			/links/{n}/{offset} [get]
 	s.router.GET("/links/:n/:offset", httpDynamic.HandleLinks)
-
-	//	@Summary		Byte range
-	//	@Description	Returns a range of bytes (Content-Range header)
-	//	@Tags			dynamic-data
-	//	@Accept			json
-	//	@Produce		application/octet-stream
-	//	@Param			numbytes	path		int		true	"Number of bytes to return"
-	//	@Param			offset		query		int		false	"Range offset"
-	//	@Success		200			{file}		binary	"Requested range of bytes"
-	//	@Success		206			{file}		binary	"Partial content when using Range header"
-	//	@Failure		400			{object}	object	"Invalid range requested"
-	//	@Router			/range/{numbytes} [get]
 	s.router.GET("/range/:numbytes", httpDynamic.HandleRange)
-
-	//	@Summary		Streamed random bytes
-	//	@Description	Streams n random bytes generated with given seed, streamed in chunks
-	//	@Tags			dynamic-data
-	//	@Accept			json
-	//	@Produce		application/octet-stream
-	//	@Param			n		path		int		true	"Number of bytes to stream"
-	//	@Param			chunk	query		int		false	"Chunk size (default: 10240)"
-	//	@Success		200		{file}		binary	"Streamed random bytes"
-	//	@Failure		400		{object}	object	"Invalid parameters"
-	//	@Router			/stream-bytes/{n} [get]
 	s.router.GET("/stream-bytes/:n", httpDynamic.HandleStreamBytes)
-
-	//	@Summary		Chunked transfer encoding
-	//	@Description	Streams n chunks of JSON data with delay
-	//	@Tags			dynamic-data
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			n		path		int		true	"Number of chunks to stream"
-	//	@Param			delay	query		number	false	"Delay between chunks in seconds (default: 0)"
-	//	@Success		200		{array}		object	"Array of streamed data chunks"
-	//	@Failure		400		{object}	object	"Invalid parameters"
-	//	@Router			/stream/{n} [get]
 	s.router.GET("/stream/:n", httpDynamic.HandleStream)
-
-	//	@Summary		UUID generation
-	//	@Description	Returns a randomly generated UUID v4
-	//	@Tags			dynamic-data
-	//	@Accept			json
-	//	@Produce		json
-	//	@Success		200	{object}	object	"Contains generated UUID"
-	//	@Router			/uuid [get]
 	s.router.GET("/uuid", httpDynamic.HandleUuid)
 
 	// Cookies

@@ -172,6 +172,45 @@ const docTemplate = `{
                 }
             }
         },
+        "/base64/{value}": {
+            "get": {
+                "description": "Decodes a Base64 encoded string provided in the URL parameter.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Decode Base64 value.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "RW5kcG9pbnRMYWIgaXMgYXdlc29tZQ==",
+                        "description": "Base64 encoded string",
+                        "name": "value",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Decoded string",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Incorrect Base64 data",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/brotli": {
             "get": {
                 "description": "Returns a Brotli compressed response.",
@@ -188,6 +227,50 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "Brotli-encoded data."
+                    }
+                }
+            }
+        },
+        "/bytes/{n}": {
+            "get": {
+                "description": "Generates a specified number of random bytes.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Generate random bytes.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Number of bytes",
+                        "name": "n",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Random bytes",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid number of bytes requested",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to generate random bytes",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 }
             }
@@ -391,6 +474,188 @@ const docTemplate = `{
                 }
             }
         },
+        "/delay/{delay}": {
+            "get": {
+                "description": "Delays the response by a specified number of milliseconds.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Delay response.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Delay in milliseconds",
+                        "name": "delay",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delayed response",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid delay value",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Delays the response by a specified number of milliseconds.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Delay response.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Delay in milliseconds",
+                        "name": "delay",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delayed response",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid delay value",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Delays the response by a specified number of milliseconds.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Delay response.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Delay in milliseconds",
+                        "name": "delay",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delayed response",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid delay value",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delays the response by a specified number of milliseconds.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Delay response.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Delay in milliseconds",
+                        "name": "delay",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delayed response",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid delay value",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Delays the response by a specified number of milliseconds.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Delay response.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Delay in milliseconds",
+                        "name": "delay",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Delayed response",
+                        "schema": {
+                            "$ref": "#/definitions/utils.HTTPResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid delay value",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/delete": {
             "delete": {
                 "description": "Returns the DELETE parameters of the request",
@@ -430,6 +695,61 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "Deny response.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/drip": {
+            "get": {
+                "description": "Streams data in chunks with a specified delay between each chunk.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Drip response.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Total duration in seconds",
+                        "name": "duration",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Total number of bytes",
+                        "name": "numbytes",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "HTTP status code",
+                        "name": "code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Initial delay in seconds",
+                        "name": "delay",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Streamed data",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid parameters",
                         "schema": {
                             "type": "string"
                         }
@@ -734,6 +1054,51 @@ const docTemplate = `{
                 }
             }
         },
+        "/links/{n}/{offset}": {
+            "get": {
+                "description": "Generates a page with a specified number of links.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Generate HTML links.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Number of links",
+                        "name": "n",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Offset for links",
+                        "name": "offset",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "HTML page with links",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid number of links or offset",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/patch": {
             "patch": {
                 "description": "Returns the PATCH parameters of the request",
@@ -798,6 +1163,56 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/range/{numbytes}": {
+            "get": {
+                "description": "Streams a specified number of bytes in chunks.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Stream bytes in range.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Total number of bytes",
+                        "name": "numbytes",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Size of each chunk",
+                        "name": "chunk_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Total duration in seconds",
+                        "name": "duration",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Streamed bytes",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid number of bytes, chunk_size, or duration",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -1068,6 +1483,94 @@ const docTemplate = `{
                 }
             }
         },
+        "/stream-bytes/{n}": {
+            "get": {
+                "description": "Streams a specified number of random bytes in chunks.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "application/octet-stream"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Stream random bytes.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Total number of bytes",
+                        "name": "n",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Size of each chunk",
+                        "name": "chunk_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Random seed",
+                        "name": "seed",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Streamed random bytes",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid number of bytes",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/stream/{n}": {
+            "get": {
+                "description": "Streams a specified number of JSON responses.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Stream JSON responses.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Number of responses",
+                        "name": "n",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Streamed JSON responses",
+                        "schema": {
+                            "$ref": "#/definitions/api.streamJSONResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid number of responses",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/user-agent": {
             "get": {
                 "description": "Returns the User-Agent string of the request",
@@ -1091,6 +1594,38 @@ const docTemplate = `{
                 }
             }
         },
+        "/uuid": {
+            "get": {
+                "description": "Generates a UUID (version 4).",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Dynamic"
+                ],
+                "summary": "Generate UUID.",
+                "responses": {
+                    "200": {
+                        "description": "Generated UUID",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to generate UUID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/xml": {
             "get": {
                 "description": "Returns XML content from a file.",
@@ -1108,6 +1643,95 @@ const docTemplate = `{
                     "200": {
                         "description": "XML content."
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "api.streamJSONResponse": {
+            "type": "object",
+            "properties": {
+                "args": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "data": {
+                    "type": "string"
+                },
+                "files": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "form": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "headers": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "json": {},
+                "method": {
+                    "type": "string"
+                },
+                "origin": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "utils.HTTPResponse": {
+            "type": "object",
+            "properties": {
+                "args": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "data": {
+                    "type": "string"
+                },
+                "files": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "form": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "headers": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "json": {},
+                "method": {
+                    "type": "string"
+                },
+                "origin": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
                 }
             }
         }

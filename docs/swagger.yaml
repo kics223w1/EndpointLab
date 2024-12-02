@@ -1,3 +1,62 @@
+definitions:
+  api.streamJSONResponse:
+    properties:
+      args:
+        additionalProperties:
+          type: string
+        type: object
+      data:
+        type: string
+      files:
+        additionalProperties:
+          type: string
+        type: object
+      form:
+        additionalProperties:
+          type: string
+        type: object
+      headers:
+        additionalProperties:
+          type: string
+        type: object
+      id:
+        type: integer
+      json: {}
+      method:
+        type: string
+      origin:
+        type: string
+      url:
+        type: string
+    type: object
+  utils.HTTPResponse:
+    properties:
+      args:
+        additionalProperties:
+          type: string
+        type: object
+      data:
+        type: string
+      files:
+        additionalProperties:
+          type: string
+        type: object
+      form:
+        additionalProperties:
+          type: string
+        type: object
+      headers:
+        additionalProperties:
+          type: string
+        type: object
+      json: {}
+      method:
+        type: string
+      origin:
+        type: string
+      url:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -110,6 +169,32 @@ paths:
       summary: Returns anything that is passed to request
       tags:
       - Anything
+  /base64/{value}:
+    get:
+      consumes:
+      - text/plain
+      description: Decodes a Base64 encoded string provided in the URL parameter.
+      parameters:
+      - default: RW5kcG9pbnRMYWIgaXMgYXdlc29tZQ==
+        description: Base64 encoded string
+        in: path
+        name: value
+        required: true
+        type: string
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: Decoded string
+          schema:
+            type: string
+        "400":
+          description: Incorrect Base64 data
+          schema:
+            type: string
+      summary: Decode Base64 value.
+      tags:
+      - Dynamic
   /brotli:
     get:
       consumes:
@@ -123,6 +208,35 @@ paths:
       summary: Handle Brotli compression.
       tags:
       - Response Formats
+  /bytes/{n}:
+    get:
+      consumes:
+      - text/plain
+      description: Generates a specified number of random bytes.
+      parameters:
+      - description: Number of bytes
+        in: path
+        name: "n"
+        required: true
+        type: integer
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: Random bytes
+          schema:
+            type: file
+        "400":
+          description: Invalid number of bytes requested
+          schema:
+            type: string
+        "500":
+          description: Failed to generate random bytes
+          schema:
+            type: string
+      summary: Generate random bytes.
+      tags:
+      - Dynamic
   /cache:
     get:
       parameters:
@@ -255,6 +369,127 @@ paths:
       summary: Handle Deflate compression.
       tags:
       - Response Formats
+  /delay/{delay}:
+    delete:
+      consumes:
+      - text/plain
+      description: Delays the response by a specified number of milliseconds.
+      parameters:
+      - description: Delay in milliseconds
+        in: path
+        name: delay
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delayed response
+          schema:
+            $ref: '#/definitions/utils.HTTPResponse'
+        "400":
+          description: Invalid delay value
+          schema:
+            type: string
+      summary: Delay response.
+      tags:
+      - Dynamic
+    get:
+      consumes:
+      - text/plain
+      description: Delays the response by a specified number of milliseconds.
+      parameters:
+      - description: Delay in milliseconds
+        in: path
+        name: delay
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delayed response
+          schema:
+            $ref: '#/definitions/utils.HTTPResponse'
+        "400":
+          description: Invalid delay value
+          schema:
+            type: string
+      summary: Delay response.
+      tags:
+      - Dynamic
+    patch:
+      consumes:
+      - text/plain
+      description: Delays the response by a specified number of milliseconds.
+      parameters:
+      - description: Delay in milliseconds
+        in: path
+        name: delay
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delayed response
+          schema:
+            $ref: '#/definitions/utils.HTTPResponse'
+        "400":
+          description: Invalid delay value
+          schema:
+            type: string
+      summary: Delay response.
+      tags:
+      - Dynamic
+    post:
+      consumes:
+      - text/plain
+      description: Delays the response by a specified number of milliseconds.
+      parameters:
+      - description: Delay in milliseconds
+        in: path
+        name: delay
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delayed response
+          schema:
+            $ref: '#/definitions/utils.HTTPResponse'
+        "400":
+          description: Invalid delay value
+          schema:
+            type: string
+      summary: Delay response.
+      tags:
+      - Dynamic
+    put:
+      consumes:
+      - text/plain
+      description: Delays the response by a specified number of milliseconds.
+      parameters:
+      - description: Delay in milliseconds
+        in: path
+        name: delay
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Delayed response
+          schema:
+            $ref: '#/definitions/utils.HTTPResponse'
+        "400":
+          description: Invalid delay value
+          schema:
+            type: string
+      summary: Delay response.
+      tags:
+      - Dynamic
   /delete:
     delete:
       consumes:
@@ -285,6 +520,42 @@ paths:
       summary: Handle Deny response.
       tags:
       - Response Formats
+  /drip:
+    get:
+      consumes:
+      - text/plain
+      description: Streams data in chunks with a specified delay between each chunk.
+      parameters:
+      - description: Total duration in seconds
+        in: query
+        name: duration
+        type: integer
+      - description: Total number of bytes
+        in: query
+        name: numbytes
+        type: integer
+      - description: HTTP status code
+        in: query
+        name: code
+        type: integer
+      - description: Initial delay in seconds
+        in: query
+        name: delay
+        type: integer
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: Streamed data
+          schema:
+            type: file
+        "400":
+          description: Invalid parameters
+          schema:
+            type: string
+      summary: Drip response.
+      tags:
+      - Dynamic
   /encoding/utf8:
     get:
       consumes:
@@ -481,6 +752,36 @@ paths:
       summary: Serve JSON content.
       tags:
       - Response Formats
+  /links/{n}/{offset}:
+    get:
+      consumes:
+      - text/plain
+      description: Generates a page with a specified number of links.
+      parameters:
+      - description: Number of links
+        in: path
+        name: "n"
+        required: true
+        type: integer
+      - description: Offset for links
+        in: path
+        name: offset
+        required: true
+        type: integer
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: HTML page with links
+          schema:
+            type: string
+        "400":
+          description: Invalid number of links or offset
+          schema:
+            type: string
+      summary: Generate HTML links.
+      tags:
+      - Dynamic
   /patch:
     patch:
       consumes:
@@ -526,6 +827,39 @@ paths:
       summary: The request's PUT parameters.
       tags:
       - HTTP Methods
+  /range/{numbytes}:
+    get:
+      consumes:
+      - text/plain
+      description: Streams a specified number of bytes in chunks.
+      parameters:
+      - description: Total number of bytes
+        in: path
+        name: numbytes
+        required: true
+        type: integer
+      - description: Size of each chunk
+        in: query
+        name: chunk_size
+        type: integer
+      - description: Total duration in seconds
+        in: query
+        name: duration
+        type: integer
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: Streamed bytes
+          schema:
+            type: file
+        "400":
+          description: Invalid number of bytes, chunk_size, or duration
+          schema:
+            type: string
+      summary: Stream bytes in range.
+      tags:
+      - Dynamic
   /response-headers:
     get:
       consumes:
@@ -701,6 +1035,64 @@ paths:
       summary: Return status code or random status code if more than one are given
       tags:
       - Status
+  /stream-bytes/{n}:
+    get:
+      consumes:
+      - text/plain
+      description: Streams a specified number of random bytes in chunks.
+      parameters:
+      - description: Total number of bytes
+        in: path
+        name: "n"
+        required: true
+        type: integer
+      - description: Size of each chunk
+        in: query
+        name: chunk_size
+        type: integer
+      - description: Random seed
+        in: query
+        name: seed
+        type: integer
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: Streamed random bytes
+          schema:
+            type: file
+        "400":
+          description: Invalid number of bytes
+          schema:
+            type: string
+      summary: Stream random bytes.
+      tags:
+      - Dynamic
+  /stream/{n}:
+    get:
+      consumes:
+      - text/plain
+      description: Streams a specified number of JSON responses.
+      parameters:
+      - description: Number of responses
+        in: path
+        name: "n"
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Streamed JSON responses
+          schema:
+            $ref: '#/definitions/api.streamJSONResponse'
+        "400":
+          description: Invalid number of responses
+          schema:
+            type: string
+      summary: Stream JSON responses.
+      tags:
+      - Dynamic
   /user-agent:
     get:
       consumes:
@@ -716,6 +1108,27 @@ paths:
       summary: Returns the User-Agent string.
       tags:
       - Request Inspection
+  /uuid:
+    get:
+      consumes:
+      - text/plain
+      description: Generates a UUID (version 4).
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Generated UUID
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to generate UUID
+          schema:
+            type: string
+      summary: Generate UUID.
+      tags:
+      - Dynamic
   /xml:
     get:
       consumes:
