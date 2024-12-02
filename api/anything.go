@@ -28,7 +28,6 @@ func NewHttpAnything() *HttpAnything {
 }
 
 
-
 func (h *HttpAnything) HandleAnything(c *gin.Context) {
 	scheme := "http"
 	if c.Request.TLS != nil {

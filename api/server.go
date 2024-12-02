@@ -24,23 +24,22 @@ func NewServer() (*Server, error) {
 	return server, nil
 }
 
-//	@title			Swagger Example API
+//	@title			EndpointLab
 //	@version		1.0
-//	@description	This is a sample server Petstore server.
+//	@description	 An alternative to httpbin.org in Gin. 
 //	@termsOfService	http://swagger.io/terms/
 
 //	@contact.name	API Support
-//	@contact.url	http://www.swagger.io/support
-//	@contact.email	support@swagger.io
+//	@contact.url	https://github.com/kics223w1/EndpointLab
 
 //	@license.name	Apache 2.0
 //	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 
-//	@host		petstore.swagger.io
-//	@BasePath	/v2
+//	@host		localhost:8080
 func (s *Server) registerRoutes() {
 	// Basic HTTP method endpoints
 	httpMethod := NewHttpMethod()
+
 	s.router.GET("/swagger/*any", func(c *gin.Context) {
 		if c.Request.RequestURI == "/swagger/" {
 			c.Redirect(302, "/swagger/index.html")
@@ -49,50 +48,10 @@ func (s *Server) registerRoutes() {
 		ginSwagger.WrapHandler(swaggerFiles.Handler)(c)
 	})
 
-
-	//	@Summary		Get request
-	//	@Description	Returns a simple GET response
-	//	@Tags			http-methods
-	//	@Accept			json
-	//	@Produce		json
-	//	@Success		200	{object}	object
-	//	@Router			/get [get]
 	s.router.GET("/get", httpMethod.HandleGet)
-
-	//	@Summary		Post request
-	//	@Description	Returns a POST response
-	//	@Tags			http-methods
-	//	@Accept			json
-	//	@Produce		json
-	//	@Success		200	{object}	object
-	//	@Router			/post [post]
 	s.router.POST("/post", httpMethod.HandlePost)
-
-	//	@Summary		Put request
-	//	@Description	Returns a PUT response
-	//	@Tags			http-methods
-	//	@Accept			json
-	//	@Produce		json
-	//	@Success		200	{object}	object
-	//	@Router			/put [put]
 	s.router.PUT("/put", httpMethod.HandlePut)
-
-	//	@Summary		Delete request
-	//	@Description	Returns a DELETE response
-	//	@Tags			http-methods
-	//	@Accept			json
-	//	@Produce		json
-	//	@Success		200	{object}	object
-	//	@Router			/delete [delete]
 	s.router.DELETE("/delete", httpMethod.HandleDelete)
-
-	//	@Summary		Patch request
-	//	@Description	Returns a PATCH response
-	//	@Tags			http-methods
-	//	@Accept			json
-	//	@Produce		json
-	//	@Success		200	{object}	object
-	//	@Router			/patch [patch]
 	s.router.PATCH("/patch", httpMethod.HandlePatch)
 
 	

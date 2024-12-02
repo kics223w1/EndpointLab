@@ -10,6 +10,10 @@ run:
 build:
 	go build -o endpointlab main.go
 
+# Update the swagger docs
+swagger:
+	swag init -g api/server.go
+
 # Build the docker image (single platform)
 dockerBuild:
 	docker build -t $(DOCKER_REPO):latest .
@@ -24,4 +28,4 @@ dockerRemoveImage:
 # Combined remove, build and push
 dockerDistribute: dockerRemoveImage dockerBuild dockerPush
 
-.PHONY: run build dockerBuild dockerPush dockerRemoveImage dockerDistribute
+.PHONY: run build swagger dockerBuild dockerPush dockerRemoveImage dockerDistribute

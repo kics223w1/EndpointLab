@@ -1,16 +1,14 @@
-basePath: /v2
-host: petstore.swagger.io
+host: localhost:8080
 info:
   contact:
-    email: support@swagger.io
     name: API Support
-    url: http://www.swagger.io/support
-  description: This is a sample server Petstore server.
+    url: https://github.com/kics223w1/EndpointLab
+  description: An alternative to httpbin.org in Gin.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Swagger Example API
+  title: EndpointLab
   version: "1.0"
 paths:
   /cookies:
@@ -28,4 +26,79 @@ paths:
       summary: Get cookies
       tags:
       - cookies
+  /delete:
+    delete:
+      consumes:
+      - application/json
+      description: Returns a DELETE response
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Delete request returns a DELETE response
+      tags:
+      - http-methods
+  /get:
+    get:
+      consumes:
+      - application/json
+      description: Returns a simple GET response
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Get request returns a simple GET response
+      tags:
+      - http-methods
+  /patch:
+    patch:
+      consumes:
+      - application/json
+      description: Returns a PATCH response
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Patch request returns a PATCH response
+      tags:
+      - http-methods
+  /post:
+    post:
+      consumes:
+      - application/json
+      description: Returns a POST response
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Post request returns a POST response
+      tags:
+      - http-methods
+  /put:
+    put:
+      consumes:
+      - application/json
+      description: Returns a PUT response
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Put request returns a PUT response
+      tags:
+      - http-methods
 swagger: "2.0"
