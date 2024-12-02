@@ -15,14 +15,14 @@ func NewResInspection() *ResInspection {
 	return &ResInspection{}
 }
 
-//	@Summary		Returns a 304 if an If-Modified-Since header or If-None-Match is present. Returns the same as a GET otherwise.
-//	@Tags			Response Inspection
-//	@Param			If-Modified-Since	header	string	false	"Optional header to check if the resource has been modified since the specified date"
-//	@Param			If-None-Match		header	string	false	"Optional header to check if the resource matches the given ETag"
-//	@Produce		json
-//	@Success		200		"Cached response"
-//	@Success		304		"Modified"
-//	@Router			/cache [get]
+//	@Summary	Returns a 304 if an If-Modified-Since header or If-None-Match is present. Returns the same as a GET otherwise.
+//	@Tags		Response inspection
+//	@Param		If-Modified-Since	header	string	false	"Optional header to check if the resource has been modified since the specified date"
+//	@Param		If-None-Match		header	string	false	"Optional header to check if the resource matches the given ETag"
+//	@Produce	json
+//	@Success	200	"Cached response"
+//	@Success	304	"Modified"
+//	@Router		/cache [get]
 func (r *ResInspection) HandleCache(ctx *gin.Context) {
 	// Check for conditional request headers
 	ifModifiedSince := ctx.GetHeader("If-Modified-Since")
@@ -51,12 +51,12 @@ func (r *ResInspection) HandleCache(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, response)
 }
 
-//	@Summary		Sets a Cache-Control header for n seconds.
-//	@Tags			Response Inspection
-//	@Param			value	path	int	true	"Number of seconds for the Cache-Control max-age directive"
-//	@Produce		json
-//	@Success		200		"Cache control set"
-//	@Router			/cache/{value} [get]
+//	@Summary	Sets a Cache-Control header for n seconds.
+//	@Tags		Response inspection
+//	@Param		value	path	int	true	"Number of seconds for the Cache-Control max-age directive"
+//	@Produce	json
+//	@Success	200	"Cache control set"
+//	@Router		/cache/{value} [get]
 func (r *ResInspection) HandleCacheValue(ctx *gin.Context) {
 	// Get the value parameter from the URL
 	value := ctx.Param("value")
@@ -82,14 +82,14 @@ func (r *ResInspection) HandleCacheValue(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, response)
 }
 
-//	@Summary		Assumes the resource has the given etag and responds to If-None-Match and If-Match headers appropriately.
-//	@Tags			Response Inspection
-//	@Param			If-None-Match	header	string	false	"Optional header to check if the resource does not match the given ETag"
-//	@Param			If-Match		header	string	false	"Optional header to check if the resource matches the given ETag"
-//	@Produce		json
-//	@Success		200		"Normal response"
-//	@Failure		412	"match"
-//	@Router			/etag/{etag} [get]
+//	@Summary	Assumes the resource has the given etag and responds to If-None-Match and If-Match headers appropriately.
+//	@Tags		Response inspection
+//	@Param		If-None-Match	header	string	false	"Optional header to check if the resource does not match the given ETag"
+//	@Param		If-Match		header	string	false	"Optional header to check if the resource matches the given ETag"
+//	@Produce	json
+//	@Success	200	"Normal response"
+//	@Failure	412	"match"
+//	@Router		/etag/{etag} [get]
 func (r *ResInspection) HandleETag(ctx *gin.Context) {
 	etag := ctx.Param("etag")
 	
@@ -142,11 +142,11 @@ func (r *ResInspection) HandleETag(ctx *gin.Context) {
 
 //	@Summary		Returns response headers.
 //	@Description	Returns all response headers including freeform values.
-//	@Tags			Response Inspection
+//	@Tags			Response inspection
 //	@Accept			json
 //	@Produce		json
 //	@Param			freeform	query	string	false	"Freeform query parameter"
-//	@Success		200		"Response headers"
+//	@Success		200			"Response headers"
 //	@Router			/response-headers [get]
 //	@Router			/response-headers [post]
 func (r *ResInspection) HandleResponseHeaders(ctx *gin.Context) {

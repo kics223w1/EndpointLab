@@ -13,19 +13,18 @@ func NewHttpStatus() *HttpStatus {
 	return &HttpStatus{}
 }
 
-// @Summary      Return status code or random status code if more than one are given
-// @Description  Returns a status code based on the path
-// @Tags         Status
-// @Param        code  path  int  true  "HTTP Status Code"
-// @Produce      json
-// @Success      200  {object}  object
-// @Router       /status/{code} [get]
-// @Router       /status/{code} [post]
-// @Router       /status/{code} [put]
-// @Router       /status/{code} [delete]
-// @Router       /status/{code} [patch]
-// @Router       /status/{code} [options]
-// @Router       /status/{code} [head]
+//	@Summary		Return status code or random status code if more than one are given
+//	@Description	Returns a status code based on the path
+//	@Tags			Status codes
+//	@Produce		json
+//	@Success		200	{object}	object
+//	@Router			/status/{code} [get]
+//	@Router			/status/{code} [post]
+//	@Router			/status/{code} [put]
+//	@Router			/status/{code} [delete]
+//	@Router			/status/{code} [patch]
+//	@Router			/status/{code} [options]
+//	@Router			/status/{code} [head]
 func (h *HttpStatus) HandleStatus(c *gin.Context) {
 	// Get the full path
 	path := c.Request.URL.Path

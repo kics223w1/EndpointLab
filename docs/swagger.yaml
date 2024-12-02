@@ -1,68 +1,10 @@
-definitions:
-  api.streamJSONResponse:
-    properties:
-      args:
-        additionalProperties:
-          type: string
-        type: object
-      data:
-        type: string
-      files:
-        additionalProperties:
-          type: string
-        type: object
-      form:
-        additionalProperties:
-          type: string
-        type: object
-      headers:
-        additionalProperties:
-          type: string
-        type: object
-      id:
-        type: integer
-      json: {}
-      method:
-        type: string
-      origin:
-        type: string
-      url:
-        type: string
-    type: object
-  utils.HTTPResponse:
-    properties:
-      args:
-        additionalProperties:
-          type: string
-        type: object
-      data:
-        type: string
-      files:
-        additionalProperties:
-          type: string
-        type: object
-      form:
-        additionalProperties:
-          type: string
-        type: object
-      headers:
-        additionalProperties:
-          type: string
-        type: object
-      json: {}
-      method:
-        type: string
-      origin:
-        type: string
-      url:
-        type: string
-    type: object
 host: localhost:8080
 info:
   contact:
-    name: API Support
+    name: John Cao
     url: https://github.com/kics223w1/EndpointLab
-  description: An alternative to httpbin.org in Gin.
+  description: 'An alternative to httpbin.org in Gin. <br/> <br/> <b>Run locally:
+    </b> <code>$ docker run -p 8080:8080 viethuy/endpointlab</code>'
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -194,6 +136,141 @@ paths:
       summary: Returns anything that is passed to request
       tags:
       - Anything
+  /auth/digest-algorithm/{qop}/{user}/{passwd}/{algorithm}:
+    get:
+      consumes:
+      - application/json
+      description: Authenticates requests using Digest Auth with specified algorithm
+      parameters:
+      - default: auth
+        description: Quality of Protection
+        in: path
+        name: qop
+        required: true
+        type: string
+      - default: user
+        description: Username
+        in: path
+        name: user
+        required: true
+        type: string
+      - default: passwd
+        description: Password
+        in: path
+        name: passwd
+        required: true
+        type: string
+      - default: MD5
+        description: Algorithm (MD5, SHA-256, SHA-512)
+        in: path
+        name: algorithm
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      summary: Handle Digest Authentication with Algorithm
+      tags:
+      - Authentication
+  /auth/digest-stale/{qop}/{user}/{passwd}/{algorithm}/{stale_after}:
+    get:
+      consumes:
+      - application/json
+      description: Authenticates requests using Digest Auth with stale after parameter
+      parameters:
+      - default: auth
+        description: Quality of Protection
+        in: path
+        name: qop
+        required: true
+        type: string
+      - default: user
+        description: Username
+        in: path
+        name: user
+        required: true
+        type: string
+      - default: passwd
+        description: Password
+        in: path
+        name: passwd
+        required: true
+        type: string
+      - default: MD5
+        description: Algorithm (MD5, SHA-256, SHA-512)
+        in: path
+        name: algorithm
+        required: true
+        type: string
+      - default: never
+        description: Stale After
+        in: path
+        name: stale_after
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      summary: Handle Digest Authentication with Stale After
+      tags:
+      - Authentication
+  /auth/digest/{qop}/{user}/{passwd}:
+    get:
+      consumes:
+      - application/json
+      description: Authenticates requests using Digest Auth
+      parameters:
+      - default: auth
+        description: Quality of Protection
+        in: path
+        name: qop
+        required: true
+        type: string
+      - default: user
+        description: Username
+        in: path
+        name: user
+        required: true
+        type: string
+      - default: passwd
+        description: Password
+        in: path
+        name: passwd
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      summary: Handle Digest Authentication
+      tags:
+      - Authentication
   /base64/{value}:
     get:
       consumes:
@@ -219,7 +296,7 @@ paths:
             type: string
       summary: Decode Base64 value.
       tags:
-      - Dynamic
+      - Dynamic data
   /basic-auth/{user}/{passwd}:
     get:
       consumes:
@@ -318,7 +395,7 @@ paths:
             type: string
       summary: Generate random bytes.
       tags:
-      - Dynamic
+      - Dynamic data
   /cache:
     get:
       parameters:
@@ -341,7 +418,7 @@ paths:
       summary: Returns a 304 if an If-Modified-Since header or If-None-Match is present.
         Returns the same as a GET otherwise.
       tags:
-      - Response Inspection
+      - Response inspection
   /cache/{value}:
     get:
       parameters:
@@ -357,7 +434,7 @@ paths:
           description: Cache control set
       summary: Sets a Cache-Control header for n seconds.
       tags:
-      - Response Inspection
+      - Response inspection
   /cookies:
     get:
       consumes:
@@ -466,16 +543,16 @@ paths:
       - application/json
       responses:
         "200":
-          description: Delayed response
+          description: OK
           schema:
-            $ref: '#/definitions/utils.HTTPResponse'
+            type: object
         "400":
           description: Invalid delay value
           schema:
             type: string
       summary: Delay response.
       tags:
-      - Dynamic
+      - Dynamic data
     get:
       consumes:
       - text/plain
@@ -490,16 +567,16 @@ paths:
       - application/json
       responses:
         "200":
-          description: Delayed response
+          description: OK
           schema:
-            $ref: '#/definitions/utils.HTTPResponse'
+            type: object
         "400":
           description: Invalid delay value
           schema:
             type: string
       summary: Delay response.
       tags:
-      - Dynamic
+      - Dynamic data
     patch:
       consumes:
       - text/plain
@@ -514,16 +591,16 @@ paths:
       - application/json
       responses:
         "200":
-          description: Delayed response
+          description: OK
           schema:
-            $ref: '#/definitions/utils.HTTPResponse'
+            type: object
         "400":
           description: Invalid delay value
           schema:
             type: string
       summary: Delay response.
       tags:
-      - Dynamic
+      - Dynamic data
     post:
       consumes:
       - text/plain
@@ -538,16 +615,16 @@ paths:
       - application/json
       responses:
         "200":
-          description: Delayed response
+          description: OK
           schema:
-            $ref: '#/definitions/utils.HTTPResponse'
+            type: object
         "400":
           description: Invalid delay value
           schema:
             type: string
       summary: Delay response.
       tags:
-      - Dynamic
+      - Dynamic data
     put:
       consumes:
       - text/plain
@@ -562,16 +639,16 @@ paths:
       - application/json
       responses:
         "200":
-          description: Delayed response
+          description: OK
           schema:
-            $ref: '#/definitions/utils.HTTPResponse'
+            type: object
         "400":
           description: Invalid delay value
           schema:
             type: string
       summary: Delay response.
       tags:
-      - Dynamic
+      - Dynamic data
   /delete:
     delete:
       consumes:
@@ -602,129 +679,6 @@ paths:
       summary: Handle Deny response.
       tags:
       - Response Formats
-  /digest-auth/{qop}/{user}/{passwd}:
-    get:
-      consumes:
-      - application/json
-      description: Authenticates requests using Digest Auth
-      parameters:
-      - description: Quality of Protection
-        in: path
-        name: qop
-        required: true
-        type: string
-      - description: Username
-        in: path
-        name: user
-        required: true
-        type: string
-      - description: Password
-        in: path
-        name: passwd
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties: true
-            type: object
-        "401":
-          description: Unauthorized
-          schema:
-            type: string
-      summary: Handle Digest Authentication
-      tags:
-      - Authentication
-  /digest-auth/{qop}/{user}/{passwd}/{algorithm}:
-    get:
-      consumes:
-      - application/json
-      description: Authenticates requests using Digest Auth with specified algorithm
-      parameters:
-      - description: Quality of Protection
-        in: path
-        name: qop
-        required: true
-        type: string
-      - description: Username
-        in: path
-        name: user
-        required: true
-        type: string
-      - description: Password
-        in: path
-        name: passwd
-        required: true
-        type: string
-      - description: Algorithm (MD5, SHA-256, SHA-512)
-        in: path
-        name: algorithm
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties: true
-            type: object
-        "401":
-          description: Unauthorized
-          schema:
-            type: string
-      summary: Handle Digest Authentication with Algorithm
-      tags:
-      - Authentication
-  /digest-auth/{qop}/{user}/{passwd}/{algorithm}/{stale_after}:
-    get:
-      consumes:
-      - application/json
-      description: Authenticates requests using Digest Auth with stale after parameter
-      parameters:
-      - description: Quality of Protection
-        in: path
-        name: qop
-        required: true
-        type: string
-      - description: Username
-        in: path
-        name: user
-        required: true
-        type: string
-      - description: Password
-        in: path
-        name: passwd
-        required: true
-        type: string
-      - description: Algorithm (MD5, SHA-256, SHA-512)
-        in: path
-        name: algorithm
-        required: true
-        type: string
-      - description: Stale After
-        in: path
-        name: stale_after
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            additionalProperties: true
-            type: object
-        "401":
-          description: Unauthorized
-          schema:
-            type: string
-      summary: Handle Digest Authentication with Stale After
-      tags:
-      - Authentication
   /drip:
     get:
       consumes:
@@ -760,7 +714,7 @@ paths:
             type: string
       summary: Drip response.
       tags:
-      - Dynamic
+      - Dynamic data
   /encoding/utf8:
     get:
       consumes:
@@ -796,7 +750,7 @@ paths:
       summary: Assumes the resource has the given etag and responds to If-None-Match
         and If-Match headers appropriately.
       tags:
-      - Response Inspection
+      - Response inspection
   /get:
     get:
       consumes:
@@ -839,7 +793,7 @@ paths:
             type: object
       summary: Returns the request headers.
       tags:
-      - Request Inspection
+      - Request inspection
   /hidden-basic-auth/{user}/{passwd}:
     get:
       consumes:
@@ -974,7 +928,7 @@ paths:
             type: object
       summary: Returns the client's IP address.
       tags:
-      - Request Inspection
+      - Request inspection
   /json:
     get:
       consumes:
@@ -1017,7 +971,7 @@ paths:
             type: string
       summary: Generate HTML links.
       tags:
-      - Dynamic
+      - Dynamic data
   /patch:
     patch:
       consumes:
@@ -1095,7 +1049,7 @@ paths:
             type: string
       summary: Stream bytes in range.
       tags:
-      - Dynamic
+      - Dynamic data
   /redirect-to:
     delete:
       consumes:
@@ -1310,7 +1264,7 @@ paths:
           description: Response headers
       summary: Returns response headers.
       tags:
-      - Response Inspection
+      - Response inspection
     post:
       consumes:
       - application/json
@@ -1327,7 +1281,7 @@ paths:
           description: Response headers
       summary: Returns response headers.
       tags:
-      - Response Inspection
+      - Response inspection
   /robots.txt:
     get:
       consumes:
@@ -1344,12 +1298,6 @@ paths:
   /status/{code}:
     delete:
       description: Returns a status code based on the path
-      parameters:
-      - description: HTTP Status Code
-        in: path
-        name: code
-        required: true
-        type: integer
       produces:
       - application/json
       responses:
@@ -1359,15 +1307,9 @@ paths:
             type: object
       summary: Return status code or random status code if more than one are given
       tags:
-      - Status
+      - Status codes
     get:
       description: Returns a status code based on the path
-      parameters:
-      - description: HTTP Status Code
-        in: path
-        name: code
-        required: true
-        type: integer
       produces:
       - application/json
       responses:
@@ -1377,15 +1319,9 @@ paths:
             type: object
       summary: Return status code or random status code if more than one are given
       tags:
-      - Status
+      - Status codes
     head:
       description: Returns a status code based on the path
-      parameters:
-      - description: HTTP Status Code
-        in: path
-        name: code
-        required: true
-        type: integer
       produces:
       - application/json
       responses:
@@ -1395,15 +1331,9 @@ paths:
             type: object
       summary: Return status code or random status code if more than one are given
       tags:
-      - Status
+      - Status codes
     options:
       description: Returns a status code based on the path
-      parameters:
-      - description: HTTP Status Code
-        in: path
-        name: code
-        required: true
-        type: integer
       produces:
       - application/json
       responses:
@@ -1413,15 +1343,9 @@ paths:
             type: object
       summary: Return status code or random status code if more than one are given
       tags:
-      - Status
+      - Status codes
     patch:
       description: Returns a status code based on the path
-      parameters:
-      - description: HTTP Status Code
-        in: path
-        name: code
-        required: true
-        type: integer
       produces:
       - application/json
       responses:
@@ -1431,15 +1355,9 @@ paths:
             type: object
       summary: Return status code or random status code if more than one are given
       tags:
-      - Status
+      - Status codes
     post:
       description: Returns a status code based on the path
-      parameters:
-      - description: HTTP Status Code
-        in: path
-        name: code
-        required: true
-        type: integer
       produces:
       - application/json
       responses:
@@ -1449,15 +1367,9 @@ paths:
             type: object
       summary: Return status code or random status code if more than one are given
       tags:
-      - Status
+      - Status codes
     put:
       description: Returns a status code based on the path
-      parameters:
-      - description: HTTP Status Code
-        in: path
-        name: code
-        required: true
-        type: integer
       produces:
       - application/json
       responses:
@@ -1467,7 +1379,7 @@ paths:
             type: object
       summary: Return status code or random status code if more than one are given
       tags:
-      - Status
+      - Status codes
   /stream-bytes/{n}:
     get:
       consumes:
@@ -1500,7 +1412,7 @@ paths:
             type: string
       summary: Stream random bytes.
       tags:
-      - Dynamic
+      - Dynamic data
   /stream/{n}:
     get:
       consumes:
@@ -1516,16 +1428,16 @@ paths:
       - application/json
       responses:
         "200":
-          description: Streamed JSON responses
+          description: OK
           schema:
-            $ref: '#/definitions/api.streamJSONResponse'
+            type: object
         "400":
           description: Invalid number of responses
           schema:
             type: string
       summary: Stream JSON responses.
       tags:
-      - Dynamic
+      - Dynamic data
   /user-agent:
     get:
       consumes:
@@ -1540,7 +1452,7 @@ paths:
             type: object
       summary: Returns the User-Agent string.
       tags:
-      - Request Inspection
+      - Request inspection
   /uuid:
     get:
       consumes:
@@ -1561,7 +1473,7 @@ paths:
             type: string
       summary: Generate UUID.
       tags:
-      - Dynamic
+      - Dynamic data
   /xml:
     get:
       consumes:

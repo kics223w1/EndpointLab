@@ -22,13 +22,13 @@ func (c *HttpCookies) HandleCookies(ctx *gin.Context) {
 	})
 }
 
-//	@Summary		Sets cookie(s) as provided by the query string and redirects to cookie list.
-//	@Tags			Cookies
-//	@Accept			json
-//	@Produce		json
-//	@Param			freeform	query	string	false	"Freeform cookie value"
-//	@Success		302		{string}	string	"Redirects to cookie list"
-//	@Router			/cookies/set [get]
+//	@Summary	Sets cookie(s) as provided by the query string and redirects to cookie list.
+//	@Tags		Cookies
+//	@Accept		json
+//	@Produce	json
+//	@Param		freeform	query		string	false	"Freeform cookie value"
+//	@Success	302			{string}	string	"Redirects to cookie list"
+//	@Router		/cookies/set [get]
 func (c *HttpCookies) HandleSetCookie(ctx *gin.Context) {
 	// Get the freeform value from query parameters
 	freeform := ctx.Query("freeform")
@@ -40,14 +40,14 @@ func (c *HttpCookies) HandleSetCookie(ctx *gin.Context) {
 	ctx.Redirect(302, "/cookies")
 }
 
-//	@Summary		Set a cookie with specified name and value
-//	@Tags			Cookies
-//	@Accept			json
-//	@Produce		json
-//	@Param			name	path	string	true	"Cookie name"
-//	@Param			value	path	string	true	"Cookie value"
-//	@Success		302		{string}	string	"Redirects to cookie list"
-//	@Router			/cookies/set/{name}/{value} [get]
+//	@Summary	Set a cookie with specified name and value
+//	@Tags		Cookies
+//	@Accept		json
+//	@Produce	json
+//	@Param		name	path		string	true	"Cookie name"
+//	@Param		value	path		string	true	"Cookie value"
+//	@Success	302		{string}	string	"Redirects to cookie list"
+//	@Router		/cookies/set/{name}/{value} [get]
 func (c *HttpCookies) HandleSetCookieWithParams(ctx *gin.Context) {
 	name := ctx.Param("name")
 	value := ctx.Param("value")
@@ -63,13 +63,13 @@ func (c *HttpCookies) HandleSetCookieWithParams(ctx *gin.Context) {
 	ctx.Redirect(302, "/cookies")
 }
 
-//	@Summary		Deletes cookie(s) as provided by the query string and redirects to cookie list.
-//	@Tags			Cookies
-//	@Accept			json
-//	@Produce		json
-//	@Param			freeform	query	string	false	"Freeform cookie value"
-//	@Success		302		{string}	string	"Redirects to cookie list"
-//	@Router			/cookies/delete [get]
+//	@Summary	Deletes cookie(s) as provided by the query string and redirects to cookie list.
+//	@Tags		Cookies
+//	@Accept		json
+//	@Produce	json
+//	@Param		freeform	query		string	false	"Freeform cookie value"
+//	@Success	302			{string}	string	"Redirects to cookie list"
+//	@Router		/cookies/delete [get]
 func (c *HttpCookies) HandleDeleteCookie(ctx *gin.Context) {
 	// Get the freeform value from query parameters
 	freeform := ctx.Query("freeform")

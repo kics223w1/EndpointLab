@@ -17,7 +17,7 @@ func NewReqInspection() *ReqInspection {
 
 //	@Summary		Returns the request headers.
 //	@Description	Returns all headers of the request
-//	@Tags			Request Inspection
+//	@Tags			Request inspection
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	{object}	object
@@ -29,7 +29,7 @@ func (r *ReqInspection) HandleHeaders(ctx *gin.Context) {
 
 //	@Summary		Returns the client's IP address.
 //	@Description	Returns the IP address of the client making the request
-//	@Tags			Request Inspection
+//	@Tags			Request inspection
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	{object}	object
@@ -41,7 +41,7 @@ func (r *ReqInspection) HandleIP(ctx *gin.Context) {
 
 //	@Summary		Returns the User-Agent string.
 //	@Description	Returns the User-Agent string of the request
-//	@Tags			Request Inspection
+//	@Tags			Request inspection
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	{object}	object

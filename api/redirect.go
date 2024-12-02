@@ -18,7 +18,7 @@ func NewHttpRedirect() *HttpRedirect {
 //	@Tags			Redirects
 //	@Accept			json
 //	@Produce		json
-//	@Param			n	path		int	true	"Number of redirects"
+//	@Param			n	path		int		true	"Number of redirects"
 //	@Success		302	{string}	string	"Redirects to the next URL"
 //	@Failure		400	{object}	object	"Invalid redirect count"
 //	@Router			/absolute-redirect/{n} [get]
@@ -56,8 +56,8 @@ func (h *HttpRedirect) HandleAbsoluteRedirect(ctx *gin.Context) {
 //	@Produce		json
 //	@Param			url			formData	string	true	"URL to redirect to"
 //	@Param			status_code	formData	int		false	"HTTP status code for the redirect"
-//	@Success		302	{string}	string	"Redirects to the specified URL"
-//	@Failure		400	{object}	object	"URL is required"
+//	@Success		302			{string}	string	"Redirects to the specified URL"
+//	@Failure		400			{object}	object	"URL is required"
 //	@Router			/redirect-to [post]
 //	@Router			/redirect-to [delete]
 //	@Router			/redirect-to [put]
@@ -87,7 +87,7 @@ func (h *HttpRedirect) HandleRedirectTo(ctx *gin.Context) {
 //	@Tags			Redirects
 //	@Accept			json
 //	@Produce		json
-//	@Param			n	path		int	true	"Number of redirects"
+//	@Param			n	path		int		true	"Number of redirects"
 //	@Success		302	{string}	string	"Redirects to the next URL"
 //	@Failure		400	{object}	object	"Invalid redirect count"
 //	@Router			/redirect/{n} [get]
@@ -116,7 +116,7 @@ func (h *HttpRedirect) HandleRedirect(ctx *gin.Context) {
 //	@Tags			Redirects
 //	@Accept			json
 //	@Produce		json
-//	@Param			n	path		int	true	"Number of redirects"
+//	@Param			n	path		int		true	"Number of redirects"
 //	@Success		302	{string}	string	"Redirects to the next URL"
 //	@Failure		400	{object}	object	"Invalid redirect count"
 //	@Router			/relative-redirect/{n} [get]

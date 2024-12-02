@@ -11,7 +11,7 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "API Support",
+            "name": "John Cao",
             "url": "https://github.com/kics223w1/EndpointLab"
         },
         "license": {
@@ -210,6 +210,198 @@ const docTemplate = `{
                 }
             }
         },
+        "/auth/digest-algorithm/{qop}/{user}/{passwd}/{algorithm}": {
+            "get": {
+                "description": "Authenticates requests using Digest Auth with specified algorithm",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Handle Digest Authentication with Algorithm",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "auth",
+                        "description": "Quality of Protection",
+                        "name": "qop",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "user",
+                        "description": "Username",
+                        "name": "user",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "passwd",
+                        "description": "Password",
+                        "name": "passwd",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "MD5",
+                        "description": "Algorithm (MD5, SHA-256, SHA-512)",
+                        "name": "algorithm",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/digest-stale/{qop}/{user}/{passwd}/{algorithm}/{stale_after}": {
+            "get": {
+                "description": "Authenticates requests using Digest Auth with stale after parameter",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Handle Digest Authentication with Stale After",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "auth",
+                        "description": "Quality of Protection",
+                        "name": "qop",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "user",
+                        "description": "Username",
+                        "name": "user",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "passwd",
+                        "description": "Password",
+                        "name": "passwd",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "MD5",
+                        "description": "Algorithm (MD5, SHA-256, SHA-512)",
+                        "name": "algorithm",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "never",
+                        "description": "Stale After",
+                        "name": "stale_after",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/digest/{qop}/{user}/{passwd}": {
+            "get": {
+                "description": "Authenticates requests using Digest Auth",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Handle Digest Authentication",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "auth",
+                        "description": "Quality of Protection",
+                        "name": "qop",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "user",
+                        "description": "Username",
+                        "name": "user",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "default": "passwd",
+                        "description": "Password",
+                        "name": "passwd",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/base64/{value}": {
             "get": {
                 "description": "Decodes a Base64 encoded string provided in the URL parameter.",
@@ -220,7 +412,7 @@ const docTemplate = `{
                     "text/plain"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Decode Base64 value.",
                 "parameters": [
@@ -364,7 +556,7 @@ const docTemplate = `{
                     "application/octet-stream"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Generate random bytes.",
                 "parameters": [
@@ -404,7 +596,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Response Inspection"
+                    "Response inspection"
                 ],
                 "summary": "Returns a 304 if an If-Modified-Since header or If-None-Match is present. Returns the same as a GET otherwise.",
                 "parameters": [
@@ -437,7 +629,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Response Inspection"
+                    "Response inspection"
                 ],
                 "summary": "Sets a Cache-Control header for n seconds.",
                 "parameters": [
@@ -607,7 +799,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Delay response.",
                 "parameters": [
@@ -621,9 +813,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Delayed response",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/utils.HTTPResponse"
+                            "type": "object"
                         }
                     },
                     "400": {
@@ -643,7 +835,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Delay response.",
                 "parameters": [
@@ -657,9 +849,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Delayed response",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/utils.HTTPResponse"
+                            "type": "object"
                         }
                     },
                     "400": {
@@ -679,7 +871,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Delay response.",
                 "parameters": [
@@ -693,9 +885,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Delayed response",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/utils.HTTPResponse"
+                            "type": "object"
                         }
                     },
                     "400": {
@@ -715,7 +907,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Delay response.",
                 "parameters": [
@@ -729,9 +921,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Delayed response",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/utils.HTTPResponse"
+                            "type": "object"
                         }
                     },
                     "400": {
@@ -751,7 +943,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Delay response.",
                 "parameters": [
@@ -765,9 +957,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Delayed response",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/utils.HTTPResponse"
+                            "type": "object"
                         }
                     },
                     "400": {
@@ -825,186 +1017,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/digest-auth/{qop}/{user}/{passwd}": {
-            "get": {
-                "description": "Authenticates requests using Digest Auth",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Handle Digest Authentication",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Quality of Protection",
-                        "name": "qop",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Username",
-                        "name": "user",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Password",
-                        "name": "passwd",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/digest-auth/{qop}/{user}/{passwd}/{algorithm}": {
-            "get": {
-                "description": "Authenticates requests using Digest Auth with specified algorithm",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Handle Digest Authentication with Algorithm",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Quality of Protection",
-                        "name": "qop",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Username",
-                        "name": "user",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Password",
-                        "name": "passwd",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Algorithm (MD5, SHA-256, SHA-512)",
-                        "name": "algorithm",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/digest-auth/{qop}/{user}/{passwd}/{algorithm}/{stale_after}": {
-            "get": {
-                "description": "Authenticates requests using Digest Auth with stale after parameter",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Authentication"
-                ],
-                "summary": "Handle Digest Authentication with Stale After",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Quality of Protection",
-                        "name": "qop",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Username",
-                        "name": "user",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Password",
-                        "name": "passwd",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Algorithm (MD5, SHA-256, SHA-512)",
-                        "name": "algorithm",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Stale After",
-                        "name": "stale_after",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
         "/drip": {
             "get": {
                 "description": "Streams data in chunks with a specified delay between each chunk.",
@@ -1015,7 +1027,7 @@ const docTemplate = `{
                     "application/octet-stream"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Drip response.",
                 "parameters": [
@@ -1086,7 +1098,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Response Inspection"
+                    "Response inspection"
                 ],
                 "summary": "Assumes the resource has the given etag and responds to If-None-Match and If-Match headers appropriately.",
                 "parameters": [
@@ -1166,7 +1178,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Request Inspection"
+                    "Request inspection"
                 ],
                 "summary": "Returns the request headers.",
                 "responses": {
@@ -1370,7 +1382,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Request Inspection"
+                    "Request inspection"
                 ],
                 "summary": "Returns the client's IP address.",
                 "responses": {
@@ -1413,7 +1425,7 @@ const docTemplate = `{
                     "text/html"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Generate HTML links.",
                 "parameters": [
@@ -1527,7 +1539,7 @@ const docTemplate = `{
                     "application/octet-stream"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Stream bytes in range.",
                 "parameters": [
@@ -1865,7 +1877,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Response Inspection"
+                    "Response inspection"
                 ],
                 "summary": "Returns response headers.",
                 "parameters": [
@@ -1891,7 +1903,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Response Inspection"
+                    "Response inspection"
                 ],
                 "summary": "Returns response headers.",
                 "parameters": [
@@ -1936,18 +1948,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Status"
+                    "Status codes"
                 ],
                 "summary": "Return status code or random status code if more than one are given",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "HTTP Status Code",
-                        "name": "code",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1963,18 +1966,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Status"
+                    "Status codes"
                 ],
                 "summary": "Return status code or random status code if more than one are given",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "HTTP Status Code",
-                        "name": "code",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1990,18 +1984,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Status"
+                    "Status codes"
                 ],
                 "summary": "Return status code or random status code if more than one are given",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "HTTP Status Code",
-                        "name": "code",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2017,18 +2002,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Status"
+                    "Status codes"
                 ],
                 "summary": "Return status code or random status code if more than one are given",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "HTTP Status Code",
-                        "name": "code",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2044,18 +2020,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Status"
+                    "Status codes"
                 ],
                 "summary": "Return status code or random status code if more than one are given",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "HTTP Status Code",
-                        "name": "code",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2071,18 +2038,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Status"
+                    "Status codes"
                 ],
                 "summary": "Return status code or random status code if more than one are given",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "HTTP Status Code",
-                        "name": "code",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2098,18 +2056,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Status"
+                    "Status codes"
                 ],
                 "summary": "Return status code or random status code if more than one are given",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "HTTP Status Code",
-                        "name": "code",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2130,7 +2079,7 @@ const docTemplate = `{
                     "application/octet-stream"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Stream random bytes.",
                 "parameters": [
@@ -2180,7 +2129,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Stream JSON responses.",
                 "parameters": [
@@ -2194,9 +2143,9 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Streamed JSON responses",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.streamJSONResponse"
+                            "type": "object"
                         }
                     },
                     "400": {
@@ -2218,7 +2167,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Request Inspection"
+                    "Request inspection"
                 ],
                 "summary": "Returns the User-Agent string.",
                 "responses": {
@@ -2241,7 +2190,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Dynamic"
+                    "Dynamic data"
                 ],
                 "summary": "Generate UUID.",
                 "responses": {
@@ -2283,95 +2232,6 @@ const docTemplate = `{
                 }
             }
         }
-    },
-    "definitions": {
-        "api.streamJSONResponse": {
-            "type": "object",
-            "properties": {
-                "args": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "data": {
-                    "type": "string"
-                },
-                "files": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "form": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "headers": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "json": {},
-                "method": {
-                    "type": "string"
-                },
-                "origin": {
-                    "type": "string"
-                },
-                "url": {
-                    "type": "string"
-                }
-            }
-        },
-        "utils.HTTPResponse": {
-            "type": "object",
-            "properties": {
-                "args": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "data": {
-                    "type": "string"
-                },
-                "files": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "form": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "headers": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "json": {},
-                "method": {
-                    "type": "string"
-                },
-                "origin": {
-                    "type": "string"
-                },
-                "url": {
-                    "type": "string"
-                }
-            }
-        }
     }
 }`
 
@@ -2382,7 +2242,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "EndpointLab",
-	Description:      "An alternative to httpbin.org in Gin.",
+	Description:      "An alternative to httpbin.org in Gin. <br/> <br/> <b>Run locally: </b> <code>$ docker run -p 8080:8080 viethuy/endpointlab</code>",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

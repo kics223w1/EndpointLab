@@ -24,9 +24,9 @@ func NewHttpAuth() *HttpAuth {
 //	@Tags			Authentication
 //	@Accept			json
 //	@Produce		json
-//	@Param			Authorization	header	string	true	"Bearer token"
-//	@Success		200	{object}	map[string]interface{}
-//	@Failure		401	{string}	string	"Unauthorized"
+//	@Param			Authorization	header		string	true	"Bearer token"
+//	@Success		200				{object}	map[string]interface{}
+//	@Failure		401				{string}	string	"Unauthorized"
 //	@Router			/bearer [get]
 func (h *HttpAuth) HandleBearer(ctx *gin.Context) {
 	// Get the Authorization header
@@ -59,10 +59,10 @@ func (h *HttpAuth) HandleBearer(ctx *gin.Context) {
 //	@Tags			Authentication
 //	@Accept			json
 //	@Produce		json
-//	@Param			user		path	string	true	"Username"
-//	@Param			passwd		path	string	true	"Password"
-//	@Success		200	{object}	map[string]interface{}
-//	@Failure		401	{string}	string	"Unauthorized"
+//	@Param			user	path		string	true	"Username"
+//	@Param			passwd	path		string	true	"Password"
+//	@Success		200		{object}	map[string]interface{}
+//	@Failure		401		{string}	string	"Unauthorized"
 //	@Router			/basic-auth/{user}/{passwd} [get]
 func (h *HttpAuth) HandleBasicAuth(ctx *gin.Context) {
 	// Get user and password from URL parameters
@@ -106,11 +106,11 @@ func (h *HttpAuth) HandleBasicAuth(ctx *gin.Context) {
 //	@Tags			Authentication
 //	@Accept			json
 //	@Produce		json
-//	@Param			qop		path	string	true	"Quality of Protection"	default(auth)
-//	@Param			user		path	string	true	"Username"	default(user)
-//	@Param			passwd		path	string	true	"Password"	default(passwd)
-//	@Success		200	{object}	map[string]interface{}
-//	@Failure		401	{string}	string	"Unauthorized"
+//	@Param			qop		path		string	true	"Quality of Protection"	default(auth)
+//	@Param			user	path		string	true	"Username"				default(user)
+//	@Param			passwd	path		string	true	"Password"				default(passwd)
+//	@Success		200		{object}	map[string]interface{}
+//	@Failure		401		{string}	string	"Unauthorized"
 //	@Router			/auth/digest/{qop}/{user}/{passwd} [get]
 func (h *HttpAuth) HandleDigestAuth(ctx *gin.Context) {
 	// Get parameters from URL
@@ -177,12 +177,12 @@ func (h *HttpAuth) HandleDigestAuth(ctx *gin.Context) {
 //	@Tags			Authentication
 //	@Accept			json
 //	@Produce		json
-//	@Param			qop			path	string	true	"Quality of Protection"	default(auth)
-//	@Param			user		path	string	true	"Username"	default(user)
-//	@Param			passwd		path	string	true	"Password"	default(passwd)
-//	@Param			algorithm	path	string	true	"Algorithm (MD5, SHA-256, SHA-512)"	default(MD5)
-//	@Success		200	{object}	map[string]interface{}
-//	@Failure		401	{string}	string	"Unauthorized"
+//	@Param			qop			path		string	true	"Quality of Protection"				default(auth)
+//	@Param			user		path		string	true	"Username"							default(user)
+//	@Param			passwd		path		string	true	"Password"							default(passwd)
+//	@Param			algorithm	path		string	true	"Algorithm (MD5, SHA-256, SHA-512)"	default(MD5)
+//	@Success		200			{object}	map[string]interface{}
+//	@Failure		401			{string}	string	"Unauthorized"
 //	@Router			/auth/digest-algorithm/{qop}/{user}/{passwd}/{algorithm} [get]
 func (h *HttpAuth) HandleDigestAuthAlgorithm(ctx *gin.Context) {
 	// Get parameters from URL
@@ -313,13 +313,13 @@ func (h *HttpAuth) HandleDigestAuthAlgorithm(ctx *gin.Context) {
 //	@Tags			Authentication
 //	@Accept			json
 //	@Produce		json
-//	@Param			qop			path	string	true	"Quality of Protection"	default(auth)
-//	@Param			user		path	string	true	"Username"	default(user)
-//	@Param			passwd		path	string	true	"Password"	default(passwd)
-//	@Param			algorithm	path	string	true	"Algorithm (MD5, SHA-256, SHA-512)"	default(MD5)
-//	@Param			stale_after	path	string	true	"Stale After"	default(never)
-//	@Success		200	{object}	map[string]interface{}
-//	@Failure		401	{string}	string	"Unauthorized"
+//	@Param			qop			path		string	true	"Quality of Protection"				default(auth)
+//	@Param			user		path		string	true	"Username"							default(user)
+//	@Param			passwd		path		string	true	"Password"							default(passwd)
+//	@Param			algorithm	path		string	true	"Algorithm (MD5, SHA-256, SHA-512)"	default(MD5)
+//	@Param			stale_after	path		string	true	"Stale After"						default(never)
+//	@Success		200			{object}	map[string]interface{}
+//	@Failure		401			{string}	string	"Unauthorized"
 //	@Router			/auth/digest-stale/{qop}/{user}/{passwd}/{algorithm}/{stale_after} [get]
 func (h *HttpAuth) HandleDigestAuthStaleAfter(ctx *gin.Context) {
 	// Get parameters from URL
@@ -427,10 +427,10 @@ func (h *HttpAuth) HandleDigestAuthStaleAfter(ctx *gin.Context) {
 //	@Tags			Authentication
 //	@Accept			json
 //	@Produce		json
-//	@Param			user		path	string	true	"Username"
-//	@Param			passwd		path	string	true	"Password"
-//	@Success		200	{object}	map[string]interface{}
-//	@Failure		404	{string}	string	"Not Found"
+//	@Param			user	path		string	true	"Username"
+//	@Param			passwd	path		string	true	"Password"
+//	@Success		200		{object}	map[string]interface{}
+//	@Failure		404		{string}	string	"Not Found"
 //	@Router			/hidden-basic-auth/{user}/{passwd} [get]
 func (h *HttpAuth) HandleHiddenBasicAuth(ctx *gin.Context) {
 	// Get user and password from URL parameters

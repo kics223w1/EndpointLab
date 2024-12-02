@@ -36,7 +36,7 @@ func NewHttpFormat() *HttpFormat {
 //	@Tags			Response Formats
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	 "Brotli-encoded data."
+//	@Success		200	"Brotli-encoded data."
 //	@Router			/brotli [get]
 func (h *HttpFormat) HandleBrotli(c *gin.Context) {
 	response := FormatResponse{
@@ -78,7 +78,7 @@ func (h *HttpFormat) HandleBrotli(c *gin.Context) {
 //	@Tags			Response Formats
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	 "Deflate-encoded data."
+//	@Success		200	"Deflate-encoded data."
 //	@Router			/deflate [get]
 func (h *HttpFormat) HandleDeflate(c *gin.Context) {
 	response := FormatResponse{
@@ -120,7 +120,7 @@ func (h *HttpFormat) HandleDeflate(c *gin.Context) {
 //	@Tags			Response Formats
 //	@Accept			plain
 //	@Produce		plain
-//	@Success		200	{string} string "Deny response."
+//	@Success		200	{string}	string	"Deny response."
 //	@Router			/deny [get]
 func (h *HttpFormat) HandleDeny(c *gin.Context) {
 
@@ -152,7 +152,7 @@ func (h *HttpFormat) handleUTF8(c *gin.Context) {
 //	@Tags			Response Formats
 //	@Accept			json
 //	@Produce		json
-//	@Success		200 "Gzip-encoded data."
+//	@Success		200	"Gzip-encoded data."
 //	@Router			/gzip [get]
 func (h *HttpFormat) HandleGzip(c *gin.Context) {
 	response := FormatResponse{
@@ -194,7 +194,7 @@ func (h *HttpFormat) HandleGzip(c *gin.Context) {
 //	@Tags			Response Formats
 //	@Accept			html
 //	@Produce		html
-//	@Success		200	 "HTML content."
+//	@Success		200	"HTML content."
 //	@Router			/html [get]
 func (h *HttpFormat) HandleHtml(c *gin.Context) {
 	html, err := os.ReadFile("templates/demo.html")
@@ -213,7 +213,7 @@ func (h *HttpFormat) HandleHtml(c *gin.Context) {
 //	@Tags			Response Formats
 //	@Accept			json
 //	@Produce		json
-//	@Success		200 "JSON content."
+//	@Success		200	"JSON content."
 //	@Router			/json [get]
 func (h *HttpFormat) HandleJson(c *gin.Context) {
 	json, err := os.ReadFile("templates/demo.json")
@@ -231,7 +231,7 @@ func (h *HttpFormat) HandleJson(c *gin.Context) {
 //	@Tags			Response Formats
 //	@Accept			plain
 //	@Produce		plain
-//	@Success		200 "robots.txt content."
+//	@Success		200	"robots.txt content."
 //	@Router			/robots.txt [get]
 func (h *HttpFormat) HandleRobotTxt(c *gin.Context) {
 	c.Header("Content-Type", "text/plain")
@@ -243,7 +243,7 @@ func (h *HttpFormat) HandleRobotTxt(c *gin.Context) {
 //	@Tags			Response Formats
 //	@Accept			xml
 //	@Produce		xml
-//	@Success		200 "XML content."
+//	@Success		200	"XML content."
 //	@Router			/xml [get]
 func (h *HttpFormat) HandleXML(c *gin.Context) {
 	xml, err := os.ReadFile("templates/demo.xml")

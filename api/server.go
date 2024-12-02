@@ -26,16 +26,16 @@ func NewServer() (*Server, error) {
 
 //	@title			EndpointLab
 //	@version		1.0
-//	@description	 An alternative to httpbin.org in Gin. 
+//	@description	An alternative to httpbin.org in Gin. <br/> <br/> <b>Run locally: </b> <code>$ docker run -p 8080:8080 viethuy/endpointlab</code>
 //	@termsOfService	http://swagger.io/terms/
 
-//	@contact.name	API Support
+//	@contact.name	John Cao
 //	@contact.url	https://github.com/kics223w1/EndpointLab
 
 //	@license.name	Apache 2.0
 //	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 
-//	@host		localhost:8080
+//	@host	localhost:8080
 func (s *Server) registerRoutes() {
 	// Basic HTTP method endpoints
 	httpMethod := NewHttpMethod()
