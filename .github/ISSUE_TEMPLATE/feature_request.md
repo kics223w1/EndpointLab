@@ -1,19 +1,7 @@
----
-name: Feature request
-about: Suggest an idea for this project
-title: ""
-labels: enhancement
-assignees: ""
----
+### Description
 
-**Problem**
-Describe the problem.
+<!-- The brief of the Pull Request -->
 
-**Solution**
-Describe the desired solution.
+### Acceptance Criteria
 
-**Alternatives**
-Describe alternative solutions.
-
-**Additional context**
-Add any other context or screenshots.
+<!-- All requirements for this ticket -->

@@ -1,9 +1,19 @@
-# Pull Request
+### Description
 
-## Description
+<!-- The brief of the Pull Request -->
 
-## Type of change
+### Ticket
 
-## How Has This Been Tested?
+<!-- Which issue ticket? -->
 
-## Checklist
+### Changelogs
+
+<!-- Describe what changes -->
+
+### How to test
+
+<!-- Step by step how to test the PR -->
+
+### Screenshot/GIF
+
+<!-- Screenshot or GIF if need -->
