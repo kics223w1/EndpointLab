@@ -6,8 +6,8 @@ labels: question
 assignees: ""
 ---
 
-**What is your question?**
-A clear and concise question about the project.
+**Question**
+State your question clearly.
 
 **Additional context**
-Add any other context or screenshots related to your question here.
+Add any other context or screenshots.
