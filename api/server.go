@@ -182,14 +182,11 @@ func (s *Server) registerRoutes() {
 
 	// Images
 	httpImage := NewHttpImage()
-	//	@Summary		PNG image
-	//	@Description	Returns a PNG image
-	//	@Tags			images
-	//	@Accept			json
-	//	@Produce		image/png
-	//	@Success		200	{file}	binary
-	//	@Router			/image/png [get]
+	s.router.GET("/image", httpImage.HandleImage)
 	s.router.GET("/image/png", httpImage.HandleImagePNG)
+	s.router.GET("/image/jpeg", httpImage.HandleImageJPEG)
+	s.router.GET("/image/webp", httpImage.HandleImageWebp)
+	s.router.GET("/image/svg", httpImage.HandleImageSVG)
 
 	// Anything
 	httpAnything := NewHttpAnything()
@@ -303,40 +300,9 @@ func (s *Server) registerRoutes() {
 
 	// Cookies
 	httpCookies := NewHttpCookies()
-	
 	s.router.GET("/cookies", httpCookies.HandleCookies)
-
-	//	@Summary		Set cookies
-	//	@Description	Sets one or more cookies using query parameters
-	//	@Tags			cookies
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			cookie1	query		string	false	"Cookie name=value pair"
-	//	@Param			cookie2	query		string	false	"Cookie name=value pair"
-	//	@Success		200		{object}	object
-	//	@Router			/cookies/set [get]
 	s.router.GET("/cookies/set", httpCookies.HandleSetCookie)
-
-	//	@Summary		Set cookie with path parameters
-	//	@Description	Sets a cookie using name and value from the URL path
-	//	@Tags			cookies
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			name	path		string	true	"Cookie name"
-	//	@Param			value	path		string	true	"Cookie value"
-	//	@Success		200		{object}	object
-	//	@Router			/cookies/set/{name}/{value} [get]
 	s.router.GET("/cookies/set/:name/:value", httpCookies.HandleSetCookieWithParams)
-
-	//	@Summary		Delete cookies
-	//	@Description	Deletes one or more cookies specified in query parameters
-	//	@Tags			cookies
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			cookie1	query		string	false	"Cookie name to delete"
-	//	@Param			cookie2	query		string	false	"Cookie name to delete"
-	//	@Success		200		{object}	object
-	//	@Router			/cookies/delete [get]
 	s.router.GET("/cookies/delete", httpCookies.HandleDeleteCookie)
 
 	// Redirects

@@ -332,6 +332,121 @@
                 }
             }
         },
+        "/image": {
+            "get": {
+                "description": "Returns a simple image of the type suggested by the Accept header",
+                "produces": [
+                    "image/webp",
+                    " image/png",
+                    " image/jpeg",
+                    " image/svg+xml"
+                ],
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns an image based on the Accept header",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "406": {
+                        "description": "Not Acceptable",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/image/jpeg": {
+            "get": {
+                "description": "Returns a simple JPEG image",
+                "produces": [
+                    "image/jpeg"
+                ],
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a JPEG image",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "file"
+                        }
+                    }
+                }
+            }
+        },
+        "/image/png": {
+            "get": {
+                "description": "Returns a simple PNG image",
+                "produces": [
+                    "image/png"
+                ],
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a PNG image",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "file"
+                        }
+                    }
+                }
+            }
+        },
+        "/image/svg": {
+            "get": {
+                "description": "Returns a simple SVG image",
+                "produces": [
+                    "image/svg+xml"
+                ],
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns an SVG image",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "file"
+                        }
+                    }
+                }
+            }
+        },
+        "/image/webp": {
+            "get": {
+                "description": "Returns a simple WEBP image",
+                "produces": [
+                    "image/webp"
+                ],
+                "tags": [
+                    "Images"
+                ],
+                "summary": "Returns a WEBP image",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "file"
+                        }
+                    }
+                }
+            }
+        },
         "/patch": {
             "patch": {
                 "description": "Returns the PATCH parameters of the request",

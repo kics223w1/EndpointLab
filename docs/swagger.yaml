@@ -220,6 +220,82 @@ paths:
       summary: The request's query parameters.
       tags:
       - HTTP Methods
+  /image:
+    get:
+      description: Returns a simple image of the type suggested by the Accept header
+      produces:
+      - image/webp
+      - ' image/png'
+      - ' image/jpeg'
+      - ' image/svg+xml'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+        "406":
+          description: Not Acceptable
+          schema:
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: object
+      summary: Returns an image based on the Accept header
+      tags:
+      - Images
+  /image/jpeg:
+    get:
+      description: Returns a simple JPEG image
+      produces:
+      - image/jpeg
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+      summary: Returns a JPEG image
+      tags:
+      - Images
+  /image/png:
+    get:
+      description: Returns a simple PNG image
+      produces:
+      - image/png
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+      summary: Returns a PNG image
+      tags:
+      - Images
+  /image/svg:
+    get:
+      description: Returns a simple SVG image
+      produces:
+      - image/svg+xml
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+      summary: Returns an SVG image
+      tags:
+      - Images
+  /image/webp:
+    get:
+      description: Returns a simple WEBP image
+      produces:
+      - image/webp
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: file
+      summary: Returns a WEBP image
+      tags:
+      - Images
   /patch:
     patch:
       consumes:
