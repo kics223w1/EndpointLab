@@ -11,19 +11,22 @@ docker run -p 8080:8080 viethuy/endpointlab
 
 ## Swagger UI
 
-Start the UI:
+Access the Swagger UI:
 
-```bash
-make run
-```
+- **Online**: Visit [SwaggerHub](<https://app.swaggerhub.com/apis-docs/HuyCao(John)/EndpointLab/1.0>).
 
-Access it at: `http://localhost:8080/swagger/index.html`
+- **Locally**:
 
-Update `swagger.json`:
+  1. Start the UI:
+     ```bash
+     make run
+     ```
+  2. Open in browser: `http://localhost:8080/swagger/index.html`
 
-```bash
-make swagger
-```
+- **Update `swagger.json`**:
+  ```bash
+  make swagger
+  ```
 
 ## Build and Distribute
 
