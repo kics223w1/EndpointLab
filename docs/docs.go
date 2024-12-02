@@ -182,7 +182,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "cookies"
+                    "Cookies"
                 ],
                 "summary": "Get cookies",
                 "responses": {
@@ -190,6 +190,104 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/cookies/delete": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cookies"
+                ],
+                "summary": "Deletes cookie(s) as provided by the query string and redirects to cookie list.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Freeform cookie value",
+                        "name": "freeform",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirects to cookie list",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/cookies/set": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cookies"
+                ],
+                "summary": "Sets cookie(s) as provided by the query string and redirects to cookie list.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Freeform cookie value",
+                        "name": "freeform",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirects to cookie list",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/cookies/set/{name}/{value}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cookies"
+                ],
+                "summary": "Set a cookie with specified name and value",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Cookie name",
+                        "name": "name",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Cookie value",
+                        "name": "value",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirects to cookie list",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }

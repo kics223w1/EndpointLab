@@ -124,7 +124,72 @@ paths:
             type: object
       summary: Get cookies
       tags:
-      - cookies
+      - Cookies
+  /cookies/delete:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Freeform cookie value
+        in: query
+        name: freeform
+        type: string
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirects to cookie list
+          schema:
+            type: string
+      summary: Deletes cookie(s) as provided by the query string and redirects to
+        cookie list.
+      tags:
+      - Cookies
+  /cookies/set:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Freeform cookie value
+        in: query
+        name: freeform
+        type: string
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirects to cookie list
+          schema:
+            type: string
+      summary: Sets cookie(s) as provided by the query string and redirects to cookie
+        list.
+      tags:
+      - Cookies
+  /cookies/set/{name}/{value}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Cookie name
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Cookie value
+        in: path
+        name: value
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirects to cookie list
+          schema:
+            type: string
+      summary: Set a cookie with specified name and value
+      tags:
+      - Cookies
   /delete:
     delete:
       consumes:
