@@ -33,7 +33,7 @@ func NewHttpAnything() *HttpAnything {
 //	@Tags			Anything
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{object}	httpAnythingResponse
+//	@Success		200	{object}  object
 //	@Router			/anything [get]
 //	@Router			/anything [post]
 //	@Router			/anything [put]

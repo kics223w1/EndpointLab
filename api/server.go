@@ -114,31 +114,8 @@ func (s *Server) registerRoutes() {
 
 	// Request inspection
 	httpReqInspection := NewReqInspection()
-	//	@Summary		Request headers
-	//	@Description	Returns the request's headers
-	//	@Tags			request-inspection
-	//	@Accept			json
-	//	@Produce		json
-	//	@Success		200	{object}	object
-	//	@Router			/headers [get]
 	s.router.GET("/headers", httpReqInspection.HandleHeaders)
-
-	//	@Summary		Client IP
-	//	@Description	Returns the client's IP address
-	//	@Tags			request-inspection
-	//	@Accept			json
-	//	@Produce		json
-	//	@Success		200	{object}	object
-	//	@Router			/ip [get]
 	s.router.GET("/ip", httpReqInspection.HandleIP)
-
-	//	@Summary		User agent
-	//	@Description	Returns the user agent string
-	//	@Tags			request-inspection
-	//	@Accept			json
-	//	@Produce		json
-	//	@Success		200	{object}	object
-	//	@Router			/user-agent [get]
 	s.router.GET("/user-agent", httpReqInspection.HandleUserAgent)
 
 	// Response inspection

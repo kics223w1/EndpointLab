@@ -1,32 +1,3 @@
-definitions:
-  api.httpAnythingResponse:
-    properties:
-      args:
-        additionalProperties:
-          type: string
-        type: object
-      data:
-        type: string
-      files:
-        additionalProperties:
-          type: string
-        type: object
-      form:
-        additionalProperties:
-          type: string
-        type: object
-      headers:
-        additionalProperties:
-          type: string
-        type: object
-      json: {}
-      method:
-        type: string
-      origin:
-        type: string
-      url:
-        type: string
-    type: object
 host: localhost:8080
 info:
   contact:
@@ -51,7 +22,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.httpAnythingResponse'
+            type: object
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -65,7 +36,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.httpAnythingResponse'
+            type: object
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -79,7 +50,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.httpAnythingResponse'
+            type: object
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -93,7 +64,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.httpAnythingResponse'
+            type: object
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -107,7 +78,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.httpAnythingResponse'
+            type: object
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -121,7 +92,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.httpAnythingResponse'
+            type: object
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -135,7 +106,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/api.httpAnythingResponse'
+            type: object
       summary: Returns anything that is passed to request
       tags:
       - Anything
@@ -249,6 +220,21 @@ paths:
       summary: The request's query parameters.
       tags:
       - HTTP Methods
+  /headers:
+    get:
+      consumes:
+      - application/json
+      description: Returns all headers of the request
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Returns the request headers.
+      tags:
+      - Request Inspection
   /image:
     get:
       description: Returns a simple image of the type suggested by the Accept header
@@ -325,6 +311,21 @@ paths:
       summary: Returns a WEBP image
       tags:
       - Images
+  /ip:
+    get:
+      consumes:
+      - application/json
+      description: Returns the IP address of the client making the request
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Returns the client's IP address.
+      tags:
+      - Request Inspection
   /patch:
     patch:
       consumes:
@@ -497,4 +498,19 @@ paths:
       summary: Return status code or random status code if more than one are given
       tags:
       - Status
+  /user-agent:
+    get:
+      consumes:
+      - application/json
+      description: Returns the User-Agent string of the request
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: object
+      summary: Returns the User-Agent string.
+      tags:
+      - Request Inspection
 swagger: "2.0"

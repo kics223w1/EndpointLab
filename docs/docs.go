@@ -40,7 +40,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.httpAnythingResponse"
+                            "type": "object"
                         }
                     }
                 }
@@ -61,7 +61,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.httpAnythingResponse"
+                            "type": "object"
                         }
                     }
                 }
@@ -82,7 +82,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.httpAnythingResponse"
+                            "type": "object"
                         }
                     }
                 }
@@ -103,7 +103,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.httpAnythingResponse"
+                            "type": "object"
                         }
                     }
                 }
@@ -124,7 +124,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.httpAnythingResponse"
+                            "type": "object"
                         }
                     }
                 }
@@ -145,7 +145,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.httpAnythingResponse"
+                            "type": "object"
                         }
                     }
                 }
@@ -166,7 +166,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/api.httpAnythingResponse"
+                            "type": "object"
                         }
                     }
                 }
@@ -339,6 +339,29 @@ const docTemplate = `{
                 }
             }
         },
+        "/headers": {
+            "get": {
+                "description": "Returns all headers of the request",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Request Inspection"
+                ],
+                "summary": "Returns the request headers.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/image": {
             "get": {
                 "description": "Returns a simple image of the type suggested by the Accept header",
@@ -449,6 +472,29 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "type": "file"
+                        }
+                    }
+                }
+            }
+        },
+        "/ip": {
+            "get": {
+                "description": "Returns the IP address of the client making the request",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Request Inspection"
+                ],
+                "summary": "Returns the client's IP address.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
                         }
                     }
                 }
@@ -713,48 +759,27 @@ const docTemplate = `{
                     }
                 }
             }
-        }
-    },
-    "definitions": {
-        "api.httpAnythingResponse": {
-            "type": "object",
-            "properties": {
-                "args": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
+        },
+        "/user-agent": {
+            "get": {
+                "description": "Returns the User-Agent string of the request",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Request Inspection"
+                ],
+                "summary": "Returns the User-Agent string.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
                     }
-                },
-                "data": {
-                    "type": "string"
-                },
-                "files": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "form": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "headers": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                },
-                "json": {},
-                "method": {
-                    "type": "string"
-                },
-                "origin": {
-                    "type": "string"
-                },
-                "url": {
-                    "type": "string"
                 }
             }
         }
