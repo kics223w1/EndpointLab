@@ -127,23 +127,15 @@ func (s *Server) registerRoutes() {
 	s.router.POST("/response-headers", httpResInspection.HandleResponseHeaders)
 
 	httpFormat := NewHttpFormat()
-	//	@Summary		Brotli compressed response
-	//	@Description	Returns brotli-encoded data
-	//	@Tags			response-format
-	//	@Accept			json
-	//	@Produce		json
-	//	@Success		200	{object}	object
-	//	@Router			/brotli [get]
 	s.router.GET("/brotli", httpFormat.HandleBrotli)
-
-	//	@Summary		JSON response
-	//	@Description	Returns JSON-encoded data
-	//	@Tags			response-format
-	//	@Accept			json
-	//	@Produce		json
-	//	@Success		200	{object}	object
-	//	@Router			/json [get]
+	s.router.GET("/deflate", httpFormat.HandleDeflate)
+	s.router.GET("/deny", httpFormat.HandleDeny)
+	s.router.GET("/encoding/utf8", httpFormat.handleUTF8)
+	s.router.GET("/gzip", httpFormat.HandleGzip)
+	s.router.GET("/html", httpFormat.HandleHtml)
 	s.router.GET("/json", httpFormat.HandleJson)
+	s.router.GET("/robots.txt", httpFormat.HandleRobotTxt)
+	s.router.GET("/xml", httpFormat.HandleXML)
 
 	// Images
 	httpImage := NewHttpImage()

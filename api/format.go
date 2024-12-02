@@ -31,6 +31,13 @@ func NewHttpFormat() *HttpFormat {
 	return &HttpFormat{}
 }
 
+//	@Summary		Handle Brotli compression.
+//	@Description	Returns a Brotli compressed response.
+//	@Tags			Response Formats
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	 "Brotli-encoded data."
+//	@Router			/brotli [get]
 func (h *HttpFormat) HandleBrotli(c *gin.Context) {
 	response := FormatResponse{
 		Brotli:  true,
@@ -66,6 +73,13 @@ func (h *HttpFormat) HandleBrotli(c *gin.Context) {
 	c.Data(http.StatusOK, "application/json", compressed.Bytes())
 }
 
+//	@Summary		Handle Deflate compression.
+//	@Description	Returns a Deflate compressed response.
+//	@Tags			Response Formats
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	 "Deflate-encoded data."
+//	@Router			/deflate [get]
 func (h *HttpFormat) HandleDeflate(c *gin.Context) {
 	response := FormatResponse{
 		Deflate: true,
@@ -101,6 +115,45 @@ func (h *HttpFormat) HandleDeflate(c *gin.Context) {
 	c.Data(http.StatusOK, "application/json", compressed.Bytes())
 }
 
+//	@Summary		Handle Deny response.
+//	@Description	Returns a plain text response with denial content.
+//	@Tags			Response Formats
+//	@Accept			plain
+//	@Produce		plain
+//	@Success		200	{string} string "Deny response."
+//	@Router			/deny [get]
+func (h *HttpFormat) HandleDeny(c *gin.Context) {
+
+	// Set content type to HTML and return the content
+	c.Header("Content-Type", "text/plain")
+	c.Data(http.StatusOK, "text/plain", []byte(utils.AngryASCII))
+}
+
+//	@Summary		Serve UTF-8 text content.
+//	@Description	Returns UTF-8 encoded text content from a file.
+//	@Tags			Response Formats
+//	@Accept			plain
+//	@Produce		plain
+//	@Success		200	"UTF-8 encoded data."
+//	@Router			/encoding/utf8 [get]
+func (h *HttpFormat) handleUTF8(c *gin.Context) {
+	html, err := os.ReadFile("templates/UTF-8-demo.txt")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read HTML file"})
+		return
+	}
+
+	c.Header("Content-Type", "text/html; charset=utf-8")
+	c.Data(http.StatusOK, "text/html; charset=utf-8", html)
+}
+
+//	@Summary		Handle Gzip compression.
+//	@Description	Returns a Gzip compressed response.
+//	@Tags			Response Formats
+//	@Accept			json
+//	@Produce		json
+//	@Success		200 "Gzip-encoded data."
+//	@Router			/gzip [get]
 func (h *HttpFormat) HandleGzip(c *gin.Context) {
 	response := FormatResponse{
 		Gzip:    "true",
@@ -136,14 +189,13 @@ func (h *HttpFormat) HandleGzip(c *gin.Context) {
 	c.Data(http.StatusOK, "application/json", compressed.Bytes())
 }
 
-func (h *HttpFormat) HandleDeny(c *gin.Context) {
-
-	// Set content type to HTML and return the content
-	c.Header("Content-Type", "text/plain")
-	c.Data(http.StatusOK, "text/plain", []byte(utils.AngryASCII))
-}
-
-
+//	@Summary		Serve HTML content.
+//	@Description	Returns HTML content from a file.
+//	@Tags			Response Formats
+//	@Accept			html
+//	@Produce		html
+//	@Success		200	 "HTML content."
+//	@Router			/html [get]
 func (h *HttpFormat) HandleHtml(c *gin.Context) {
 	html, err := os.ReadFile("templates/demo.html")
 	if err != nil {
@@ -155,17 +207,14 @@ func (h *HttpFormat) HandleHtml(c *gin.Context) {
 	c.Data(http.StatusOK, "text/html", html)
 }	
 
-func (h *HttpFormat) HandleXML(c *gin.Context) {
-	xml, err := os.ReadFile("templates/demo.xml")
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read HTML file"})
-		return
-	}
 
-	c.Header("Content-Type", "application/xml")
-	c.Data(http.StatusOK, "application/xml", xml)
-}	
-
+//	@Summary		Serve JSON content.
+//	@Description	Returns JSON content from a file.
+//	@Tags			Response Formats
+//	@Accept			json
+//	@Produce		json
+//	@Success		200 "JSON content."
+//	@Router			/json [get]
 func (h *HttpFormat) HandleJson(c *gin.Context) {
 	json, err := os.ReadFile("templates/demo.json")
 	if err != nil {
@@ -177,22 +226,32 @@ func (h *HttpFormat) HandleJson(c *gin.Context) {
 	c.Data(http.StatusOK, "application/json", json)
 }
 
-func (h *HttpFormat) handleUTF8(c *gin.Context) {
-	html, err := os.ReadFile("templates/UTF-8-demo.txt")
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read HTML file"})
-		return
-	}
-
-	c.Header("Content-Type", "text/html; charset=utf-8")
-	c.Data(http.StatusOK, "text/html; charset=utf-8", html)
-}
-
-
+//	@Summary		Serve robots.txt content.
+//	@Description	Returns the content of robots.txt.
+//	@Tags			Response Formats
+//	@Accept			plain
+//	@Produce		plain
+//	@Success		200 "robots.txt content."
+//	@Router			/robots.txt [get]
 func (h *HttpFormat) HandleRobotTxt(c *gin.Context) {
 	c.Header("Content-Type", "text/plain")
 	c.Data(http.StatusOK, "text/plain", []byte(utils.RobotTXT))
 }
 
+//	@Summary		Serve XML content.
+//	@Description	Returns XML content from a file.
+//	@Tags			Response Formats
+//	@Accept			xml
+//	@Produce		xml
+//	@Success		200 "XML content."
+//	@Router			/xml [get]
+func (h *HttpFormat) HandleXML(c *gin.Context) {
+	xml, err := os.ReadFile("templates/demo.xml")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read HTML file"})
+		return
+	}
 
-
+	c.Header("Content-Type", "application/xml")
+	c.Data(http.StatusOK, "application/xml", xml)
+}	

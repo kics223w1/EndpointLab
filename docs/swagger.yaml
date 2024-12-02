@@ -110,6 +110,19 @@ paths:
       summary: Returns anything that is passed to request
       tags:
       - Anything
+  /brotli:
+    get:
+      consumes:
+      - application/json
+      description: Returns a Brotli compressed response.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Brotli-encoded data.
+      summary: Handle Brotli compression.
+      tags:
+      - Response Formats
   /cache:
     get:
       parameters:
@@ -229,6 +242,19 @@ paths:
       summary: Set a cookie with specified name and value
       tags:
       - Cookies
+  /deflate:
+    get:
+      consumes:
+      - application/json
+      description: Returns a Deflate compressed response.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Deflate-encoded data.
+      summary: Handle Deflate compression.
+      tags:
+      - Response Formats
   /delete:
     delete:
       consumes:
@@ -244,6 +270,34 @@ paths:
       summary: The request's DELETE parameters.
       tags:
       - HTTP Methods
+  /deny:
+    get:
+      consumes:
+      - text/plain
+      description: Returns a plain text response with denial content.
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: Deny response.
+          schema:
+            type: string
+      summary: Handle Deny response.
+      tags:
+      - Response Formats
+  /encoding/utf8:
+    get:
+      consumes:
+      - text/plain
+      description: Returns UTF-8 encoded text content from a file.
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: UTF-8 encoded data.
+      summary: Serve UTF-8 text content.
+      tags:
+      - Response Formats
   /etag/{etag}:
     get:
       parameters:
@@ -282,6 +336,19 @@ paths:
       summary: The request's query parameters.
       tags:
       - HTTP Methods
+  /gzip:
+    get:
+      consumes:
+      - application/json
+      description: Returns a Gzip compressed response.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Gzip-encoded data.
+      summary: Handle Gzip compression.
+      tags:
+      - Response Formats
   /headers:
     get:
       consumes:
@@ -297,6 +364,19 @@ paths:
       summary: Returns the request headers.
       tags:
       - Request Inspection
+  /html:
+    get:
+      consumes:
+      - text/html
+      description: Returns HTML content from a file.
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: HTML content.
+      summary: Serve HTML content.
+      tags:
+      - Response Formats
   /image:
     get:
       description: Returns a simple image of the type suggested by the Accept header
@@ -388,6 +468,19 @@ paths:
       summary: Returns the client's IP address.
       tags:
       - Request Inspection
+  /json:
+    get:
+      consumes:
+      - application/json
+      description: Returns JSON content from a file.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JSON content.
+      summary: Serve JSON content.
+      tags:
+      - Response Formats
   /patch:
     patch:
       consumes:
@@ -468,6 +561,19 @@ paths:
       summary: Returns response headers.
       tags:
       - Response Inspection
+  /robots.txt:
+    get:
+      consumes:
+      - text/plain
+      description: Returns the content of robots.txt.
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: robots.txt content.
+      summary: Serve robots.txt content.
+      tags:
+      - Response Formats
   /status/{code}:
     delete:
       description: Returns a status code based on the path
@@ -610,4 +716,17 @@ paths:
       summary: Returns the User-Agent string.
       tags:
       - Request Inspection
+  /xml:
+    get:
+      consumes:
+      - text/xml
+      description: Returns XML content from a file.
+      produces:
+      - text/xml
+      responses:
+        "200":
+          description: XML content.
+      summary: Serve XML content.
+      tags:
+      - Response Formats
 swagger: "2.0"

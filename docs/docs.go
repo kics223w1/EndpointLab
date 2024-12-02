@@ -172,6 +172,26 @@ const docTemplate = `{
                 }
             }
         },
+        "/brotli": {
+            "get": {
+                "description": "Returns a Brotli compressed response.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Response Formats"
+                ],
+                "summary": "Handle Brotli compression.",
+                "responses": {
+                    "200": {
+                        "description": "Brotli-encoded data."
+                    }
+                }
+            }
+        },
         "/cache": {
             "get": {
                 "produces": [
@@ -351,6 +371,26 @@ const docTemplate = `{
                 }
             }
         },
+        "/deflate": {
+            "get": {
+                "description": "Returns a Deflate compressed response.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Response Formats"
+                ],
+                "summary": "Handle Deflate compression.",
+                "responses": {
+                    "200": {
+                        "description": "Deflate-encoded data."
+                    }
+                }
+            }
+        },
         "/delete": {
             "delete": {
                 "description": "Returns the DELETE parameters of the request",
@@ -370,6 +410,49 @@ const docTemplate = `{
                         "schema": {
                             "type": "object"
                         }
+                    }
+                }
+            }
+        },
+        "/deny": {
+            "get": {
+                "description": "Returns a plain text response with denial content.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "Response Formats"
+                ],
+                "summary": "Handle Deny response.",
+                "responses": {
+                    "200": {
+                        "description": "Deny response.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/encoding/utf8": {
+            "get": {
+                "description": "Returns UTF-8 encoded text content from a file.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "Response Formats"
+                ],
+                "summary": "Serve UTF-8 text content.",
+                "responses": {
+                    "200": {
+                        "description": "UTF-8 encoded data."
                     }
                 }
             }
@@ -430,6 +513,26 @@ const docTemplate = `{
                 }
             }
         },
+        "/gzip": {
+            "get": {
+                "description": "Returns a Gzip compressed response.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Response Formats"
+                ],
+                "summary": "Handle Gzip compression.",
+                "responses": {
+                    "200": {
+                        "description": "Gzip-encoded data."
+                    }
+                }
+            }
+        },
         "/headers": {
             "get": {
                 "description": "Returns all headers of the request",
@@ -449,6 +552,26 @@ const docTemplate = `{
                         "schema": {
                             "type": "object"
                         }
+                    }
+                }
+            }
+        },
+        "/html": {
+            "get": {
+                "description": "Returns HTML content from a file.",
+                "consumes": [
+                    "text/html"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "tags": [
+                    "Response Formats"
+                ],
+                "summary": "Serve HTML content.",
+                "responses": {
+                    "200": {
+                        "description": "HTML content."
                     }
                 }
             }
@@ -591,6 +714,26 @@ const docTemplate = `{
                 }
             }
         },
+        "/json": {
+            "get": {
+                "description": "Returns JSON content from a file.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Response Formats"
+                ],
+                "summary": "Serve JSON content.",
+                "responses": {
+                    "200": {
+                        "description": "JSON content."
+                    }
+                }
+            }
+        },
         "/patch": {
             "patch": {
                 "description": "Returns the PATCH parameters of the request",
@@ -710,6 +853,26 @@ const docTemplate = `{
                 "responses": {
                     "200": {
                         "description": "Response headers"
+                    }
+                }
+            }
+        },
+        "/robots.txt": {
+            "get": {
+                "description": "Returns the content of robots.txt.",
+                "consumes": [
+                    "text/plain"
+                ],
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "Response Formats"
+                ],
+                "summary": "Serve robots.txt content.",
+                "responses": {
+                    "200": {
+                        "description": "robots.txt content."
                     }
                 }
             }
@@ -924,6 +1087,26 @@ const docTemplate = `{
                         "schema": {
                             "type": "object"
                         }
+                    }
+                }
+            }
+        },
+        "/xml": {
+            "get": {
+                "description": "Returns XML content from a file.",
+                "consumes": [
+                    "text/xml"
+                ],
+                "produces": [
+                    "text/xml"
+                ],
+                "tags": [
+                    "Response Formats"
+                ],
+                "summary": "Serve XML content.",
+                "responses": {
+                    "200": {
+                        "description": "XML content."
                     }
                 }
             }
