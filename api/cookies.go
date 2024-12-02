@@ -8,6 +8,14 @@ func NewHttpCookies() *HttpCookies {
 	return &HttpCookies{}
 }
 
+// HandleCookies returns the cookies sent by the client
+//	@Summary		Get cookies
+	//	@Description	Returns the cookies sent by the client
+	//	@Tags			cookies
+	//	@Accept			json
+	//	@Produce		json
+	//	@Success		200	{object}	object
+	//	@Router			/cookies [get]
 func (c *HttpCookies) HandleCookies(ctx *gin.Context) {
 	cookies := ctx.Request.Cookies()
 	ctx.JSON(200, gin.H{
