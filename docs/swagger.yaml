@@ -110,6 +110,45 @@ paths:
       summary: Returns anything that is passed to request
       tags:
       - Anything
+  /cache:
+    get:
+      parameters:
+      - description: Optional header to check if the resource has been modified since
+          the specified date
+        in: header
+        name: If-Modified-Since
+        type: string
+      - description: Optional header to check if the resource matches the given ETag
+        in: header
+        name: If-None-Match
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Cached response
+        "304":
+          description: Modified
+      summary: Returns a 304 if an If-Modified-Since header or If-None-Match is present.
+        Returns the same as a GET otherwise.
+      tags:
+      - Response Inspection
+  /cache/{value}:
+    get:
+      parameters:
+      - description: Number of seconds for the Cache-Control max-age directive
+        in: path
+        name: value
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Cache control set
+      summary: Sets a Cache-Control header for n seconds.
+      tags:
+      - Response Inspection
   /cookies:
     get:
       consumes:
@@ -205,6 +244,29 @@ paths:
       summary: The request's DELETE parameters.
       tags:
       - HTTP Methods
+  /etag/{etag}:
+    get:
+      parameters:
+      - description: Optional header to check if the resource does not match the given
+          ETag
+        in: header
+        name: If-None-Match
+        type: string
+      - description: Optional header to check if the resource matches the given ETag
+        in: header
+        name: If-Match
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Normal response
+        "412":
+          description: match
+      summary: Assumes the resource has the given etag and responds to If-None-Match
+        and If-Match headers appropriately.
+      tags:
+      - Response Inspection
   /get:
     get:
       consumes:
@@ -371,6 +433,41 @@ paths:
       summary: The request's PUT parameters.
       tags:
       - HTTP Methods
+  /response-headers:
+    get:
+      consumes:
+      - application/json
+      description: Returns all response headers including freeform values.
+      parameters:
+      - description: Freeform query parameter
+        in: query
+        name: freeform
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Response headers
+      summary: Returns response headers.
+      tags:
+      - Response Inspection
+    post:
+      consumes:
+      - application/json
+      description: Returns all response headers including freeform values.
+      parameters:
+      - description: Freeform query parameter
+        in: query
+        name: freeform
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Response headers
+      summary: Returns response headers.
+      tags:
+      - Response Inspection
   /status/{code}:
     delete:
       description: Returns a status code based on the path

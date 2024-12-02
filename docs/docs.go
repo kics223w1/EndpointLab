@@ -172,6 +172,64 @@ const docTemplate = `{
                 }
             }
         },
+        "/cache": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Response Inspection"
+                ],
+                "summary": "Returns a 304 if an If-Modified-Since header or If-None-Match is present. Returns the same as a GET otherwise.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Optional header to check if the resource has been modified since the specified date",
+                        "name": "If-Modified-Since",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Optional header to check if the resource matches the given ETag",
+                        "name": "If-None-Match",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cached response"
+                    },
+                    "304": {
+                        "description": "Modified"
+                    }
+                }
+            }
+        },
+        "/cache/{value}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Response Inspection"
+                ],
+                "summary": "Sets a Cache-Control header for n seconds.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Number of seconds for the Cache-Control max-age directive",
+                        "name": "value",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cache control set"
+                    }
+                }
+            }
+        },
         "/cookies": {
             "get": {
                 "description": "Returns the cookies sent by the client",
@@ -312,6 +370,39 @@ const docTemplate = `{
                         "schema": {
                             "type": "object"
                         }
+                    }
+                }
+            }
+        },
+        "/etag/{etag}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Response Inspection"
+                ],
+                "summary": "Assumes the resource has the given etag and responds to If-None-Match and If-Match headers appropriately.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Optional header to check if the resource does not match the given ETag",
+                        "name": "If-None-Match",
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Optional header to check if the resource matches the given ETag",
+                        "name": "If-Match",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Normal response"
+                    },
+                    "412": {
+                        "description": "match"
                     }
                 }
             }
@@ -565,6 +656,60 @@ const docTemplate = `{
                         "schema": {
                             "type": "object"
                         }
+                    }
+                }
+            }
+        },
+        "/response-headers": {
+            "get": {
+                "description": "Returns all response headers including freeform values.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Response Inspection"
+                ],
+                "summary": "Returns response headers.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Freeform query parameter",
+                        "name": "freeform",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Response headers"
+                    }
+                }
+            },
+            "post": {
+                "description": "Returns all response headers including freeform values.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Response Inspection"
+                ],
+                "summary": "Returns response headers.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Freeform query parameter",
+                        "name": "freeform",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Response headers"
                     }
                 }
             }

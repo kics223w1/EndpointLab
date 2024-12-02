@@ -120,16 +120,12 @@ func (s *Server) registerRoutes() {
 
 	// Response inspection
 	httpResInspection := NewResInspection()
-	//	@Summary		Cache control
-	//	@Description	Returns cache control headers
-	//	@Tags			response-inspection
-	//	@Accept			json
-	//	@Produce		json
-	//	@Success		200	{object}	object
-	//	@Router			/cache [get]
 	s.router.GET("/cache", httpResInspection.HandleCache)
+	s.router.GET("/cache/:value", httpResInspection.HandleCacheValue)
+	s.router.GET("/etag/:etag", httpResInspection.HandleETag)
+	s.router.GET("/response-headers", httpResInspection.HandleResponseHeaders)
+	s.router.POST("/response-headers", httpResInspection.HandleResponseHeaders)
 
-	// Format endpoint
 	httpFormat := NewHttpFormat()
 	//	@Summary		Brotli compressed response
 	//	@Description	Returns brotli-encoded data
