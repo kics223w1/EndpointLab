@@ -220,6 +220,63 @@ paths:
       summary: Decode Base64 value.
       tags:
       - Dynamic
+  /basic-auth/{user}/{passwd}:
+    get:
+      consumes:
+      - application/json
+      description: Authenticates requests using Basic Auth
+      parameters:
+      - description: Username
+        in: path
+        name: user
+        required: true
+        type: string
+      - description: Password
+        in: path
+        name: passwd
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      summary: Handle Basic Authentication
+      tags:
+      - Authentication
+  /bearer:
+    get:
+      consumes:
+      - application/json
+      description: Authenticates requests using a Bearer token
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      summary: Handle Bearer Token Authentication
+      tags:
+      - Authentication
   /brotli:
     get:
       consumes:
@@ -545,6 +602,129 @@ paths:
       summary: Handle Deny response.
       tags:
       - Response Formats
+  /digest-auth/{qop}/{user}/{passwd}:
+    get:
+      consumes:
+      - application/json
+      description: Authenticates requests using Digest Auth
+      parameters:
+      - description: Quality of Protection
+        in: path
+        name: qop
+        required: true
+        type: string
+      - description: Username
+        in: path
+        name: user
+        required: true
+        type: string
+      - description: Password
+        in: path
+        name: passwd
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      summary: Handle Digest Authentication
+      tags:
+      - Authentication
+  /digest-auth/{qop}/{user}/{passwd}/{algorithm}:
+    get:
+      consumes:
+      - application/json
+      description: Authenticates requests using Digest Auth with specified algorithm
+      parameters:
+      - description: Quality of Protection
+        in: path
+        name: qop
+        required: true
+        type: string
+      - description: Username
+        in: path
+        name: user
+        required: true
+        type: string
+      - description: Password
+        in: path
+        name: passwd
+        required: true
+        type: string
+      - description: Algorithm (MD5, SHA-256, SHA-512)
+        in: path
+        name: algorithm
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      summary: Handle Digest Authentication with Algorithm
+      tags:
+      - Authentication
+  /digest-auth/{qop}/{user}/{passwd}/{algorithm}/{stale_after}:
+    get:
+      consumes:
+      - application/json
+      description: Authenticates requests using Digest Auth with stale after parameter
+      parameters:
+      - description: Quality of Protection
+        in: path
+        name: qop
+        required: true
+        type: string
+      - description: Username
+        in: path
+        name: user
+        required: true
+        type: string
+      - description: Password
+        in: path
+        name: passwd
+        required: true
+        type: string
+      - description: Algorithm (MD5, SHA-256, SHA-512)
+        in: path
+        name: algorithm
+        required: true
+        type: string
+      - description: Stale After
+        in: path
+        name: stale_after
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      summary: Handle Digest Authentication with Stale After
+      tags:
+      - Authentication
   /drip:
     get:
       consumes:
@@ -660,6 +840,37 @@ paths:
       summary: Returns the request headers.
       tags:
       - Request Inspection
+  /hidden-basic-auth/{user}/{passwd}:
+    get:
+      consumes:
+      - application/json
+      description: Authenticates requests using Basic Auth but hides the requirement
+      parameters:
+      - description: Username
+        in: path
+        name: user
+        required: true
+        type: string
+      - description: Password
+        in: path
+        name: passwd
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Handle Hidden Basic Authentication
+      tags:
+      - Authentication
   /html:
     get:
       consumes:

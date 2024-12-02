@@ -53,60 +53,15 @@ func (s *Server) registerRoutes() {
 	s.router.PUT("/put", httpMethod.HandlePut)
 	s.router.DELETE("/delete", httpMethod.HandleDelete)
 	s.router.PATCH("/patch", httpMethod.HandlePatch)
-
 	
 	// Auth endpoint
 	httpAuth := NewHttpAuth()
-	//	@Summary		Bearer auth
-	//	@Description	Protected endpoint that requires bearer token
-	//	@Tags			auth
-	//	@Accept			json
-	//	@Produce		json
-	//	@Security		ApiKeyAuth
-	//	@Success		200	{object}	object
-	//	@Failure		401	{object}	object
-	//	@Router			/bearer [get]
 	s.router.GET("/bearer", httpAuth.HandleBearer)
-
-	//	@Summary		Basic auth
-	//	@Description	Protected endpoint that requires basic auth
-	//	@Tags			auth
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			user	path	string	true	"Username"
-	//	@Param			passwd	path	string	true	"Password"
-	//	@Security		BasicAuth
-	//	@Success		200	{object}	object
-	//	@Failure		401	{object}	object
-	//	@Router			/basic-auth/{user}/{passwd} [get]
 	s.router.GET("/basic-auth/:user/:passwd", httpAuth.HandleBasicAuth)
-
-	//	@Summary		Digest auth
-	//	@Description	Protected endpoint that requires digest auth
-	//	@Tags			auth
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			qop		path		string	true	"Quality of Protection"
-	//	@Param			user	path		string	true	"Username"
-	//	@Param			passwd	path		string	true	"Password"
-	//	@Success		200		{object}	object
-	//	@Failure		401		{object}	object
-	//	@Router			/digest-auth/{qop}/{user}/{passwd} [get]
 	s.router.GET("/digest-auth/:qop/:user/:passwd", httpAuth.HandleDigestAuth)
-
-	//	@Summary		Digest auth with algorithm
-	//	@Description	Protected endpoint that requires digest auth with specific algorithm
-	//	@Tags			auth
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			qop			path		string	true	"Quality of Protection"
-	//	@Param			user		path		string	true	"Username"
-	//	@Param			passwd		path		string	true	"Password"
-	//	@Param			algorithm	path		string	true	"Algorithm"
-	//	@Success		200			{object}	object
-	//	@Failure		401			{object}	object
-	//	@Router			/digest-auth/{qop}/{user}/{passwd}/{algorithm} [get]
+	s.router.GET("/hidden-basic-auth/:user/:passwd", httpAuth.HandleHiddenBasicAuth)
 	s.router.GET("/digest-auth/:qop/:user/:passwd/:algorithm", httpAuth.HandleDigestAuthAlgorithm)
+	s.router.GET("/digest-auth/:qop/:user/:passwd/:algorithm/:stale_after", httpAuth.HandleDigestAuthStaleAfter)
 
 	// Status endpoint
 	httpStatus := NewHttpStatus()
