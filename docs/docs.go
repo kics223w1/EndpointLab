@@ -23,6 +23,44 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/absolute-redirect/{n}": {
+            "get": {
+                "description": "Redirects the request to a new URL a specified number of times.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Redirects"
+                ],
+                "summary": "Handle absolute redirects.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Number of redirects",
+                        "name": "n",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirects to the next URL",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid redirect count",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
         "/anything": {
             "get": {
                 "description": "Return anything that is passed to the request",
@@ -1213,6 +1251,294 @@ const docTemplate = `{
                         "description": "Invalid number of bytes, chunk_size, or duration",
                         "schema": {
                             "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/redirect-to": {
+            "get": {
+                "description": "Redirects the request to a specified URL with an optional status code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Redirects"
+                ],
+                "summary": "Handle redirect to a specific URL.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "URL to redirect to",
+                        "name": "url",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "HTTP status code for the redirect",
+                        "name": "status_code",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirects to the specified URL",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "URL is required",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Redirects the request to a specified URL with an optional status code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Redirects"
+                ],
+                "summary": "Handle redirect to a specific URL.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "URL to redirect to",
+                        "name": "url",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "HTTP status code for the redirect",
+                        "name": "status_code",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirects to the specified URL",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "URL is required",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Redirects the request to a specified URL with an optional status code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Redirects"
+                ],
+                "summary": "Handle redirect to a specific URL.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "URL to redirect to",
+                        "name": "url",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "HTTP status code for the redirect",
+                        "name": "status_code",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirects to the specified URL",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "URL is required",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Redirects the request to a specified URL with an optional status code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Redirects"
+                ],
+                "summary": "Handle redirect to a specific URL.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "URL to redirect to",
+                        "name": "url",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "HTTP status code for the redirect",
+                        "name": "status_code",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirects to the specified URL",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "URL is required",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Redirects the request to a specified URL with an optional status code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Redirects"
+                ],
+                "summary": "Handle redirect to a specific URL.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "URL to redirect to",
+                        "name": "url",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "HTTP status code for the redirect",
+                        "name": "status_code",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirects to the specified URL",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "URL is required",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/redirect/{n}": {
+            "get": {
+                "description": "Redirects the request to a relative URL a specified number of times.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Redirects"
+                ],
+                "summary": "Handle relative redirects.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Number of redirects",
+                        "name": "n",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirects to the next URL",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid redirect count",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/relative-redirect/{n}": {
+            "get": {
+                "description": "Redirects the request to a relative URL with a different path a specified number of times.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Redirects"
+                ],
+                "summary": "Handle relative redirects with a different path.",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Number of redirects",
+                        "name": "n",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirects to the next URL",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid redirect count",
+                        "schema": {
+                            "type": "object"
                         }
                     }
                 }

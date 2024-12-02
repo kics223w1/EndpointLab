@@ -70,6 +70,31 @@ info:
   title: EndpointLab
   version: "1.0"
 paths:
+  /absolute-redirect/{n}:
+    get:
+      consumes:
+      - application/json
+      description: Redirects the request to a new URL a specified number of times.
+      parameters:
+      - description: Number of redirects
+        in: path
+        name: "n"
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirects to the next URL
+          schema:
+            type: string
+        "400":
+          description: Invalid redirect count
+          schema:
+            type: object
+      summary: Handle absolute redirects.
+      tags:
+      - Redirects
   /anything:
     delete:
       consumes:
@@ -860,6 +885,203 @@ paths:
       summary: Stream bytes in range.
       tags:
       - Dynamic
+  /redirect-to:
+    delete:
+      consumes:
+      - application/json
+      description: Redirects the request to a specified URL with an optional status
+        code.
+      parameters:
+      - description: URL to redirect to
+        in: formData
+        name: url
+        required: true
+        type: string
+      - description: HTTP status code for the redirect
+        in: formData
+        name: status_code
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirects to the specified URL
+          schema:
+            type: string
+        "400":
+          description: URL is required
+          schema:
+            type: object
+      summary: Handle redirect to a specific URL.
+      tags:
+      - Redirects
+    get:
+      consumes:
+      - application/json
+      description: Redirects the request to a specified URL with an optional status
+        code.
+      parameters:
+      - description: URL to redirect to
+        in: formData
+        name: url
+        required: true
+        type: string
+      - description: HTTP status code for the redirect
+        in: formData
+        name: status_code
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirects to the specified URL
+          schema:
+            type: string
+        "400":
+          description: URL is required
+          schema:
+            type: object
+      summary: Handle redirect to a specific URL.
+      tags:
+      - Redirects
+    patch:
+      consumes:
+      - application/json
+      description: Redirects the request to a specified URL with an optional status
+        code.
+      parameters:
+      - description: URL to redirect to
+        in: formData
+        name: url
+        required: true
+        type: string
+      - description: HTTP status code for the redirect
+        in: formData
+        name: status_code
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirects to the specified URL
+          schema:
+            type: string
+        "400":
+          description: URL is required
+          schema:
+            type: object
+      summary: Handle redirect to a specific URL.
+      tags:
+      - Redirects
+    post:
+      consumes:
+      - application/json
+      description: Redirects the request to a specified URL with an optional status
+        code.
+      parameters:
+      - description: URL to redirect to
+        in: formData
+        name: url
+        required: true
+        type: string
+      - description: HTTP status code for the redirect
+        in: formData
+        name: status_code
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirects to the specified URL
+          schema:
+            type: string
+        "400":
+          description: URL is required
+          schema:
+            type: object
+      summary: Handle redirect to a specific URL.
+      tags:
+      - Redirects
+    put:
+      consumes:
+      - application/json
+      description: Redirects the request to a specified URL with an optional status
+        code.
+      parameters:
+      - description: URL to redirect to
+        in: formData
+        name: url
+        required: true
+        type: string
+      - description: HTTP status code for the redirect
+        in: formData
+        name: status_code
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirects to the specified URL
+          schema:
+            type: string
+        "400":
+          description: URL is required
+          schema:
+            type: object
+      summary: Handle redirect to a specific URL.
+      tags:
+      - Redirects
+  /redirect/{n}:
+    get:
+      consumes:
+      - application/json
+      description: Redirects the request to a relative URL a specified number of times.
+      parameters:
+      - description: Number of redirects
+        in: path
+        name: "n"
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirects to the next URL
+          schema:
+            type: string
+        "400":
+          description: Invalid redirect count
+          schema:
+            type: object
+      summary: Handle relative redirects.
+      tags:
+      - Redirects
+  /relative-redirect/{n}:
+    get:
+      consumes:
+      - application/json
+      description: Redirects the request to a relative URL with a different path a
+        specified number of times.
+      parameters:
+      - description: Number of redirects
+        in: path
+        name: "n"
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "302":
+          description: Redirects to the next URL
+          schema:
+            type: string
+        "400":
+          description: Invalid redirect count
+          schema:
+            type: object
+      summary: Handle relative redirects with a different path.
+      tags:
+      - Redirects
   /response-headers:
     get:
       consumes:

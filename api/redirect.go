@@ -13,6 +13,15 @@ func NewHttpRedirect() *HttpRedirect {
 	return &HttpRedirect{}
 }
 
+//	@Summary		Handle absolute redirects.
+//	@Description	Redirects the request to a new URL a specified number of times.
+//	@Tags			Redirects
+//	@Accept			json
+//	@Produce		json
+//	@Param			n	path		int	true	"Number of redirects"
+//	@Success		302	{string}	string	"Redirects to the next URL"
+//	@Failure		400	{object}	object	"Invalid redirect count"
+//	@Router			/absolute-redirect/{n} [get]
 func (h *HttpRedirect) HandleAbsoluteRedirect(ctx *gin.Context) {
 	// Get the number of redirects from path parameter
 	n := ctx.Param("n")
@@ -40,6 +49,20 @@ func (h *HttpRedirect) HandleAbsoluteRedirect(ctx *gin.Context) {
 	ctx.Redirect(302, nextURL)
 }
 
+//	@Summary		Handle redirect to a specific URL.
+//	@Description	Redirects the request to a specified URL with an optional status code.
+//	@Tags			Redirects
+//	@Accept			json
+//	@Produce		json
+//	@Param			url			formData	string	true	"URL to redirect to"
+//	@Param			status_code	formData	int		false	"HTTP status code for the redirect"
+//	@Success		302	{string}	string	"Redirects to the specified URL"
+//	@Failure		400	{object}	object	"URL is required"
+//	@Router			/redirect-to [post]
+//	@Router			/redirect-to [delete]
+//	@Router			/redirect-to [put]
+//	@Router			/redirect-to [patch]
+//	@Router			/redirect-to [get]
 func (h *HttpRedirect) HandleRedirectTo(ctx *gin.Context) {
 	// Get URL from form body
 	url := ctx.Request.FormValue("url")
@@ -59,6 +82,15 @@ func (h *HttpRedirect) HandleRedirectTo(ctx *gin.Context) {
 	ctx.Redirect(statusCode, url)
 }
 
+//	@Summary		Handle relative redirects.
+//	@Description	Redirects the request to a relative URL a specified number of times.
+//	@Tags			Redirects
+//	@Accept			json
+//	@Produce		json
+//	@Param			n	path		int	true	"Number of redirects"
+//	@Success		302	{string}	string	"Redirects to the next URL"
+//	@Failure		400	{object}	object	"Invalid redirect count"
+//	@Router			/redirect/{n} [get]
 func (h *HttpRedirect) HandleRedirect(ctx *gin.Context) {
 	// Get the number of redirects from path parameter
 	n := ctx.Param("n")
@@ -79,6 +111,15 @@ func (h *HttpRedirect) HandleRedirect(ctx *gin.Context) {
 	ctx.Redirect(302, nextURL)
 }
 
+//	@Summary		Handle relative redirects with a different path.
+//	@Description	Redirects the request to a relative URL with a different path a specified number of times.
+//	@Tags			Redirects
+//	@Accept			json
+//	@Produce		json
+//	@Param			n	path		int	true	"Number of redirects"
+//	@Success		302	{string}	string	"Redirects to the next URL"
+//	@Failure		400	{object}	object	"Invalid redirect count"
+//	@Router			/relative-redirect/{n} [get]
 func (h *HttpRedirect) HandleRelativeRedirect(ctx *gin.Context) {
 	// Get the number of redirects from path parameter
 	n := ctx.Param("n")

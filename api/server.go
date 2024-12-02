@@ -170,52 +170,9 @@ func (s *Server) registerRoutes() {
 
 	// Redirects
 	httpRedirects := NewHttpRedirect()
-	//	@Summary		Absolute redirect
-	//	@Description	Performs an absolute URL redirect the specified number of times
-	//	@Tags			redirects
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			n	path		int		true	"Number of redirects"
-	//	@Success		302	{object}	object	"Redirect response"
-	//	@Failure		400	{object}	object	"Invalid number of redirects"
-	//	@Router			/absolute-redirect/{n} [get]
 	s.router.GET("/absolute-redirect/:n", httpRedirects.HandleAbsoluteRedirect)
-
-	//	@Summary		Redirect to URL
-	//	@Description	Redirects to the URL specified in the 'url' query parameter
-	//	@Tags			redirects
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			url			query		string	true	"URL to redirect to"
-	//	@Param			status_code	query		int		false	"HTTP status code for redirect (default 302)"
-	//	@Success		302			{object}	object	"Redirect response"
-	//	@Success		301			{object}	object	"Permanent redirect response"
-	//	@Success		307			{object}	object	"Temporary redirect response"
-	//	@Success		308			{object}	object	"Permanent redirect response"
-	//	@Failure		400			{object}	object	"Invalid URL or status code"
-	//	@Router			/redirect-to [get]
 	s.router.Any("/redirect-to", httpRedirects.HandleRedirectTo)
-
-	//	@Summary		Redirect n times
-	//	@Description	Redirects n times before returning a response
-	//	@Tags			redirects
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			n	path		int		true	"Number of redirects"
-	//	@Success		302	{object}	object	"Redirect response"
-	//	@Failure		400	{object}	object	"Invalid number of redirects"
-	//	@Router			/redirect/{n} [get]
 	s.router.GET("/redirect/:n", httpRedirects.HandleRedirect)
-
-	//	@Summary		Relative redirect
-	//	@Description	Performs a relative redirect the specified number of times
-	//	@Tags			redirects
-	//	@Accept			json
-	//	@Produce		json
-	//	@Param			n	path		int		true	"Number of redirects"
-	//	@Success		302	{object}	object	"Redirect response"
-	//	@Failure		400	{object}	object	"Invalid number of redirects"
-	//	@Router			/relative-redirect/{n} [get]
 	s.router.GET("/relative-redirect/:n", httpRedirects.HandleRelativeRedirect)
 }
 
