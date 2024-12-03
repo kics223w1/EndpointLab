@@ -40,7 +40,7 @@ func (h *HttpMethod) HandleGet(c *gin.Context) {
 		scheme = "https"
 	}
 	fullURL := scheme + "://" + c.Request.Host + c.Request.URL.String()
-	
+
 	response := HTTPMethodResponse{
 		Args:    utils.ConvertQuery(c.Request.URL.Query()),
 		Headers: utils.ConvertHeaders(c.Request.Header),
