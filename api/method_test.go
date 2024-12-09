@@ -118,10 +118,28 @@ func TestHandleDelete(t *testing.T) {
 
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("DELETE", "/delete", nil)
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Header-Name-1", "Header-Value-1")
+
+	req.Body = io.NopCloser(bytes.NewBufferString(`{"name":"John", "age":30, "city":"New York"}`))
+
 	router.ServeHTTP(w, req)
 
+	var response HTTPMethodResponse
+	err := json.Unmarshal(w.Body.Bytes(), &response)
+	expectedData := `{"name":"John", "age":30, "city":"New York"}`
+	expectedJSON := map[string]interface{}{
+        "name": "John",
+        "age":  float64(30),
+        "city": "New York",
+    }
+
+	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, w.Code)
-	// Add more assertions to check the response body
+	assert.Equal(t, "DELETE", response.Method)
+	assert.Equal(t, "Header-Value-1", response.Headers["Header-Name-1"])
+	assert.Equal(t, expectedData, response.Data)
+	assert.Equal(t, expectedJSON, response.JSON)
 }
 
 func TestHandlePatch(t *testing.T) {
