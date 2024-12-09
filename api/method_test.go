@@ -62,6 +62,7 @@ func TestHandlePost(t *testing.T) {
 	var response HTTPMethodResponse
 
 	err := json.Unmarshal(w.Body.Bytes(), &response)
+	expectedArgs := map[string]string{"id": "123"}
 	expectedData := `{"name":"John", "age":30, "city":"New York"}`
 	expectedJSON := map[string]interface{}{
         "name": "John",
@@ -73,11 +74,10 @@ func TestHandlePost(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, w.Code)
 
-	assert.Equal(t, "123", response.Args["id"])	
 	assert.Equal(t, "POST", response.Method)
 
 	assert.Equal(t, "Header-Value-1", response.Headers["Header-Name-1"])
-
+	assert.Equal(t, expectedArgs, response.Args)
 	assert.Equal(t, expectedData, response.Data)
 	assert.Equal(t, expectedJSON, response.JSON)
 }
@@ -97,6 +97,7 @@ func TestHandlePut(t *testing.T) {
 
 	var response HTTPMethodResponse
 	err := json.Unmarshal(w.Body.Bytes(), &response)
+	expectedArgs := map[string]string{"id": "123"}
 	expectedData := `{"name":"John", "age":30, "city":"New York"}`
 	expectedJSON := map[string]interface{}{
         "name": "John",
@@ -106,9 +107,9 @@ func TestHandlePut(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, w.Code)
-	assert.Equal(t, "123", response.Args["id"])
 	assert.Equal(t, "PUT", response.Method)
 	assert.Equal(t, "Header-Value-1", response.Headers["Header-Name-1"])
+	assert.Equal(t, expectedArgs, response.Args)
 	assert.Equal(t, expectedData, response.Data)
 	assert.Equal(t, expectedJSON, response.JSON)
 }
@@ -117,7 +118,7 @@ func TestHandleDelete(t *testing.T) {
 	router := setupRouter()
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("DELETE", "/delete", nil)
+	req, _ := http.NewRequest("DELETE", "/delete?id=123", nil)
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Header-Name-1", "Header-Value-1")
 
@@ -127,6 +128,7 @@ func TestHandleDelete(t *testing.T) {
 
 	var response HTTPMethodResponse
 	err := json.Unmarshal(w.Body.Bytes(), &response)
+	expectedArgs := map[string]string{"id": "123"}
 	expectedData := `{"name":"John", "age":30, "city":"New York"}`
 	expectedJSON := map[string]interface{}{
         "name": "John",
@@ -138,6 +140,7 @@ func TestHandleDelete(t *testing.T) {
 	assert.Equal(t, http.StatusOK, w.Code)
 	assert.Equal(t, "DELETE", response.Method)
 	assert.Equal(t, "Header-Value-1", response.Headers["Header-Name-1"])
+	assert.Equal(t, expectedArgs, response.Args)
 	assert.Equal(t, expectedData, response.Data)
 	assert.Equal(t, expectedJSON, response.JSON)
 }
@@ -146,10 +149,30 @@ func TestHandlePatch(t *testing.T) {
 	router := setupRouter()
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("PATCH", "/patch", nil)
+	req, _ := http.NewRequest("PATCH", "/patch?id=123", nil)
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Header-Name-1", "Header-Value-1")
+
+	req.Body = io.NopCloser(bytes.NewBufferString(`{"name":"John", "age":30, "city":"New York"}`))
+
 	router.ServeHTTP(w, req)
 
+	var response HTTPMethodResponse
+	err := json.Unmarshal(w.Body.Bytes(), &response)
+	expectedArgs := map[string]string{"id": "123"}
+	expectedData := `{"name":"John", "age":30, "city":"New York"}`
+	expectedJSON := map[string]interface{}{
+        "name": "John",
+        "age":  float64(30),
+        "city": "New York",
+    }
+
+	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, w.Code)
-	// Add more assertions to check the response body
+	assert.Equal(t, "PATCH", response.Method)
+	assert.Equal(t, "Header-Value-1", response.Headers["Header-Name-1"])
+	assert.Equal(t, expectedArgs, response.Args)
+	assert.Equal(t, expectedData, response.Data)
+	assert.Equal(t, expectedJSON, response.JSON)
 }
 
