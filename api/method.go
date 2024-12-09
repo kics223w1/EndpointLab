@@ -114,13 +114,23 @@ func (h *HttpMethod) HandlePost(c *gin.Context) {
 //	@Success		200	{object}	object
 //	@Router			/put [put]
 func (h *HttpMethod) HandlePut(c *gin.Context) {
+	// Read body data
+	bodyData, err := c.GetRawData()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to read request body"})
+		return
+	}
+
+	// Parse JSON if applicable
+	jsonData := parseJSONIfApplicable(c.Request.Header, bodyData)
+
 	response := HTTPMethodResponse{
 		Args:    utils.ConvertQuery(c.Request.URL.Query()),
-		Data:    "",
+		Data:    string(bodyData),
 		Files:   make(map[string]string),
 		Form:    make(map[string]string),
 		Headers: utils.ConvertHeaders(c.Request.Header),
-		JSON:    nil,
+		JSON:    jsonData,
 		Origin:  c.ClientIP(),
 		URL:     c.Request.URL.String(),
 		Method:  c.Request.Method,
