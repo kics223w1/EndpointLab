@@ -198,3 +198,18 @@ func TestStatusCodeWithMethodOPTIONS(t *testing.T) {
 		})
 	}
 }
+
+func TestStatusCodeInvalid(t *testing.T) {
+	router := setupRouterStatus()
+
+	t.Run("Invalid", func(t *testing.T) {
+		req, _ := http.NewRequest("GET", "/status/invalid", nil)
+		w := httptest.NewRecorder()
+		router.ServeHTTP(w, req)
+
+		if w.Code != http.StatusBadRequest {
+			t.Errorf("Expected status code %d, but got %d", http.StatusNotFound, w.Code)
+		}
+	})
+}
+
