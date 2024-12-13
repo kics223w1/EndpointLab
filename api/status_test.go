@@ -150,3 +150,19 @@ func TestStatusCodeWithMethodPATCH(t *testing.T) {
 	}
 }
 
+func TestStatusCodeWithMethodDELETE(t *testing.T) {
+	router := setupRouterStatus()
+
+	for _, code := range getStatusCodes() {
+		t.Run(http.StatusText(code), func(t *testing.T) {
+			req, _ := http.NewRequest("DELETE", "/status/"+strconv.Itoa(code), nil)
+			w := httptest.NewRecorder()
+			router.ServeHTTP(w, req)
+
+			if w.Code != code {
+				t.Errorf("Expected status code %d, but got %d", code, w.Code)
+			}
+		})
+	}
+}
+
