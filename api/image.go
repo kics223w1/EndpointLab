@@ -46,6 +46,9 @@ func (h *HttpImage) HandleImage(c *gin.Context) {
 	case acceptHeader == "image/svg+xml":
 		imagePath = fmt.Sprintf("%s/svg_logo.svg", h.imagePath)
 		contentType = "image/svg+xml"
+	case acceptHeader == "image/avif":
+		imagePath = fmt.Sprintf("%s/fox.avif", h.imagePath)
+		contentType = "image/avif"
 	default:
 		c.JSON(http.StatusNotAcceptable, gin.H{"error": "Unsupported media type"})
 		return
@@ -170,5 +173,31 @@ func (h *HttpImage) HandleImageSVG(c *gin.Context) {
 	c.Header("Content-Length", fmt.Sprint(len(image)))
 	c.Header("Cache-Control", "public, max-age=31536000")
 	c.Data(http.StatusOK, "image/svg+xml", image)
+}
+
+//	@Summary		Returns an AVIF image
+//	@Description	Returns a simple AVIF image
+//	@Tags			Images
+//	@Produce		image/avif
+//	@Success		200	{file}	file
+//	@Router			/image/avif [get]
+func (h *HttpImage) HandleImageAvif(c *gin.Context) {
+	imagePath := fmt.Sprintf("%s/fox.avif", h.imagePath)
+
+	if _, err := os.Stat(imagePath); os.IsNotExist(err) {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Image not found at path: %s", imagePath)})
+		return
+	}
+
+	image, err := os.ReadFile(imagePath)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to read image file: %v", err)})
+		return
+	}
+
+	c.Header("Content-Type", "image/avif")
+	c.Header("Content-Length", fmt.Sprint(len(image)))
+	c.Header("Cache-Control", "public, max-age=31536000")
+	c.Data(http.StatusOK, "image/avif", image)
 }
 

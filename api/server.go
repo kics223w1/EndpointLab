@@ -98,6 +98,7 @@ func (s *Server) registerRoutes() {
 	s.router.GET("/image/png", httpImage.HandleImagePNG)
 	s.router.GET("/image/jpeg", httpImage.HandleImageJPEG)
 	s.router.GET("/image/webp", httpImage.HandleImageWebp)
+	s.router.GET("/image/avif", httpImage.HandleImageAvif)
 	s.router.GET("/image/svg", httpImage.HandleImageSVG)
 
 	// Anything
